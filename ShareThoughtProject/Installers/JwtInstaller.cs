@@ -23,32 +23,22 @@ namespace ShareThoughtProject.Installers
 
             services.AddScoped<IIdentityService, IdentityService>();
 
-            services.AddAuthentication(cfg =>
+            services.AddAuthentication(x =>
             {
-                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
             {
-                var plainTextSecurityKey = jwtSettings.Secret;
-
-                var signingKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(plainTextSecurityKey));
-
-                var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(signingKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
-
-                cfg.TokenValidationParameters = new TokenValidationParameters()
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
                     ValidateIssuer = false,
-                    IssuerSigningKey = signingKey
-                };
-
-                // this is useful as you can see the actual issue
-                cfg.Events = new JwtBearerEvents()
-                {
-                    OnAuthenticationFailed = async context =>
-                    {
-                        var ex = context.Exception;
-                    }
+                    ValidateAudience = false,
+                    RequireExpirationTime = false,
+                    ValidateLifetime = true
                 };
             });
 
