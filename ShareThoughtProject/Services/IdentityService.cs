@@ -4,6 +4,7 @@ using ShareThoughtProject.Domain;
 using ShareThoughtProject.Interfaces;
 using ShareThoughtProject.Options;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -47,26 +48,38 @@ namespace ShareThoughtProject.Services
                 };
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var plainTextSecurityKey = _jwtSettings.Secret;
+
+            var signingKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(plainTextSecurityKey));
+
+            var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(signingKey,
+                Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
+
+            // -------------------------
+
+            var claimsIdentity = new ClaimsIdentity(new List<Claim>()
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Email, newUser.Email),
-                    new Claim("id", newUser.Id)
-                }),
-                Expires = DateTime.UtcNow.AddHours(2),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                new Claim(ClaimTypes.Email, newUser.Email),
+                new Claim(ClaimTypes.Role, "Administrator"),
+            }, "Custom");
+
+            var securityTokenDescriptor = new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor()
+            {
+                Audience = "http://my.website.com",
+                Issuer = "http://my.tokenissuer.com",
+
+                Subject = claimsIdentity,
+                SigningCredentials = signingCredentials
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var plainToken = tokenHandler.CreateToken(securityTokenDescriptor);
+            var signedAndEncodedToken = tokenHandler.WriteToken(plainToken);
             return new AuthenticationResult
             {
-                Success = true, 
-                Token = tokenHandler.WriteToken(token)
+                Success = true,
+                Token = signedAndEncodedToken
             };
         }
     }
