@@ -8,6 +8,7 @@ using ShareThoughtProject.Services;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using ShareThoughtProject.Extensions;
 
 namespace ShareThoughtProject.Controllers.V1
 {
@@ -29,11 +30,12 @@ namespace ShareThoughtProject.Controllers.V1
         [HttpPut(ApiRoutes.Posts.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid postId, [FromBody] UpdatePostRequest request)
         {
-            var post = new Post
-            {
-                Id = postId,
-                Name = request.Name
-            };
+            var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
+            if (!userOwnsPost)
+                return BadRequest(new {error = "You don't own this post"});
+
+            var post = await _postService.GetPostByIdAsync(postId);
+            post.Name = request.Name;
 
             var updated = await _postService.UpdatePostAsync(post);
             return (updated == false ? NotFound() : Ok(post));
@@ -50,6 +52,10 @@ namespace ShareThoughtProject.Controllers.V1
         [HttpDelete(ApiRoutes.Posts.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid postId)
         {
+            var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
+            if (!userOwnsPost)
+                return BadRequest(new { error = "You don't own this post" });
+
             var deleted = await _postService.DeletePostAsync(postId);
             return (deleted == true ? NoContent() : NotFound());
         }
@@ -57,7 +63,11 @@ namespace ShareThoughtProject.Controllers.V1
         [HttpPost(ApiRoutes.Posts.Create)]
         public async Task<IActionResult> Create([FromBody] CreatePostRequest postRequest)
         {
-            var post = new Post { Id = Guid.NewGuid(), Name = postRequest.Name };
+            var post = new Post 
+            { 
+                Name = postRequest.Name,
+                UserId = HttpContext.GetUserId()
+            };
             if (string.IsNullOrEmpty(post.Name))
             {
                 return BadRequest("Name cannot be empty");
