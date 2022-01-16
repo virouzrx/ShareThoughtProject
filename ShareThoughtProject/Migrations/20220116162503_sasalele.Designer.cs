@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShareThoughtProject.Data;
 
-namespace ShareThoughtProject.Data.Migrations
+namespace ShareThoughtProject.Migrations
 {
     [DbContext(typeof(ShareThoughtDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220116162503_sasalele")]
+    partial class sasalele
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,8 +242,9 @@ namespace ShareThoughtProject.Data.Migrations
 
             modelBuilder.Entity("ShareThoughtProject.Domain.RefreshToken", b =>
                 {
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Token")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");

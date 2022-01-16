@@ -55,7 +55,7 @@ namespace ShareThoughtProject.Services
             }
 
             var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
-            var storedRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
+            var storedRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.Token.ToString() == refreshToken);
             if (storedRefreshToken == null)
             {
                 return new AuthenticationResult { Errors = new[] { "This refresh token does not exist" } };
@@ -170,7 +170,7 @@ namespace ShareThoughtProject.Services
             {
                 Success = true,
                 Token = tokenHandler.WriteToken(token),
-                RefreshToken = refreshToken.Token
+                RefreshToken = refreshToken.Token.ToString()
             };
         }
     }
