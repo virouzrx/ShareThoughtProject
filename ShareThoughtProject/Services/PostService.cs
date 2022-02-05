@@ -34,9 +34,16 @@ namespace ShareThoughtProject.Services
             return deleted > 0;
         }
 
+        public async Task<List<Hashtag>> GetHashtagsAsync()
+        {
+            return await _dbContext.Hashtags.ToListAsync();
+        }
+
         public async Task<Post> GetPostByIdAsync(Guid postId)
         {
-            return await _dbContext.Posts.SingleOrDefaultAsync(x => x.Id == postId);
+            var xx = await _dbContext.Posts.Include(post => post.Hashtags).ToListAsync();
+            var x = await _dbContext.Posts.Include(tag => tag.Hashtags).SingleOrDefaultAsync(x => x.Id == postId);
+            return x;
         }
         
         public async Task<List<Post>> GetPostsAsync()

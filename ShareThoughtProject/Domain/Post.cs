@@ -16,5 +16,6 @@ namespace ShareThoughtProject.Domain
         [ForeignKey("UserId")]
         public IdentityUser User { get; set; }
         public string UserId{ get; set; }
+        public ICollection<Hashtag> Hashtags { get; set; }
     }
 }

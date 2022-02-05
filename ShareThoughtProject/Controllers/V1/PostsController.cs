@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ShareThoughtProject.Extensions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ShareThoughtProject.Controllers.V1
 {
@@ -16,9 +19,11 @@ namespace ShareThoughtProject.Controllers.V1
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
-        public PostsController(IPostService postService)
+        private readonly IHashtagService _hashtagService;
+        public PostsController(IPostService postService, IHashtagService hashtagService)
         {
             _postService = postService;
+            _hashtagService = hashtagService;
         }
 
         [HttpGet(ApiRoutes.Posts.GetAll)]
@@ -63,10 +68,25 @@ namespace ShareThoughtProject.Controllers.V1
         [HttpPost(ApiRoutes.Posts.Create)]
         public async Task<IActionResult> Create([FromBody] CreatePostRequest postRequest)
         {
-            var post = new Post 
-            { 
+            var hashtags = await _hashtagService.GetTagsByNameAsync(postRequest.Hashtags);
+            if (!hashtags.Any())
+            {
+                foreach(var tag in postRequest.Hashtags)
+                {
+                    var hashtag = new Hashtag
+                    {
+                        HashtagName = tag,
+                        HashtagNameInLower = tag.ToLower(),
+                        AmountOfHashtagFollowers = 0
+                    };
+                    hashtags.Add(hashtag);
+                }
+            }
+            var post = new Post
+            {
                 Name = postRequest.Name,
-                UserId = HttpContext.GetUserId()
+                UserId = HttpContext.GetUserId(), 
+                Hashtags = hashtags
             };
             if (string.IsNullOrEmpty(post.Name))
             {

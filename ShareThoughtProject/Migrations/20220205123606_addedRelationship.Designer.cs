@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShareThoughtProject.Data;
 
 namespace ShareThoughtProject.Migrations
 {
     [DbContext(typeof(ShareThoughtDbContext))]
-    partial class ShareThoughtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220205123606_addedRelationship")]
+    partial class addedRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,9 +246,6 @@ namespace ShareThoughtProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("HashtagName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HashtagNameInLower")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
