@@ -20,6 +20,7 @@ namespace ShareThoughtProject.Installers
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ShareThoughtDbContext>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IHashtagService, HashtagService>();
         }
     }
 }

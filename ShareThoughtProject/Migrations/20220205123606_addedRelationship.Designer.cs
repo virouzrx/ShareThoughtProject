@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShareThoughtProject.Data;
 
 namespace ShareThoughtProject.Migrations
 {
     [DbContext(typeof(ShareThoughtDbContext))]
-    partial class ShareThoughtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220205123606_addedRelationship")]
+    partial class addedRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,42 +236,6 @@ namespace ShareThoughtProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Comment", b =>
-                {
-                    b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AuthorName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CommentScore")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SupercommentLink")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Guid");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comment");
-                });
-
             modelBuilder.Entity("ShareThoughtProject.Domain.Hashtag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -280,9 +246,6 @@ namespace ShareThoughtProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("HashtagName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HashtagNameInLower")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -296,14 +259,8 @@ namespace ShareThoughtProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -412,23 +369,6 @@ namespace ShareThoughtProject.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Comment", b =>
-                {
-                    b.HasOne("ShareThoughtProject.Domain.Post", "Post")
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ShareThoughtProject.Domain.Post", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -445,11 +385,6 @@ namespace ShareThoughtProject.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ShareThoughtProject.Domain.Post", b =>
-                {
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

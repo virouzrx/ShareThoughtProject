@@ -7,7 +7,7 @@ namespace ShareThoughtProject.Extensions
     {
         public static string GetUserId(this HttpContext httpContext)
         {
-            if (httpContext == null)
+            if (httpContext.User == null)
             {
                 return string.Empty;
             }

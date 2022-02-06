@@ -25,5 +25,10 @@ namespace ShareThoughtProject.Contracts
             public const string Register = Base + "/identity/register";
             public const string Refresh = Base + "/identity/refresh";
         }
+
+        public static class Hashtags
+        {
+            public const string GetAll = Base + "/";
+        }
     }
 }

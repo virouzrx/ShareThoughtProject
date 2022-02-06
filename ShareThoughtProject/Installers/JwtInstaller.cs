@@ -43,7 +43,7 @@ namespace ShareThoughtProject.Installers
                 x.SaveToken = true;
                 x.TokenValidationParameters = tokenValidationParameters;
             });
-
+            services.AddAuthorization();
         }
     }
 }
