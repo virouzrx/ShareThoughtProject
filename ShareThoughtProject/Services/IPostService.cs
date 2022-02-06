@@ -15,6 +15,7 @@ namespace ShareThoughtProject.Services
         Task<bool>DeletePostAsync(Guid postId);
         Task<bool> CreatePostAsync(Post post);
         Task<bool> UserOwnsPostAsync(Guid postId, string getUserId);
+        Task<List<Post>> GetPostsByHashtagAsync(Hashtag hashtags);
         Task<List<Hashtag>> GetHashtagsAsync();
     }
 }

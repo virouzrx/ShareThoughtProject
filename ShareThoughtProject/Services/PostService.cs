@@ -51,6 +51,16 @@ namespace ShareThoughtProject.Services
             return await _dbContext.Posts.ToListAsync();
         }
 
+        public async Task<List<Post>> GetPostsByHashtagAsync(Hashtag hashtag)
+        {
+            var posts = await _dbContext.Posts
+                .Where(x => x.Hashtags.Select(tag => tag.HashtagNameInLower)
+                    .ToList()
+                    .Contains(hashtag.HashtagNameInLower))
+                .ToListAsync();
+            return posts;
+        }
+
         public async Task<bool> UpdatePostAsync(Post postToUpdate)
         {
             _dbContext.Posts.Update(postToUpdate);
