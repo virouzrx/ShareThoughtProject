@@ -1,6 +1,6 @@
 ﻿namespace ShareThoughtProject.Services
 {
-    public class ICommentService
+    public interface ICommentService
     {
     }
 }

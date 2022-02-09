@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static ShareThoughtProject.Domain.Enums;
 
 namespace ShareThoughtProject.Domain
 {
@@ -13,6 +14,9 @@ namespace ShareThoughtProject.Domain
         public string Name { get; set; }
         public string Content { get; set; }
         public int Score { get; set; }
+        public bool IsDeleted { get; set; }
+        public FlagStatus CurrentFlagStatus { get; set; }
+        public GeneralFlagReason? FlagReason { get; set; } 
         [ForeignKey("UserId")]
         public IdentityUser User { get; set; }
         public string UserId{ get; set; }

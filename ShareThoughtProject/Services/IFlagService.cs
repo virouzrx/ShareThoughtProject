@@ -1,6 +1,11 @@
-﻿namespace ShareThoughtProject.Services
+﻿using System.Threading.Tasks;
+
+namespace ShareThoughtProject.Services
 {
-    public class IFlagService
+    public interface IFlagService
     {
+        Task<bool> FlagPost { get; set; }
+        Task<bool> FlagComment { get; set; }
+
     }
 }

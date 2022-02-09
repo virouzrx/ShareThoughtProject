@@ -11,6 +11,7 @@ namespace ShareThoughtProject.Data
         }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Hashtag> Hashtags { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; } 
     }
 }
