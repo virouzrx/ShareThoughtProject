@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShareThoughtProject.Domain;
 
 namespace ShareThoughtProject.Data
 {
-    public class ShareThoughtDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext
+    public class ShareThoughtDbContext : IdentityDbContext
     {
         public ShareThoughtDbContext(DbContextOptions<ShareThoughtDbContext> options)
             : base(options)

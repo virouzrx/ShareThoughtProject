@@ -1,6 +1,6 @@
 ﻿namespace ShareThoughtProject.Contracts.V1.Requests
 {
-    public class CreateCommentRequest
+    public class UpdateCommentRequest
     {
         public string Content { get; set; }
     }

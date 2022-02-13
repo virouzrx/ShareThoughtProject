@@ -41,14 +41,19 @@ namespace ShareThoughtProject.Services
 
         public async Task<Post> GetPostByIdAsync(Guid postId)
         {
-            var xx = await _dbContext.Posts.Include(post => post.Hashtags).ToListAsync();
-            var x = await _dbContext.Posts.Include(tag => tag.Hashtags).SingleOrDefaultAsync(x => x.Id == postId);
-            return x;
+            var post = await _dbContext.Posts
+                .Include(post => post.Hashtags)
+                .Include(post => post.Comments)
+                .SingleOrDefaultAsync(x => x.Id == postId);
+            return post;
         }
         
         public async Task<List<Post>> GetPostsAsync()
         {
-            return await _dbContext.Posts.ToListAsync();
+            return await _dbContext.Posts
+                .Include(post => post.Hashtags)
+                .Include(post => post.Comments)
+                .ToListAsync();
         }
 
         public async Task<List<Post>> GetPostsByHashtagAsync(Hashtag hashtag)

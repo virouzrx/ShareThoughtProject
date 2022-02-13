@@ -18,7 +18,7 @@ namespace ShareThoughtProject.Contracts
             public const string Update = Base + "/posts/{postId}";
             public const string Delete = Base + "/posts/{postId}";
         }
-        //TODO - replace with Identity Server
+
         public static class Identity
         {
             public const string Login = Base + "/identity/login";
@@ -28,7 +28,18 @@ namespace ShareThoughtProject.Contracts
 
         public static class Hashtags
         {
-            public const string GetAll = Base + "/";
+            public const string GetAll = Base + "/allHashtags";
         }
+
+        public static class Comments
+        {
+            public const string GetAllPostsComments = Base + "/getPostComments/{postId}";
+            public const string CreateComment = Base + "/comments/{postId}";
+            public const string CreateSubComment = Base + "/subcomments/{postId}";
+            public const string Update = Base + "/comments/update/{commentId}";
+            public const string Delete = Base + "/comments/{commentId}";
+            public const string Vote = Base + "/comments/vote/{commentId}";
+        }
+
     }
 }
