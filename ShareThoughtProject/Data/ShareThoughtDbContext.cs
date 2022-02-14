@@ -4,7 +4,7 @@ using ShareThoughtProject.Domain;
 
 namespace ShareThoughtProject.Data
 {
-    public class ShareThoughtDbContext : IdentityDbContext
+    public class ShareThoughtDbContext : IdentityDbContext<AppUser>
     {
         public ShareThoughtDbContext(DbContextOptions<ShareThoughtDbContext> options)
             : base(options)

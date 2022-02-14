@@ -96,7 +96,6 @@ namespace ShareThoughtProject.Controllers.V1
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationUri = baseUrl + "/" + ApiRoutes.Posts.Get.Replace("{postId}", post.Id.ToString());
-            var postResponse = new PostResponse { Id = post.Id };
             return Created(locationUri, post);
         }
     }

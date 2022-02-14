@@ -55,7 +55,6 @@ namespace ShareThoughtProject.Services
                 .Include(post => post.Comments)
                 .ToListAsync();
         }
-
         public async Task<List<Post>> GetPostsByHashtagAsync(Hashtag hashtag)
         {
             var posts = await _dbContext.Posts

@@ -109,10 +109,18 @@ namespace ShareThoughtProject.Services
                 StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public async Task<AuthenticationResult> RegisterAsync(string email, string password)
+        public async Task<AuthenticationResult> RegisterAsync(string email, string username, string password)
         {
-            var existingUser = await _userManager.FindByEmailAsync(email);
-            if (existingUser != null)
+            var existingUserByEmailAddress = await _userManager.FindByEmailAsync(email);
+            if (existingUserByEmailAddress != null)
+            {
+                return new AuthenticationResult
+                {
+                    Errors = new[] { "User with this e-mail address already exists" }
+                };
+            }
+            var existingUserByUsername = await _userManager.FindByNameAsync(username);
+            if (existingUserByUsername != null)
             {
                 return new AuthenticationResult
                 {
@@ -122,7 +130,7 @@ namespace ShareThoughtProject.Services
             var newUser = new IdentityUser
             {
                 Email = email,
-                UserName = email
+                UserName = username
             };
             var createdUser = await _userManager.CreateAsync(newUser, password);
             if (!createdUser.Succeeded)
