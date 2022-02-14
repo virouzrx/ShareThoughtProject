@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ShareThoughtProject.Data;
+using ShareThoughtProject.Domain;
 using ShareThoughtProject.Interfaces;
 using ShareThoughtProject.Services;
 
@@ -17,7 +18,7 @@ namespace ShareThoughtProject.Installers
                     configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ShareThoughtDbContext>();
             //Services
             services.AddScoped<IPostService, PostService>();

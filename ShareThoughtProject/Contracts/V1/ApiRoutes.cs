@@ -40,6 +40,13 @@ namespace ShareThoughtProject.Contracts
             public const string Delete = Base + "/comments/{commentId}";
             public const string Vote = Base + "/comments/vote/{commentId}";
         }
+        public static class Flags
+        {
+            public const string FlagPost = Base + "flagPost{postId}";
+            public const string FlagComment = Base + "/flagComment{commentId}";
+            public const string FlagPostResolve = Base + "/flagPostResolve{postId}";
+            public const string FlagCommentResolve = Base + "/flagCommentResolve{commentId}";
+        }
 
     }
 }

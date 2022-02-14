@@ -2,9 +2,9 @@
 
 namespace ShareThoughtProject.Contracts.V1.Requests
 {
-    public class FlagPostRequest
+    public class FlagCommentRequest
     {
-        public GeneralFlagReason FlagReason { get; set; }
+        public CommentFlag CommentFlagReason { get; set; }
         public string Message { get; set; }
     }
 }

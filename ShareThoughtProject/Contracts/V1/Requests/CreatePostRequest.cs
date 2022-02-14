@@ -9,5 +9,6 @@ namespace ShareThoughtProject.Contracts.V1.Requests
     {
         public string Name { get; set; }
         public List<string> Hashtags { get; set; }
+        public string AuthorName { get; set; }
     }
 }

@@ -17,12 +17,12 @@ namespace ShareThoughtProject.Services
 {
     public class IdentityService : IIdentityService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly ShareThoughtDbContext _context;
 
-        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, ShareThoughtDbContext context)
+        public IdentityService(UserManager<AppUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, ShareThoughtDbContext context)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
@@ -30,7 +30,7 @@ namespace ShareThoughtProject.Services
             _context = context;
         }
 
-        public async Task<AuthenticationResult> LoginAsync(string email, string password)
+        public async Task<AuthenticationResult> LoginAsync(string email, string username, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null || await _userManager.CheckPasswordAsync(user, password) == false)
@@ -127,7 +127,7 @@ namespace ShareThoughtProject.Services
                     Errors = new[] { "User with this e-mail address already exists" }
                 };
             }
-            var newUser = new IdentityUser
+            var newUser = new AppUser
             {
                 Email = email,
                 UserName = username
@@ -144,7 +144,7 @@ namespace ShareThoughtProject.Services
             return await GenerateAuthenticationResultForUserAsync(newUser);
         }
 
-        private async Task<AuthenticationResult> GenerateAuthenticationResultForUserAsync(IdentityUser user)
+        private async Task<AuthenticationResult> GenerateAuthenticationResultForUserAsync(AppUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
@@ -155,7 +155,8 @@ namespace ShareThoughtProject.Services
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("id", user.Id)
+                    new Claim("id", user.Id),
+                    new Claim("username", user.UserName)
                 }),
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
