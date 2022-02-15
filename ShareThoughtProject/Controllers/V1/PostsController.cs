@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ShareThoughtProject.Extensions;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace ShareThoughtProject.Controllers.V1
 {
@@ -20,16 +20,20 @@ namespace ShareThoughtProject.Controllers.V1
     {
         private readonly IPostService _postService;
         private readonly IHashtagService _hashtagService;
-        public PostsController(IPostService postService, IHashtagService hashtagService)
+        private readonly IMapper _mapper;
+        public PostsController(IPostService postService, IHashtagService hashtagService, IMapper mapper)
         {
             _postService = postService;
             _hashtagService = hashtagService;
+            _mapper = mapper;
         }
 
         [HttpGet(ApiRoutes.Posts.GetAll)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _postService.GetPostsAsync());
+            var posts = await _postService.GetPostsAsync();
+            var mapped = _mapper.Map<List<PostResponse>>(posts);
+            return Ok(_mapper.Map<List<PostResponse>>(posts));
         }
 
         [HttpPut(ApiRoutes.Posts.Update)]
@@ -43,7 +47,7 @@ namespace ShareThoughtProject.Controllers.V1
             post.Name = request.Name;
 
             var updated = await _postService.UpdatePostAsync(post);
-            return (updated == false ? NotFound() : Ok(post));
+            return (updated == false ? NotFound() : Ok(_mapper.Map<PostResponse>(post)));
         }
 
 
@@ -51,7 +55,7 @@ namespace ShareThoughtProject.Controllers.V1
         public async Task<IActionResult> Get([FromRoute] Guid postId)
         {
             var post = await _postService.GetPostByIdAsync(postId);
-            return (post == null ? NotFound() : Ok(post));
+            return (post == null ? NotFound() : Ok(_mapper.Map<PostResponse>(post)));
         }
 
         [HttpDelete(ApiRoutes.Posts.Delete)]
@@ -84,7 +88,7 @@ namespace ShareThoughtProject.Controllers.V1
             }
             var post = new Post
             {
-                Name = postRequest.Name,
+                Name = HttpContext.GetUsername(),
                 UserId = HttpContext.GetUserId(), 
                 Hashtags = hashtags
             };
@@ -96,7 +100,7 @@ namespace ShareThoughtProject.Controllers.V1
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationUri = baseUrl + "/" + ApiRoutes.Posts.Get.Replace("{postId}", post.Id.ToString());
-            return Created(locationUri, post);
+            return Created(locationUri, _mapper.Map<PostResponse>(post));
         }
     }
 }

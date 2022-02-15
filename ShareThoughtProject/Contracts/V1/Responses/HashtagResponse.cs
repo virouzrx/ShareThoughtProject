@@ -2,7 +2,7 @@
 
 namespace ShareThoughtProject.Contracts.V1.Responses
 {
-    public class HashtagsResponse
+    public class HashtagResponse
     {
         public Guid Id { get; set; }
         public string HashtagName { get; set; }

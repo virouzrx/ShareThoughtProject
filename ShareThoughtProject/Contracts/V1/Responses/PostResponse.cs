@@ -18,7 +18,7 @@ namespace ShareThoughtProject.Contracts.V1.Responses
         public FlagStatus CurrentFlagStatus { get; set; }
         public GeneralFlagReason? FlagReason { get; set; }
         public string UserId { get; set; }
-        public IEnumerable<Hashtag> Hashtags { get; set; }
-        public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<HashtagResponse> Hashtags { get; set; }
+        public IEnumerable<CommentResponse> Comments { get; set; }
     }
 }

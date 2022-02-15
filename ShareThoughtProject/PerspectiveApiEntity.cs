@@ -2,7 +2,7 @@
 
 namespace ShareThoughtProject
 {
-    public class PerspectiveApiConfig
+    public class PerspectiveApiEntity
     {
         public AttributeScores attributeScores { get; set; }
         public List<string> languages { get; set; }

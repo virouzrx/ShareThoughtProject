@@ -8,7 +8,7 @@ namespace ShareThoughtProject.Contracts.V1.Responses
         public string Content { get; set; }
         public DateTime Created { get; set; }
         public string AuthorName { get; set; }
-        public Guid SupercommentLink { get; set; }
+        public Guid? SupercommentLink { get; set; }
         public int CommentScore { get; set; }
         public string UserId { get; set; }
         public Guid PostId { get; set; }

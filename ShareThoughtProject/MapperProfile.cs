@@ -8,7 +8,9 @@ namespace ShareThoughtProject
     {
         public MapperProfile() 
         {
-
+            CreateMap<Post, PostResponse>();
+            CreateMap<Hashtag, HashtagResponse>();
+            CreateMap<Comment, CommentResponse>();
         }
     }
 }

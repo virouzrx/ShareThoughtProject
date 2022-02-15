@@ -13,5 +13,14 @@ namespace ShareThoughtProject.Extensions
             }
             return httpContext.User.Claims.Single(x => x.Type == "id").Value;
         }
+
+        public static string GetUsername(this HttpContext httpContext)
+        {
+            if (httpContext.User == null)
+            {
+                return string.Empty;
+            }
+            return httpContext.User.Claims.Single(x => x.Type == "username").Value;
+        }
     }
 }
