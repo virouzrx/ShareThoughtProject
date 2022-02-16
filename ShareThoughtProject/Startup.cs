@@ -7,19 +7,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ShareThoughtProject.Data;
+using ShareThoughtProject.Config;
 using ShareThoughtProject.Installers;
-using ShareThoughtProject.Interfaces;
 using ShareThoughtProject.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace ShareThoughtProject
 {
     public class Startup
     {
+        const string keyPath = "C:\\perspective.txt"; //<- in deployment would be a env var
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +29,7 @@ namespace ShareThoughtProject
         {
             services.InstallServicesInAssembly(Configuration);
             services.AddAutoMapper(typeof(Startup));
+            services.AddSingleton<IPerspectiveConfig>(x => new PerspectiveConfig(File.ReadAllText(keyPath)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

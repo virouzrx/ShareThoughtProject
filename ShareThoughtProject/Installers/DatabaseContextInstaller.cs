@@ -23,7 +23,9 @@ namespace ShareThoughtProject.Installers
             //Services
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IHashtagService, HashtagService>();
-            services.AddScoped<ICommentService, CommentService>();  
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IPerspectiveApiService, PerspectiveApiService>();
+            services.AddHttpClient<IPerspectiveApiService, PerspectiveApiService>();
         }
     }
 }

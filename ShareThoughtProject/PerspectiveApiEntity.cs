@@ -27,25 +27,7 @@ namespace ShareThoughtProject
         public string type { get; set; }
     }
 
-    public class TOXICITY
-    {
-        public List<SpanScore> spanScores { get; set; }
-        public SummaryScore summaryScore { get; set; }
-    }
-
-    public class LIKELYTOREJECT
-    {
-        public List<SpanScore> spanScores { get; set; }
-        public SummaryScore summaryScore { get; set; }
-    }
-
     public class PROFANITY
-    {
-        public List<SpanScore> spanScores { get; set; }
-        public SummaryScore summaryScore { get; set; }
-    }
-
-    public class INSULT
     {
         public List<SpanScore> spanScores { get; set; }
         public SummaryScore summaryScore { get; set; }
@@ -64,12 +46,6 @@ namespace ShareThoughtProject
     }
 
     public class SEXUALLYEXPLICIT
-    {
-        public List<SpanScore> spanScores { get; set; }
-        public SummaryScore summaryScore { get; set; }
-    }
-
-    public class SEVERETOXICITY
     {
         public List<SpanScore> spanScores { get; set; }
         public SummaryScore summaryScore { get; set; }

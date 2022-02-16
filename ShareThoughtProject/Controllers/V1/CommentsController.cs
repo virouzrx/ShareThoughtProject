@@ -15,10 +15,12 @@ namespace ShareThoughtProject.Controllers.V1
     public class CommentsController : ControllerBase
     {
         private readonly ICommentService _commentService;
+        private readonly IPerspectiveApiService _perspectiveApiService;
 
-        public CommentsController(ICommentService commentService)
+        public CommentsController(ICommentService commentService, IPerspectiveApiService perspectiveApiService)
         {
             _commentService = commentService;
+            _perspectiveApiService = perspectiveApiService;
         }
 
         [HttpGet(ApiRoutes.Comments.GetAllPostsComments)]
@@ -38,6 +40,15 @@ namespace ShareThoughtProject.Controllers.V1
                 UserId = HttpContext.GetUserId(),
                 PostId = postId
             };
+            var autoModerationResult = await _perspectiveApiService.AutoModerateComment(commentRequest.Content);
+            if (autoModerationResult == AutoModerationResult.AutoModerationStatus.REJECT)
+            {
+                return BadRequest("Inadequite content. Please change your comment so it doesn't violate our terms");
+            }
+            if (autoModerationResult == AutoModerationResult.AutoModerationStatus.FLAG)
+            {
+                comment.FlagStatus = Enums.FlagStatus.FlaggedAndWaiting;
+            }
 
             var created = await _commentService.AddCommentAsync(comment, postId);
             return created == true ? Ok() : NotFound();
