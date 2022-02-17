@@ -17,5 +17,6 @@ namespace ShareThoughtProject.Services
         Task<bool> UserOwnsPostAsync(Guid postId, string getUserId);
         Task<List<Post>> GetPostsByHashtagAsync(Hashtag hashtags);
         Task<List<Hashtag>> GetHashtagsAsync();
+        Task<bool> VotePostAsync(Post post, bool isUpvote, string userId);
     }
 }

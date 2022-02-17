@@ -15,7 +15,23 @@ namespace ShareThoughtProject.Services
         {
             _dbContext = dbContext;
         }
-        
+
+        public async Task<bool> VotePostAsync(Post post, bool isUpvote, string userId)
+        {
+            post.Score.Vote(isUpvote);
+            var vote = new PostVote
+            {
+                PostId = post.Id,
+                IsLike = isUpvote,
+                UserId = userId,
+                VoteDate = DateTime.Now
+            };
+            _dbContext.PostVotes.Add(vote);
+            _dbContext.Posts.Update(post);
+            var updated = await _dbContext.SaveChangesAsync();
+            return updated > 0;
+        }
+
         public async Task<bool> CreatePostAsync(Post post)
         {
             await _dbContext.Posts.AddAsync(post);

@@ -32,7 +32,6 @@ namespace ShareThoughtProject.Controllers.V1
         public async Task<IActionResult> GetAll()
         {
             var posts = await _postService.GetPostsAsync();
-            var mapped = _mapper.Map<List<PostResponse>>(posts);
             return Ok(_mapper.Map<List<PostResponse>>(posts));
         }
 
@@ -90,6 +89,8 @@ namespace ShareThoughtProject.Controllers.V1
             {
                 Name = HttpContext.GetUsername(),
                 UserId = HttpContext.GetUserId(), 
+                Created = DateTime.Now,
+                Score = 0,
                 Hashtags = hashtags
             };
             if (string.IsNullOrEmpty(post.Name))

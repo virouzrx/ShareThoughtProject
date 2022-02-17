@@ -31,9 +31,20 @@ namespace ShareThoughtProject.Services
             return await _dbContext.Comments.Where(x => x.PostId == guidPostId).ToListAsync();
         }
 
-        public async Task<bool> VoteCommentAsync(Comment comment, bool isUpvote)
+        public async Task<bool> VoteCommentAsync(Comment comment, bool isUpvote, string userId)
         {
-            comment.CommentScore.Vote(isUpvote);
+            if (isUpvote)
+                comment.CommentScore++;
+            else
+                comment.CommentScore--;
+            var vote = new CommentVote
+            {
+                CommentId = comment.Id,
+                IsLike = isUpvote,
+                UserId = userId, 
+                VoteDate = DateTime.Now
+            };
+            _dbContext.CommentsVotes.Add(vote);
             _dbContext.Comments.Update(comment);
             var updated = await _dbContext.SaveChangesAsync();
             return updated > 0;

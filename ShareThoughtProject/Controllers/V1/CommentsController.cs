@@ -99,8 +99,9 @@ namespace ShareThoughtProject.Controllers.V1
         [HttpPut(ApiRoutes.Comments.Vote)]
         public async Task<IActionResult> VoteComment(Guid commentId, bool isUpvote)
         {
+            var userId = HttpContext.GetUserId();
             var comment = await _commentService.GetCommentByIdAsync(commentId);
-            var updated = await _commentService.VoteCommentAsync(comment, isUpvote);
+            var updated = await _commentService.VoteCommentAsync(comment, isUpvote, userId);
 
             return updated == true ? NoContent() : NotFound();
         }

@@ -10,8 +10,8 @@ using ShareThoughtProject.Data;
 namespace ShareThoughtProject.Migrations
 {
     [DbContext(typeof(ShareThoughtDbContext))]
-    [Migration("20220214201126_addedUserClass")]
-    partial class addedUserClass
+    [Migration("20220217214406_Addedvotes")]
+    partial class Addedvotes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -260,6 +260,15 @@ namespace ShareThoughtProject.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FlagReason")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FlagStatus")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
 
@@ -276,6 +285,33 @@ namespace ShareThoughtProject.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ShareThoughtProject.Domain.CommentVote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CommentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsLike")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CommentsVotes");
                 });
 
             modelBuilder.Entity("ShareThoughtProject.Domain.Hashtag", b =>
@@ -339,6 +375,30 @@ namespace ShareThoughtProject.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("ShareThoughtProject.Domain.PostVote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsLike")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostVotes");
                 });
 
             modelBuilder.Entity("ShareThoughtProject.Domain.RefreshToken", b =>
@@ -455,11 +515,43 @@ namespace ShareThoughtProject.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ShareThoughtProject.Domain.CommentVote", b =>
+                {
+                    b.HasOne("ShareThoughtProject.Domain.Comment", "Comment")
+                        .WithMany()
+                        .HasForeignKey("PostId");
+
+                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ShareThoughtProject.Domain.Post", b =>
                 {
                     b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ShareThoughtProject.Domain.PostVote", b =>
+                {
+                    b.HasOne("ShareThoughtProject.Domain.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
