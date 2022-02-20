@@ -130,6 +130,7 @@ namespace ShareThoughtProject.Services
             var newUser = new AppUser
             {
                 Email = email,
+                Joined = DateTime.Now,
                 UserName = username
             };
             var createdUser = await _userManager.CreateAsync(newUser, password);

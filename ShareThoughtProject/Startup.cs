@@ -8,9 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShareThoughtProject.Config;
+using ShareThoughtProject.Data;
 using ShareThoughtProject.Installers;
 using ShareThoughtProject.Options;
 using System.IO;
+using System.Linq;
 
 namespace ShareThoughtProject
 {
@@ -30,11 +32,25 @@ namespace ShareThoughtProject
             services.InstallServicesInAssembly(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IPerspectiveConfig>(x => new PerspectiveConfig(File.ReadAllText(keyPath)));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ShareThoughtDbContext>();
+                var autoModerator = context.Users.Where(x => x.UserName == "AutoModerator").FirstOrDefaultAsync();
+                if (autoModerator != null)
+                {
+                    context.Users.Add(new Domain.AppUser
+                    {
+                        UserName = "AutoModerator",
+                        AvatarPath = "todo",
+                    });
+                }
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

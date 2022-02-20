@@ -24,9 +24,10 @@ namespace ShareThoughtProject.Controllers.V1
         }
 
         [HttpPost(ApiRoutes.Flags.FlagEntity)]
-        public async Task<IActionResult> FlagEntity([FromRoute] ReportedEntityType reportedEntityType, [FromRoute] Guid flaggedEntityId, [FromBody] FlagPostRequest flagPostRequest)
+        //todo - eliminate from routes
+        public async Task<IActionResult> FlagEntity([FromRoute] ReportedEntityType entityType, [FromRoute] Guid entityId, [FromBody] FlagPostRequest flagPostRequest)
         {
-            var answer = await _flagService.FlagEntityAsync(reportedEntityType, flaggedEntityId, flagPostRequest, HttpContext.GetUserId());
+            var answer = await _flagService.FlagEntityAsync(entityType, entityId, flagPostRequest, HttpContext.GetUserId());
             if (answer.Success)
             {
                 return Ok(answer.Message);

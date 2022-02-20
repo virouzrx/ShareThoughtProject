@@ -18,6 +18,6 @@ namespace ShareThoughtProject.Services
         Task<List<Post>> GetPostsByHashtagAsync(Hashtag hashtags);
         Task<List<Hashtag>> GetHashtagsAsync();
         Task<bool> VotePostAsync(Post post, bool isUpvote, string userId);
-        public Task<List<Post>> GetPopularPosts();
+        public Task<List<Post>> GetPostsThisWeek();
     }
 }

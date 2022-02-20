@@ -63,7 +63,7 @@ namespace ShareThoughtProject.Services
                 .SingleOrDefaultAsync(x => x.Id == postId);
             return post;
         }
-        
+
         public async Task<List<Post>> GetPostsAsync()
         {
             return await _dbContext.Posts
@@ -93,9 +93,36 @@ namespace ShareThoughtProject.Services
             return await _dbContext.Posts.AsNoTracking().AnyAsync(x => x.Id == postId && x.UserId == userId);
         }
 
-        public Task<List<Post>> GetPopularPosts()
+        public async Task<List<Post>> GetPostsThisWeek()
         {
-            throw new NotImplementedException();
+            Dictionary<Guid, int> postsAndLikes = new();
+            var postsFromLastWeek = await _dbContext.Posts
+                .Where(x => x.Created >= DateTime.Now.AddDays(-7))
+                .Select(x => x.Id)
+                .ToListAsync();
+
+            foreach (var item in postsFromLastWeek)
+            {
+                var AllPostVotes = await _dbContext.PostVotes.Where(x => x.PostId == item).ToListAsync();
+                var likes = AllPostVotes.Where(x => x.IsLike).Count();
+                if (likes > AllPostVotes.Count)
+                {
+                    postsAndLikes.Add(item, likes);
+                }
+            }
+            var topPosts = postsAndLikes
+                .OrderByDescending(x => x.Value)
+                .ToDictionary(x => x.Key, x => x.Value)
+                .Take(5)
+                .Select(x => x.Key)
+                .ToList();
+
+            List<Post> postsToReturn = new();
+            foreach (var item in topPosts)
+            {
+                postsToReturn.Add(await _dbContext.Posts.Where(x => x.Id == item).FirstOrDefaultAsync());
+            }
+            return postsToReturn;
         }
     }
 }

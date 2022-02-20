@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using ShareThoughtProject.Data;
 using System.Linq;
 
 namespace ShareThoughtProject.Extensions

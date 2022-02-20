@@ -103,5 +103,15 @@ namespace ShareThoughtProject.Controllers.V1
             var locationUri = baseUrl + "/" + ApiRoutes.Posts.Get.Replace("{postId}", post.Id.ToString());
             return Created(locationUri, _mapper.Map<PostResponse>(post));
         }
+
+        [HttpPut(ApiRoutes.Posts.Vote)]
+        public async Task<IActionResult> VoteComment(Guid commentId, bool isUpvote)
+        {
+            var userId = HttpContext.GetUserId();
+            var comment = await _postService.GetPostByIdAsync(commentId);
+            var updated = await _postService.VotePostAsync(comment, isUpvote, userId);
+
+            return updated == true ? NoContent() : NotFound();
+        }
     }
 }

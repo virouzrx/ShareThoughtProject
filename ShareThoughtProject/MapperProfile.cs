@@ -11,6 +11,7 @@ namespace ShareThoughtProject
             CreateMap<Post, PostResponse>();
             CreateMap<Hashtag, HashtagResponse>();
             CreateMap<Comment, CommentResponse>();
+            CreateMap<AppUser, UserInfoResponse>();
         }
     }
 }

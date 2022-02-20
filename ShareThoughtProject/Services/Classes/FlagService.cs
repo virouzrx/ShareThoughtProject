@@ -51,8 +51,8 @@ namespace ShareThoughtProject.Services
                 else
                 {
                     flagged.SameReportsCount++;
+                    _dbContext.Reports.Update(flagged);
                 }
-                _dbContext.Reports.Update(flagged);
                 var updated = await _dbContext.SaveChangesAsync();
                 string flagMessage;
                 if (!(updated > 0))
