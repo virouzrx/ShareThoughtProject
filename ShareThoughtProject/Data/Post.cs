@@ -15,11 +15,10 @@ namespace ShareThoughtProject.Domain
         public string Title { get; set; }
         public string UrlTitle { get; set; }
         public string Content { get; set; }
+        public string? ResolverId { get; set; }
         public DateTime Created { get; set; }
         public int Score { get; set; }
         public bool IsDeleted { get; set; }
-        public FlagStatus CurrentFlagStatus { get; set; }
-        public GeneralFlagReason? FlagReason { get; set; } 
         [ForeignKey("UserId")]
         public AppUser User { get; set; }
         public string UserId{ get; set; }

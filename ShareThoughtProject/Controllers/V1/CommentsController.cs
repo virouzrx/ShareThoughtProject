@@ -16,11 +16,13 @@ namespace ShareThoughtProject.Controllers.V1
     {
         private readonly ICommentService _commentService;
         private readonly IPerspectiveApiService _perspectiveApiService;
+        private readonly IModerationService _moderationService;
 
-        public CommentsController(ICommentService commentService, IPerspectiveApiService perspectiveApiService)
+        public CommentsController(ICommentService commentService, IPerspectiveApiService perspectiveApiService, IModerationService moderationService)
         {
             _commentService = commentService;
             _perspectiveApiService = perspectiveApiService;
+            _moderationService = moderationService;
         }
 
         [HttpGet(ApiRoutes.Comments.GetAllPostsComments)]
@@ -47,7 +49,7 @@ namespace ShareThoughtProject.Controllers.V1
             }
             if (autoModerationResult == AutoModerationResult.AutoModerationStatus.FLAG)
             {
-                comment.FlagStatus = Enums.FlagStatus.FlaggedAndWaiting;
+                
             }
 
             var created = await _commentService.AddCommentAsync(comment, postId);

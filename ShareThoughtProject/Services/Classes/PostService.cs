@@ -92,5 +92,10 @@ namespace ShareThoughtProject.Services
         {
             return await _dbContext.Posts.AsNoTracking().AnyAsync(x => x.Id == postId && x.UserId == userId);
         }
+
+        public Task<List<Post>> GetPopularPosts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

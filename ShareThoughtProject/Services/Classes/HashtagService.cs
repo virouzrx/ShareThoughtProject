@@ -4,6 +4,7 @@ using ShareThoughtProject.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace ShareThoughtProject.Services
 {
@@ -39,16 +40,38 @@ namespace ShareThoughtProject.Services
             return hashtags;
         }
 
-        public async Task<bool> UpdateHashtagFollowersCount(Hashtag hashtag, bool follow)
+        public async Task<bool> UpdateHashtagFollowersCount(Hashtag hashtag, string userId)
         {
-            if (follow)
-                hashtag.AmountOfHashtagFollowers++;
-            else
+            var existingHasthagFollow = _dbContext.HashtagFollows.Where(x => x.UserId == userId && x.HashtagId == hashtag.Id).FirstOrDefault();
+            if (existingHasthagFollow != null)
+            {
+                _dbContext.HashtagFollows.Remove(existingHasthagFollow);
                 hashtag.AmountOfHashtagFollowers--;
-
+            }
+            else
+            {
+                var newHashtagFollow = new HashtagFollow
+                {
+                    UserId = userId,
+                    HashtagId = hashtag.Id,
+                    FollowDate = DateTime.Now
+                };
+                _dbContext.HashtagFollows.Add(newHashtagFollow);
+                hashtag.AmountOfHashtagFollowers++;
+            }
             _dbContext.Hashtags.Update(hashtag);
             var updated = await _dbContext.SaveChangesAsync();
             return updated > 0;
+        }
+
+        public async Task<List<Hashtag>> GetMostPopularHashtags()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Hashtag>> GetRisingHashtags()
+        {
+            throw new NotImplementedException();
         }
     }
 }

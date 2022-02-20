@@ -11,11 +11,10 @@ namespace ShareThoughtProject.Domain
         [Key]
         public Guid Id { get; set; }
         public string Content { get; set; }
+        public string? ResolverId { get; set; }
         public DateTime Created { get; set; }
         public string AuthorName { get; set; }
         public Guid SupercommentLink { get; set; }
-        public CommentFlag FlagReason { get; set; }
-        public FlagStatus FlagStatus { get; set; }
         public bool IsDeleted { get; set; }
         public int CommentScore { get; set; }
         [ForeignKey("UserId")]

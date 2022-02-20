@@ -4,7 +4,7 @@ namespace ShareThoughtProject.Contracts.V1.Requests
 {
     public class FlagCommentRequest
     {
-        public CommentFlag CommentFlagReason { get; set; }
+        public GeneralFlagReason CommentFlagReason { get; set; }
         public string Message { get; set; }
     }
 }

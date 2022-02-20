@@ -2,6 +2,7 @@
 using ShareThoughtProject.Contracts;
 using ShareThoughtProject.Contracts.V1.Requests;
 using ShareThoughtProject.Domain;
+using ShareThoughtProject.Extensions;
 using ShareThoughtProject.Services;
 using System;
 using System.Threading.Tasks;
@@ -15,52 +16,28 @@ namespace ShareThoughtProject.Controllers.V1
         private readonly IFlagService _flagService;
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
-        public ModeratorFlagController(IFlagService flagService, IPostService postService, ICommentService commentService)
+        private readonly IModerationService _moderationService;
+        public ModeratorFlagController(IFlagService flagService, IPostService postService, ICommentService commentService, IModerationService moderationService)
         {
             _flagService = flagService;
             _postService = postService;
             _commentService = commentService;
+            _moderationService = moderationService;
         }
 
         [HttpPost(ApiRoutes.Flags.FlagPostResolve)]
-        public async Task<IActionResult> ResolvePostsFlag([FromBody] Guid postId, FlagStatus flagStatus)
+        public async Task<IActionResult> ResolveEntityFlag([FromBody] ResolveEntityFlagRequest resolveEntityRequest)
         {
-            var post = await _postService.GetPostByIdAsync(postId);
-            var validationResult = ValidateFlagResolution(flagStatus);
-            if (validationResult)
+            var resolution = await _moderationService.ResolveFlag(resolveEntityRequest, HttpContext.GetUserId());
+            if (resolution.Success && resolution.AnythingChanged)
             {
-                if (flagStatus == FlagStatus.FlaggedAndDeleted)
-                    post.IsDeleted = true;
-
-                post.CurrentFlagStatus = flagStatus;
-                var flagged = await _flagService.FlagPostAsync(post);
-                return (flagged == true ? Ok() : NotFound());
+                return Ok();
             }
-            return BadRequest("Incorrect flag resolution value.");
-        }
-
-        [HttpPost(ApiRoutes.Flags.FlagCommentResolve)]
-        public async Task<IActionResult> FlagComment([FromBody] Guid commentId, FlagStatus flagStatus)
-        {
-            var comment = await _commentService.GetCommentByIdAsync(commentId);
-            var validationResult = ValidateFlagResolution(flagStatus);
-            if (validationResult)
+            if (resolution.Success && !resolution.AnythingChanged)
             {
-                if (flagStatus == FlagStatus.FlaggedAndDeleted)
-                    comment.IsDeleted = true;
-
-                comment.FlagStatus = flagStatus;
-                var flagged = await _flagService.FlagCommentAsync(comment);
-                return (flagged == true ? Ok() : NotFound());
+                return Ok("No changes have been made. Flagged content hasn't been reviewed");
             }
-            return BadRequest("Incorrect flag resolution value.");
-        }
-
-        public bool ValidateFlagResolution(FlagStatus flagStatus)
-        {
-            if (flagStatus == FlagStatus.NotFlagged || flagStatus == FlagStatus.FlaggedAndWaiting)
-                return false;
-            return true;
+            return BadRequest("Something went wrong");
         }
     }
 }

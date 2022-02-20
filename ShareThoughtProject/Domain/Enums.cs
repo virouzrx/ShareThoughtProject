@@ -9,7 +9,8 @@
             GraphicImagery,
             Fakenews,
             HatePropagation,
-            Persecution
+            Persecution,
+            Spam
         }
         public enum FlagStatus
         {
@@ -25,14 +26,10 @@
             MutedTemporarily, 
             MutedPernamently
         }
-        public enum CommentFlag
+        public enum ReportedEntityType
         {
-            Racism, 
-            Vulgarisms, 
-            Persecution, 
-            Fakenews,
-            HatePropagation,
-            Spam
+            Post,
+            Comment
         }
     }
 }

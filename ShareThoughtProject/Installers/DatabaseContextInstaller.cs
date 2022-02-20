@@ -6,6 +6,7 @@ using ShareThoughtProject.Data;
 using ShareThoughtProject.Domain;
 using ShareThoughtProject.Interfaces;
 using ShareThoughtProject.Services;
+using ShareThoughtProject.Services.Classes;
 
 namespace ShareThoughtProject.Installers
 {
@@ -24,6 +25,7 @@ namespace ShareThoughtProject.Installers
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IHashtagService, HashtagService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IModerationService, ModerationService>();
             services.AddScoped<IPerspectiveApiService, PerspectiveApiService>();
             services.AddHttpClient<IPerspectiveApiService, PerspectiveApiService>();
         }

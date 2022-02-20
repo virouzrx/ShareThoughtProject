@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ShareThoughtProject.Data.CounterTables;
 using ShareThoughtProject.Domain;
 
 namespace ShareThoughtProject.Data
@@ -15,6 +16,8 @@ namespace ShareThoughtProject.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<PostVote> PostVotes { get; set; }
         public DbSet<CommentVote> CommentsVotes { get; set; }
+        public DbSet<HashtagFollow> HashtagFollows { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; } 
+        public DbSet<Report> Reports { get; set; }
     }
 }

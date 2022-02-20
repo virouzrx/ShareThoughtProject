@@ -29,6 +29,7 @@ namespace ShareThoughtProject.Contracts
         public static class Hashtags
         {
             public const string GetAll = Base + "/allHashtags";
+            public const string Follow = Base + "/follow{hashtagId}";
         }
 
         public static class Comments
@@ -42,7 +43,7 @@ namespace ShareThoughtProject.Contracts
         }
         public static class Flags
         {
-            public const string FlagPost = Base + "/flagPost{postId}";
+            public const string FlagEntity = Base + "/flag/{entityType}/{entityId}";
             public const string FlagComment = Base + "/flagComment{commentId}";
             public const string FlagPostResolve = Base + "/flagPostResolve{postId}";
             public const string FlagCommentResolve = Base + "/flagCommentResolve{commentId}";
