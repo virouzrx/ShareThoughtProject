@@ -34,11 +34,7 @@ namespace ShareThoughtProject.Controllers.V1
                     Errors = authResponse.Errors
                 });
             }
-            return Ok(new AuthSuccessResponse
-            {
-                Token = authResponse.Token,
-                RefreshToken = authResponse.RefreshToken
-            });
+            return Ok("We've sent a confirmation e-mail on the address you've provided.");
         }
 
         [HttpPost(ApiRoutes.Identity.Login)]
@@ -74,6 +70,24 @@ namespace ShareThoughtProject.Controllers.V1
             {
                 Token = authResponse.Token,
                 RefreshToken = authResponse.RefreshToken
+            });
+        }
+
+        [HttpGet(ApiRoutes.Identity.Confirm)]
+        public async Task<IActionResult> Confirm([FromRoute] string userId, [FromRoute] string token)
+        {
+            var confirmation = await _identityService.ConfirmEmailAsync(userId, token);
+            if (!confirmation.Success)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Errors = confirmation.Errors
+                });
+            }
+            return Ok(new AuthSuccessResponse
+            {
+                Token = confirmation.Token,
+                RefreshToken = confirmation.RefreshToken
             });
         }
     }

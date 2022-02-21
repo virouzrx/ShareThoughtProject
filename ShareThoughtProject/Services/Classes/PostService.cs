@@ -30,6 +30,7 @@ namespace ShareThoughtProject.Services
             _dbContext.Posts.Update(post);
             var updated = await _dbContext.SaveChangesAsync();
             return updated > 0;
+
         }
 
         public async Task<bool> CreatePostAsync(Post post)
@@ -64,6 +65,15 @@ namespace ShareThoughtProject.Services
             return post;
         }
 
+        public async Task<Post> GetPostByTitleAsync(string title)
+        {
+            var post = await _dbContext.Posts
+                .Include(post => post.Hashtags)
+                .Include(post => post.Comments)
+                .SingleOrDefaultAsync(x => x.Title == title);
+            return post;
+        }
+
         public async Task<List<Post>> GetPostsAsync()
         {
             return await _dbContext.Posts
@@ -93,7 +103,7 @@ namespace ShareThoughtProject.Services
             return await _dbContext.Posts.AsNoTracking().AnyAsync(x => x.Id == postId && x.UserId == userId);
         }
 
-        public async Task<List<Post>> GetPostsThisWeek()
+        public async Task<List<Post>> GetPopularPostsThisWeek()
         {
             Dictionary<Guid, int> postsAndLikes = new();
             var postsFromLastWeek = await _dbContext.Posts

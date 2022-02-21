@@ -40,10 +40,45 @@ namespace ShareThoughtProject.Controllers.V1
         {
             var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
             if (!userOwnsPost)
-                return BadRequest(new {error = "You don't own this post"});
-
+                return BadRequest(new { error = "You don't own this post" });
+            var hashtags = await _hashtagService.GetTagsByNameAsync(request.Hashtags);
+            if (!hashtags.Any())
+            {
+                foreach (var tag in request.Hashtags)
+                {
+                    var hashtag = new Hashtag
+                    {
+                        HashtagName = tag,
+                        HashtagNameInLower = tag.ToLower(),
+                        AmountOfHashtagFollowers = 0
+                    };
+                    hashtags.Add(hashtag);
+                }
+            }
             var post = await _postService.GetPostByIdAsync(postId);
-            post.Name = request.Name;
+
+            post.Title = request.Title;
+            post.Description = request.Description;
+            post.UrlTitle = request.UrlTitle;
+            post.UserId = HttpContext.GetUserId();
+            post.Hashtags = hashtags;
+
+            if (string.IsNullOrEmpty(post.Title))
+            {
+                return BadRequest("Title cannot be empty");
+            }
+            if (string.IsNullOrEmpty(post.Description))
+            {
+                return BadRequest("Description cannot be empty");
+            }
+            if (string.IsNullOrEmpty(post.Content))
+            {
+                return BadRequest("Content cannot be empty");
+            }
+            if (string.IsNullOrEmpty(post.UrlTitle))
+            {
+                return BadRequest("UrlTitle cannot be empty");
+            }
 
             var updated = await _postService.UpdatePostAsync(post);
             return (updated == false ? NotFound() : Ok(_mapper.Map<PostResponse>(post)));
@@ -74,7 +109,7 @@ namespace ShareThoughtProject.Controllers.V1
             var hashtags = await _hashtagService.GetTagsByNameAsync(postRequest.Hashtags);
             if (!hashtags.Any())
             {
-                foreach(var tag in postRequest.Hashtags)
+                foreach (var tag in postRequest.Hashtags)
                 {
                     var hashtag = new Hashtag
                     {
@@ -87,15 +122,30 @@ namespace ShareThoughtProject.Controllers.V1
             }
             var post = new Post
             {
-                Name = HttpContext.GetUsername(),
-                UserId = HttpContext.GetUserId(), 
+                Title = postRequest.Title,
+                Description = postRequest.Description,
+                UrlTitle = postRequest.UrlTitle,
+                UserId = HttpContext.GetUserId(),
                 Created = DateTime.Now,
+                Content = postRequest.Content,
                 Score = 0,
                 Hashtags = hashtags
             };
-            if (string.IsNullOrEmpty(post.Name))
+            if (string.IsNullOrEmpty(post.Title))
             {
-                return BadRequest("Name cannot be empty");
+                return BadRequest("Title cannot be empty");
+            }
+            if (string.IsNullOrEmpty(post.Description))
+            {
+                return BadRequest("Description cannot be empty");
+            }
+            if (string.IsNullOrEmpty(post.Content))
+            {
+                return BadRequest("Content cannot be empty");
+            }
+            if (string.IsNullOrEmpty(post.UrlTitle))
+            {
+                return BadRequest("UrlTitle cannot be empty");
             }
             await _postService.CreatePostAsync(post);
 

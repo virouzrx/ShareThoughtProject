@@ -11,11 +11,11 @@ namespace ShareThoughtProject.Domain
     {
         [Key]
         public Guid Id { get; set; }
-        public string Name { get; set; }
         public string Title { get; set; }
+        public string ImagePath { get; set; }
+        public string Description { get; set; }
         public string UrlTitle { get; set; }
         public string Content { get; set; }
-        public string? ResolverId { get; set; }
         public DateTime Created { get; set; }
         public int Score { get; set; }
         public bool IsDeleted { get; set; }

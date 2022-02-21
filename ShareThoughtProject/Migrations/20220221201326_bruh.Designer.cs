@@ -10,8 +10,8 @@ using ShareThoughtProject.Data;
 namespace ShareThoughtProject.Migrations
 {
     [DbContext(typeof(ShareThoughtDbContext))]
-    [Migration("20220217214406_Addedvotes")]
-    partial class Addedvotes
+    [Migration("20220221201326_bruh")]
+    partial class bruh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,6 +171,55 @@ namespace ShareThoughtProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ShareThoughtProject.Data.CounterTables.Report", b =>
+                {
+                    b.Property<Guid>("ReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CurrentFlagStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FlagReason")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ReportedCommentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ReportedEntityType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ReportedPostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReporterId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ResolverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("SameReportsCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReportId");
+
+                    b.HasIndex("ReportedCommentId");
+
+                    b.HasIndex("ReportedPostId");
+
+                    b.HasIndex("ReporterId");
+
+                    b.HasIndex("ResolverId");
+
+                    b.ToTable("Reports");
+                });
+
             modelBuilder.Entity("ShareThoughtProject.Domain.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -182,6 +231,9 @@ namespace ShareThoughtProject.Migrations
                     b.Property<string>("AvatarPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CommentScore")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -192,6 +244,9 @@ namespace ShareThoughtProject.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("Joined")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -215,6 +270,9 @@ namespace ShareThoughtProject.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("PostScore")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -260,17 +318,14 @@ namespace ShareThoughtProject.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FlagReason")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FlagStatus")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ResolverId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SupercommentLink")
                         .HasColumnType("uniqueidentifier");
@@ -305,6 +360,9 @@ namespace ShareThoughtProject.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("VoteDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
@@ -334,6 +392,30 @@ namespace ShareThoughtProject.Migrations
                     b.ToTable("Hashtags");
                 });
 
+            modelBuilder.Entity("ShareThoughtProject.Domain.HashtagFollow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("FollowDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("HashtagId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HashtagId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("HashtagFollows");
+                });
+
             modelBuilder.Entity("ShareThoughtProject.Domain.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -346,17 +428,14 @@ namespace ShareThoughtProject.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CurrentFlagStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FlagReason")
-                        .HasColumnType("int");
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");
@@ -391,6 +470,9 @@ namespace ShareThoughtProject.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("VoteDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -498,6 +580,33 @@ namespace ShareThoughtProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ShareThoughtProject.Data.CounterTables.Report", b =>
+                {
+                    b.HasOne("ShareThoughtProject.Domain.Comment", "Comment")
+                        .WithMany()
+                        .HasForeignKey("ReportedCommentId");
+
+                    b.HasOne("ShareThoughtProject.Domain.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("ReportedPostId");
+
+                    b.HasOne("ShareThoughtProject.Domain.AppUser", "Reporter")
+                        .WithMany()
+                        .HasForeignKey("ReporterId");
+
+                    b.HasOne("ShareThoughtProject.Domain.AppUser", "Resolver")
+                        .WithMany()
+                        .HasForeignKey("ResolverId");
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Reporter");
+
+                    b.Navigation("Resolver");
+                });
+
             modelBuilder.Entity("ShareThoughtProject.Domain.Comment", b =>
                 {
                     b.HasOne("ShareThoughtProject.Domain.Post", "Post")
@@ -526,6 +635,23 @@ namespace ShareThoughtProject.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Comment");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ShareThoughtProject.Domain.HashtagFollow", b =>
+                {
+                    b.HasOne("ShareThoughtProject.Domain.Hashtag", "Hashtag")
+                        .WithMany()
+                        .HasForeignKey("HashtagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Hashtag");
 
                     b.Navigation("User");
                 });

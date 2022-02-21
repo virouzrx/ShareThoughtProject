@@ -7,6 +7,7 @@ using ShareThoughtProject.Domain;
 using ShareThoughtProject.Interfaces;
 using ShareThoughtProject.Services;
 using ShareThoughtProject.Services.Classes;
+using ShareThoughtProject.Services.Interfaces;
 
 namespace ShareThoughtProject.Installers
 {
@@ -21,12 +22,15 @@ namespace ShareThoughtProject.Installers
 
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ShareThoughtDbContext>();
+            
             //Services
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IHashtagService, HashtagService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IFlagService, FlagService>();
             services.AddScoped<IModerationService, ModerationService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IPerspectiveApiService, PerspectiveApiService>();
             services.AddHttpClient<IPerspectiveApiService, PerspectiveApiService>();
         }

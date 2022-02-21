@@ -19,6 +19,7 @@ namespace ShareThoughtProject
     public class Startup
     {
         const string keyPath = "C:\\perspective.txt"; //<- in deployment would be a env var
+        const string emailPasswordPath = "C:\\email.txt";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,10 +30,10 @@ namespace ShareThoughtProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IPerspectiveConfig>(x => new PerspectiveConfig(File.ReadAllText(keyPath)));
+            services.AddSingleton<IEmailServiceConfig>(x => new EmailServiceConfig(File.ReadAllText(emailPasswordPath)));
             services.InstallServicesInAssembly(Configuration);
             services.AddAutoMapper(typeof(Startup));
-            services.AddSingleton<IPerspectiveConfig>(x => new PerspectiveConfig(File.ReadAllText(keyPath)));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

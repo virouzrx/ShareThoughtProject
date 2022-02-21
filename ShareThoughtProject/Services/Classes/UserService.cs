@@ -49,5 +49,9 @@ namespace ShareThoughtProject.Services
            return await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
         }
 
+        public async Task<AppUser> GetUserByUsername(string username)
+        {
+            return await _context.Users.Where(x => x.UserName == username).FirstOrDefaultAsync();
+        }
     }
 }

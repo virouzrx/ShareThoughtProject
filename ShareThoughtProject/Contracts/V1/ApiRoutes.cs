@@ -13,7 +13,7 @@ namespace ShareThoughtProject.Contracts
         public static class Posts
         {
             public const string GetAll = Base + "/posts";
-            public const string Get = Base + "/posts/{postId}";
+            public const string Get = Base + "/posts/{postTitle}";
             public const string Create = Base + "/posts";
             public const string Update = Base + "/posts/{postId}";
             public const string Delete = Base + "/posts/{postId}";
@@ -25,12 +25,13 @@ namespace ShareThoughtProject.Contracts
             public const string Login = Base + "/identity/login";
             public const string Register = Base + "/identity/register";
             public const string Refresh = Base + "/identity/refresh";
+            public const string Confirm = Base + "/identity/confirm/{userId}/{token}";
         }
 
         public static class Hashtags
         {
             public const string GetAll = Base + "/allHashtags";
-            public const string Follow = Base + "/follow{hashtagId}";
+            public const string Follow = Base + "/follow/{hashtagId}";
         }
 
         public static class Comments
@@ -48,6 +49,12 @@ namespace ShareThoughtProject.Contracts
             public const string FlagComment = Base + "/flagComment{commentId}";
             public const string FlagPostResolve = Base + "/flagPostResolve{postId}";
             public const string FlagCommentResolve = Base + "/flagCommentResolve{commentId}";
+        }
+
+        public static class User
+        {
+            public const string GetAllUsers = Base + "/users/getall";
+            public const string GetUserInfo = Base + "/user/{username}";
         }
 
     }
