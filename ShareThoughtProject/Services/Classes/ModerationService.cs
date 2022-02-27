@@ -1,15 +1,15 @@
-﻿using ShareThoughtProject.Data;
+﻿using ShareThoughtProjectApi.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using ShareThoughtProject.Domain;
+using ShareThoughtProjectApi.Domain;
 using Microsoft.EntityFrameworkCore;
-using ShareThoughtProject.Data.CounterTables;
-using ShareThoughtProject.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Data.CounterTables;
+using ShareThoughtProjectApi.Contracts.V1.Requests;
 using System;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Services.Classes
+namespace ShareThoughtProjectApi.Services.Classes
 {
     public class ModerationService : IModerationService
     {

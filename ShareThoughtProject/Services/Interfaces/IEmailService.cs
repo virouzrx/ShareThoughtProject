@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Services.Interfaces
+namespace ShareThoughtProjectApi.Services.Interfaces
 {
     public interface IEmailService
     {

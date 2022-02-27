@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShareThoughtProject.Data;
-using ShareThoughtProject.Domain;
+using ShareThoughtProjectApi.Data;
+using ShareThoughtProjectApi.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public class HashtagService : IHashtagService
     {

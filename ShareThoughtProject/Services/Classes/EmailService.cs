@@ -2,15 +2,15 @@
 using MailKit;
 using MailKit.Security;
 using MailKit.Net.Smtp;
-using ShareThoughtProject.Services.Interfaces;
+using ShareThoughtProjectApi.Services.Interfaces;
 using MimeKit.Text;
-using ShareThoughtProject.Config;
+using ShareThoughtProjectApi.Config;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using ShareThoughtProject.Contracts;
+using ShareThoughtProjectApi.Contracts;
 
-namespace ShareThoughtProject.Services.Classes
+namespace ShareThoughtProjectApi.Services.Classes
 {
     public class EmailService : IEmailService
     {

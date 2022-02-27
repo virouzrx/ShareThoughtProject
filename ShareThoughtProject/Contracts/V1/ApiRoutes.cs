@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Contracts
+namespace ShareThoughtProjectApi.Contracts
 {
     public static class ApiRoutes
     {

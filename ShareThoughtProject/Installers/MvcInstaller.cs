@@ -1,16 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareThoughtProject.Interfaces;
+using ShareThoughtProjectApi.Interfaces;
 using System.Collections.Generic;
 using Microsoft.OpenApi.Models;
-using ShareThoughtProject.Options;
-using ShareThoughtProject.Services;
+using ShareThoughtProjectApi.Options;
+using ShareThoughtProjectApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace ShareThoughtProject.Installers
+namespace ShareThoughtProjectApi.Installers
 {
     public class MvcInstaller : IInstaller
     {

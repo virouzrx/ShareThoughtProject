@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ShareThoughtProject.Migrations
+namespace ShareThoughtProjectApi.Migrations
 {
     public partial class bruh : Migration
     {

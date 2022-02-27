@@ -1,10 +1,10 @@
-﻿using ShareThoughtProject.Contracts.V1.Requests;
-using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Domain;
 using System;
 using System.Threading.Tasks;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public interface IFlagService
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Options
+namespace ShareThoughtProjectApi.Options
 {
     public class SwaggerOptions
     {

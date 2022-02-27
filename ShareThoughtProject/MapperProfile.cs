@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ShareThoughtProject.Contracts.V1.Responses;
-using ShareThoughtProject.Domain;
+using ShareThoughtProjectApi.Contracts.V1.Responses;
+using ShareThoughtProjectApi.Domain;
 
-namespace ShareThoughtProject
+namespace ShareThoughtProjectApi
 {
     public class MapperProfile : Profile
     {

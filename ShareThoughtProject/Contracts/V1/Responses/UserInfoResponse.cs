@@ -1,8 +1,8 @@
-﻿using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Domain;
 using System;
 using System.Collections.Generic;
 
-namespace ShareThoughtProject.Contracts.V1.Responses
+namespace ShareThoughtProjectApi.Contracts.V1.Responses
 {
     public class UserInfoResponse
     {

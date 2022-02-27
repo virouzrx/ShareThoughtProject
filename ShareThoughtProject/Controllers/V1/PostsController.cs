@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShareThoughtProject.Domain;
+using ShareThoughtProjectApi.Domain;
 using System;
-using ShareThoughtProject.Contracts;
-using ShareThoughtProject.Contracts.V1.Requests;
-using ShareThoughtProject.Contracts.V1.Responses;
-using ShareThoughtProject.Services;
+using ShareThoughtProjectApi.Contracts;
+using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Contracts.V1.Responses;
+using ShareThoughtProjectApi.Services;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using ShareThoughtProject.Extensions;
+using ShareThoughtProjectApi.Extensions;
 using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
 
-namespace ShareThoughtProject.Controllers.V1
+namespace ShareThoughtProjectApi.Controllers.V1
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostsController : ControllerBase

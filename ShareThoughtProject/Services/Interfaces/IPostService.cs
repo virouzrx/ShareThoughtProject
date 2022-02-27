@@ -1,11 +1,11 @@
-﻿using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static ShareThoughtProject.Contracts.ApiRoutes;
+using static ShareThoughtProjectApi.Contracts.ApiRoutes;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public interface IPostService
     {

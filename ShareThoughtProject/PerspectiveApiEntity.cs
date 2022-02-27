@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ShareThoughtProject
+namespace ShareThoughtProjectApi
 {
     public class PerspectiveApiEntity
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ShareThoughtProject.Domain
+namespace ShareThoughtProjectApi.Domain
 {
     public class PostVote
     {

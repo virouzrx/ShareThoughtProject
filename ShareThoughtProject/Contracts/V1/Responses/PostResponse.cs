@@ -1,9 +1,9 @@
-﻿using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Domain;
 using System;
 using System.Collections.Generic;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Contracts.V1.Responses
+namespace ShareThoughtProjectApi.Contracts.V1.Responses
 {
     public class PostResponse
     {

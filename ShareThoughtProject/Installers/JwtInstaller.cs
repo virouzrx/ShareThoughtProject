@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareThoughtProject.Interfaces;
-using ShareThoughtProject.Options;
+using ShareThoughtProjectApi.Interfaces;
+using ShareThoughtProjectApi.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text;
-using ShareThoughtProject.Services;
+using ShareThoughtProjectApi.Services;
 
-namespace ShareThoughtProject.Installers
+namespace ShareThoughtProjectApi.Installers
 {
     public class JwtInstaller : IInstaller
     {

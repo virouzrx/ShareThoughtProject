@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShareThoughtProject.Contracts;
-using ShareThoughtProject.Contracts.V1.Requests;
-using ShareThoughtProject.Extensions;
-using ShareThoughtProject.Services;
+using ShareThoughtProjectApi.Contracts;
+using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Extensions;
+using ShareThoughtProjectApi.Services;
 using System;
 using System.Threading.Tasks;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Controllers.V1
+namespace ShareThoughtProjectApi.Controllers.V1
 {
     public class FlagsController : ControllerBase
     {

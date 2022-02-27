@@ -2,14 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareThoughtProject.Data;
-using ShareThoughtProject.Domain;
-using ShareThoughtProject.Interfaces;
-using ShareThoughtProject.Services;
-using ShareThoughtProject.Services.Classes;
-using ShareThoughtProject.Services.Interfaces;
+using ShareThoughtProjectApi.Data;
+using ShareThoughtProjectApi.Domain;
+using ShareThoughtProjectApi.Interfaces;
+using ShareThoughtProjectApi.Services;
+using ShareThoughtProjectApi.Services.Classes;
+using ShareThoughtProjectApi.Services.Interfaces;
 
-namespace ShareThoughtProject.Installers
+namespace ShareThoughtProjectApi.Installers
 {
     public class DatabaseContextInstaller : IInstaller
     {

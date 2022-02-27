@@ -2,9 +2,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Domain
+namespace ShareThoughtProjectApi.Domain
 {
     public class Comment
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShareThoughtProject.Contracts.V1.Requests
+namespace ShareThoughtProjectApi.Contracts.V1.Requests
 {
     public class UserRegistrationRequest
     {

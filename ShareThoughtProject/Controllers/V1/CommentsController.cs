@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShareThoughtProject.Contracts;
-using ShareThoughtProject.Contracts.V1.Requests;
-using ShareThoughtProject.Domain;
-using ShareThoughtProject.Extensions;
-using ShareThoughtProject.Services;
+using ShareThoughtProjectApi.Contracts;
+using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Domain;
+using ShareThoughtProjectApi.Extensions;
+using ShareThoughtProjectApi.Services;
 using System;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Controllers.V1
+namespace ShareThoughtProjectApi.Controllers.V1
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CommentsController : ControllerBase

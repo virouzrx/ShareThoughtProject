@@ -1,6 +1,6 @@
-﻿using static ShareThoughtProject.Domain.Enums;
+﻿using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Contracts.V1.Requests
+namespace ShareThoughtProjectApi.Contracts.V1.Requests
 {
     public class ResolveCommentFlagRequest
     {

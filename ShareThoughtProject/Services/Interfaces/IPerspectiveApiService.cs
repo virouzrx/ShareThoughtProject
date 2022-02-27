@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using static ShareThoughtProject.Domain.AutoModerationResult;
+using static ShareThoughtProjectApi.Domain.AutoModerationResult;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public interface IPerspectiveApiService
     {

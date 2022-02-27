@@ -1,4 +1,4 @@
-﻿namespace ShareThoughtProject.Services
+﻿namespace ShareThoughtProjectApi.Services
 {
     public static class GeneralMethods
     {

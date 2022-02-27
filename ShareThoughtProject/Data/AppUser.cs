@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ShareThoughtProject.Domain
+namespace ShareThoughtProjectApi.Domain
 {
     public class AppUser : IdentityUser
     {

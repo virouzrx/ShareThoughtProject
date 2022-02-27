@@ -1,8 +1,8 @@
-﻿using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public interface IUserService
     {

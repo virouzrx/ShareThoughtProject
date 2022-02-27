@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using ShareThoughtProject.Data;
+using ShareThoughtProjectApi.Data;
 using System.Linq;
 
-namespace ShareThoughtProject.Extensions
+namespace ShareThoughtProjectApi.Extensions
 {
     public static class Extensions
     {

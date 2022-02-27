@@ -1,10 +1,10 @@
-﻿using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Domain;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Data.CounterTables
+namespace ShareThoughtProjectApi.Data.CounterTables
 {
     public class Report
     {

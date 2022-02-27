@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ShareThoughtProject.Domain
+namespace ShareThoughtProjectApi.Domain
 {
     public class AuthenticationResult
     {

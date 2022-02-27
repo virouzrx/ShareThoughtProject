@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShareThoughtProject.Data;
+using ShareThoughtProjectApi.Data;
 
-namespace ShareThoughtProject.Migrations
+namespace ShareThoughtProjectApi.Migrations
 {
     [DbContext(typeof(ShareThoughtDbContext))]
     partial class ShareThoughtDbContextModelSnapshot : ModelSnapshot

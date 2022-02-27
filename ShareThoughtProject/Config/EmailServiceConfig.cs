@@ -1,4 +1,4 @@
-﻿namespace ShareThoughtProject.Config
+﻿namespace ShareThoughtProjectApi.Config
 {
     public class EmailServiceConfig : IEmailServiceConfig
     {

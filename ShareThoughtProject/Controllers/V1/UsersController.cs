@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShareThoughtProject.Contracts;
-using ShareThoughtProject.Contracts.V1.Responses;
-using ShareThoughtProject.Services;
+using ShareThoughtProjectApi.Contracts;
+using ShareThoughtProjectApi.Contracts.V1.Responses;
+using ShareThoughtProjectApi.Services;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Controllers.V1
+namespace ShareThoughtProjectApi.Controllers.V1
 {
     public class UsersController
     {

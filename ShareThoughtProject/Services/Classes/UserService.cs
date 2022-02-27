@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShareThoughtProject.Data;
-using ShareThoughtProject.Domain;
+using ShareThoughtProjectApi.Data;
+using ShareThoughtProjectApi.Domain;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public class UserService : IUserService
     {

@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ShareThoughtProject.Config;
-using ShareThoughtProject.Data;
-using ShareThoughtProject.Installers;
-using ShareThoughtProject.Options;
+using ShareThoughtProjectApi.Config;
+using ShareThoughtProjectApi.Data;
+using ShareThoughtProjectApi.Installers;
+using ShareThoughtProjectApi.Options;
 using System.IO;
 using System.Linq;
 
-namespace ShareThoughtProject
+namespace ShareThoughtProjectApi
 {
     public class Startup
     {

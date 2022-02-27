@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ShareThoughtProject.Data.CounterTables;
-using ShareThoughtProject.Domain;
+using ShareThoughtProjectApi.Data.CounterTables;
+using ShareThoughtProjectApi.Domain;
 
-namespace ShareThoughtProject.Data
+namespace ShareThoughtProjectApi.Data
 {
     public class ShareThoughtDbContext : IdentityDbContext<AppUser>
     {

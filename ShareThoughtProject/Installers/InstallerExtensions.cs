@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShareThoughtProject.Interfaces;
+using ShareThoughtProjectApi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Installers
+namespace ShareThoughtProjectApi.Installers
 {
     public static class InstallerExtensions
     {

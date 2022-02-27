@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShareThoughtProject.Contracts;
-using ShareThoughtProject.Contracts.V1.Requests;
-using ShareThoughtProject.Contracts.V1.Responses;
-using ShareThoughtProject.Interfaces;
+using ShareThoughtProjectApi.Contracts;
+using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Contracts.V1.Responses;
+using ShareThoughtProjectApi.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Controllers.V1
+namespace ShareThoughtProjectApi.Controllers.V1
 {
     public class IdentityController : Controller
     {

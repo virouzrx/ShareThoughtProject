@@ -5,10 +5,10 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
-using ShareThoughtProject.Config;
-using static ShareThoughtProject.Domain.AutoModerationResult;
+using ShareThoughtProjectApi.Config;
+using static ShareThoughtProjectApi.Domain.AutoModerationResult;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public class PerspectiveApiService : IPerspectiveApiService
     {

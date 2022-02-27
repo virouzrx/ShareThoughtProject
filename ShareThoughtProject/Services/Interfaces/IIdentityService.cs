@@ -1,7 +1,7 @@
-﻿using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Domain;
 using System.Threading.Tasks;
 
-namespace ShareThoughtProject.Interfaces
+namespace ShareThoughtProjectApi.Interfaces
 {
     public interface IIdentityService
     {

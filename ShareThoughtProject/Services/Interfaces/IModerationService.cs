@@ -1,11 +1,11 @@
-﻿using ShareThoughtProject.Contracts.V1.Requests;
-using ShareThoughtProject.Data.CounterTables;
-using ShareThoughtProject.Domain;
+﻿using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Data.CounterTables;
+using ShareThoughtProjectApi.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public interface IModerationService
     {

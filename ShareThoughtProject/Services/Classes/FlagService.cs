@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShareThoughtProject.Contracts.V1.Requests;
-using ShareThoughtProject.Data;
-using ShareThoughtProject.Data.CounterTables;
-using ShareThoughtProject.Domain;
+using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Data;
+using ShareThoughtProjectApi.Data.CounterTables;
+using ShareThoughtProjectApi.Domain;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static ShareThoughtProject.Domain.Enums;
+using static ShareThoughtProjectApi.Domain.Enums;
 
-namespace ShareThoughtProject.Services
+namespace ShareThoughtProjectApi.Services
 {
     public class FlagService : IFlagService
     {
