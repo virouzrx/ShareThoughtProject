@@ -1,0 +1,190 @@
+.search {
+    background-color: #fff;
+    padding: 4px;
+    border-radius: 5px
+}
+
+.search-1 {
+    position: relative;
+    width: 100%
+}
+
+.btn-group-pagination {
+    margin-top: 1.5em;
+}
+
+.post-author-and-info {
+    display: flex;
+}
+
+.vr {
+    font-size: medium;
+    margin-top: 0.25em;
+}
+
+.author-name-and-date {
+    margin-top: 0.5em;
+    margin-left: 0.75em;
+    margin-right: 0.75em;
+    font-size: small;
+}
+
+.new-post {
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 1.25rem;
+    margin-top: 1em;
+}
+
+.card-author-avatar {
+    width: 2.2em;
+    height: 2.2em;
+    border-radius: 100%;
+}
+
+.likes-count {
+    display: inline-block;
+    min-width: 30%;
+    width: 5em;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #289e44;
+}
+
+.hashtag-wrapper {
+    margin-bottom: 1em;
+    justify-content: center;
+}
+
+.hashtag {
+    display: inline-block;
+    min-width: 3em;
+    max-width: min-content;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    font-size: small;
+    line-height: 1.5;
+    background-color: #289e44;
+    padding: 0.1em 0.5em 0.1em 0.5em;
+}
+
+.comments-count {
+    min-width: 10%;
+    width: 5em;
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #2457e2;
+}
+
+.btn-success {
+    background-color: #1e7e34;
+    border: none;
+    border-radius: 0;
+}
+
+.btn-success :active, .btn-success :focus
+{
+    background-color: #135723;
+    border: none;
+    outline: none !important;
+}
+
+
+.search-1 input {
+    height: 45px;
+    border: none;
+    width: 100%;
+    padding-left: 34px;
+    padding-right: 10px;
+    border-right: 2px solid #eee
+}
+
+.search-1 input:focus {
+    border-color: none;
+    box-shadow: none;
+    outline: none
+}
+
+.search-1 i {
+    position: absolute;
+    top: 12px;
+    left: 5px;
+    font-size: 24px;
+    color: #eee
+}
+
+::placeholder {
+    color: #eee;
+    opacity: 1
+}
+
+.search-2 {
+    position: relative;
+    width: 100%
+}
+
+.search-2 input {
+    height: 45px;
+    border: none;
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 100px
+}
+
+.search-2 input:focus {
+    border-color: none;
+    box-shadow: none;
+    outline: none
+}
+
+.search-2 i {
+    position: absolute;
+    top: 12px;
+    left: -10px;
+    font-size: 24px;
+    color: #eee
+}
+
+.search-2 button {
+    position: absolute;
+    right: 1px;
+    top: 0px;
+    border: none;
+    height: 45px;
+    background-color: red;
+    color: #fff;
+    width: 90px;
+    border-radius: 4px
+}
+
+@media (max-width:800px) {
+    .search-1 input {
+        border-right: none;
+        border-bottom: 1px solid #eee
+    }
+
+    .search-2 i {
+        left: 4px
+    }
+
+    .search-2 input {
+        padding-left: 34px
+    }
+
+    .search-2 button {
+        height: 37px;
+        top: 5px
+    }
+}

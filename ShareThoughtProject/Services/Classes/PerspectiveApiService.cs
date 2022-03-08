@@ -44,7 +44,7 @@ namespace ShareThoughtProjectApi.Services
             if (profanityScore > 75 ||
                 identityAttackScore > 75 ||
                 threatScore > 75 ||
-                sexuallyExplicitScore < 75)
+                sexuallyExplicitScore > 75)
             {
                 return AutoModerationStatus.REJECT;
             }

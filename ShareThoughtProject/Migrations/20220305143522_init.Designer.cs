@@ -10,8 +10,8 @@ using ShareThoughtProjectApi.Data;
 namespace ShareThoughtProjectApi.Migrations
 {
     [DbContext(typeof(ShareThoughtDbContext))]
-    [Migration("20220221201326_bruh")]
-    partial class bruh
+    [Migration("20220305143522_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,7 +171,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Data.CounterTables.Report", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Data.CounterTables.Report", b =>
                 {
                     b.Property<Guid>("ReportId")
                         .ValueGeneratedOnAdd()
@@ -220,7 +220,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("Reports");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.AppUser", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -300,7 +300,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Comment", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.Comment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -342,7 +342,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.CommentVote", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.CommentVote", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -372,7 +372,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("CommentsVotes");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Hashtag", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.Hashtag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -392,7 +392,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("Hashtags");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.HashtagFollow", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.HashtagFollow", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -416,7 +416,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("HashtagFollows");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Post", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.Post", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -456,7 +456,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.PostVote", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.PostVote", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -483,7 +483,7 @@ namespace ShareThoughtProjectApi.Migrations
                     b.ToTable("PostVotes");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.RefreshToken", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.RefreshToken", b =>
                 {
                     b.Property<Guid>("Token")
                         .ValueGeneratedOnAdd()
@@ -516,13 +516,13 @@ namespace ShareThoughtProjectApi.Migrations
 
             modelBuilder.Entity("HashtagPost", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.Hashtag", null)
+                    b.HasOne("ShareThoughtProjectApi.Domain.Hashtag", null)
                         .WithMany()
                         .HasForeignKey("HashtagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShareThoughtProject.Domain.Post", null)
+                    b.HasOne("ShareThoughtProjectApi.Domain.Post", null)
                         .WithMany()
                         .HasForeignKey("PostsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -540,7 +540,7 @@ namespace ShareThoughtProjectApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", null)
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -549,7 +549,7 @@ namespace ShareThoughtProjectApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", null)
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -564,7 +564,7 @@ namespace ShareThoughtProjectApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", null)
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -573,28 +573,28 @@ namespace ShareThoughtProjectApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", null)
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Data.CounterTables.Report", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Data.CounterTables.Report", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.Comment", "Comment")
+                    b.HasOne("ShareThoughtProjectApi.Domain.Comment", "Comment")
                         .WithMany()
                         .HasForeignKey("ReportedCommentId");
 
-                    b.HasOne("ShareThoughtProject.Domain.Post", "Post")
+                    b.HasOne("ShareThoughtProjectApi.Domain.Post", "Post")
                         .WithMany()
                         .HasForeignKey("ReportedPostId");
 
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "Reporter")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "Reporter")
                         .WithMany()
                         .HasForeignKey("ReporterId");
 
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "Resolver")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "Resolver")
                         .WithMany()
                         .HasForeignKey("ResolverId");
 
@@ -607,15 +607,15 @@ namespace ShareThoughtProjectApi.Migrations
                     b.Navigation("Resolver");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Comment", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.Comment", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.Post", "Post")
+                    b.HasOne("ShareThoughtProjectApi.Domain.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -624,13 +624,13 @@ namespace ShareThoughtProjectApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.CommentVote", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.CommentVote", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.Comment", "Comment")
+                    b.HasOne("ShareThoughtProjectApi.Domain.Comment", "Comment")
                         .WithMany()
                         .HasForeignKey("PostId");
 
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -639,15 +639,15 @@ namespace ShareThoughtProjectApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.HashtagFollow", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.HashtagFollow", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.Hashtag", "Hashtag")
+                    b.HasOne("ShareThoughtProjectApi.Domain.Hashtag", "Hashtag")
                         .WithMany()
                         .HasForeignKey("HashtagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -656,24 +656,24 @@ namespace ShareThoughtProjectApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Post", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.Post", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.PostVote", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.PostVote", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.Post", "Post")
+                    b.HasOne("ShareThoughtProjectApi.Domain.Post", "Post")
                         .WithMany()
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -682,16 +682,16 @@ namespace ShareThoughtProjectApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.RefreshToken", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.RefreshToken", b =>
                 {
-                    b.HasOne("ShareThoughtProject.Domain.AppUser", "User")
+                    b.HasOne("ShareThoughtProjectApi.Domain.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShareThoughtProject.Domain.Post", b =>
+            modelBuilder.Entity("ShareThoughtProjectApi.Domain.Post", b =>
                 {
                     b.Navigation("Comments");
                 });
