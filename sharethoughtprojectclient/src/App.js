@@ -1,23 +1,23 @@
 import logo from './logo.svg';
+import CustomNavbar from './Components/CustomNavbar/CustomNavbar';
+import PostsCarousel from './Components/PostsCarousel/PostsCarousel';
+import Container from 'react-bootstrap/Container'
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <CustomNavbar></CustomNavbar>
+      <Container>
+        <h2 class='carousel-header'>Popular today</h2>
+        <hr class="mb-5" />
+      </Container>
+      <PostsCarousel></PostsCarousel>
+      <Container>
+        <h2 class='carousel-header'>Top posts this week</h2>
+        <hr class="mb-5" />
+      </Container>
+      <PostsCarousel></PostsCarousel>
     </div>
   );
 }

@@ -22,6 +22,33 @@
     margin-top: 0.25em;
 }
 
+.dropdown-item {
+    box-shadow: none !important;
+}
+
+.dropdown-item:active, .dropdown-item:focus {
+    color: #fff;
+    background-color: #289e44;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.nav-dropdown {
+    border-radius: 0 !important;
+    color: #fff;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.nav-dropdown:hover{
+    color: #fff;
+}
+
+.nav-dropdown:active, :focus{
+    box-shadow: 0 0 0 0.2rem #1e7e34 !important;
+    color: #fff;
+}
+
 .author-name-and-date {
     margin-top: 0.5em;
     margin-left: 0.75em;

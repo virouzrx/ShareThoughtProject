@@ -1,0 +1,21 @@
+.profile-pic {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 100%;
+    margin-left: 1em;
+    margin-top: 7px;
+}
+
+.profile-name {
+    padding-top: 0.5em;
+    margin-top: 2px;
+    font-size: larger;
+}
+
+.navbar-button {
+    margin-top: 7px !important;
+}
+
+.navbar-element {
+    font-size: large;
+}
