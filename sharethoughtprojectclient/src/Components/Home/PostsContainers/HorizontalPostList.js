@@ -2,7 +2,7 @@ import { Col, Button } from 'react-bootstrap'
 import PostHorizontal from '../PostsContainers/SinglePostComponent/PostHorizontal';
 import { Link } from 'react-router-dom';
 
-function HorizontalPostList() {
+function HorizontalPostList(props) {
     const list = []
     const ffs = [
         {
@@ -30,21 +30,23 @@ function HorizontalPostList() {
         },
     ];
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < props.postAmount; i++) {
         list.push(
             <div>
                 <Col>
-                    <PostHorizontal
-                        title={ffs[0].title}
-                        desc={ffs[0].desc}
-                        upvoteCount={ffs[0].upvoteCount}
-                        commentCount={ffs[0].commentCount}
-                        authorName={ffs[0].authorName}
-                        dateCreated={ffs[0].dateCreated}
-                        postPic={ffs[0].postPic}
-                        authorPic={ffs[0].authorPic}
-                        hashtags={ffs[0].hashtags}
-                    />
+                    <a className="hyperlink-card" href="/post/1">
+                        <PostHorizontal
+                            title={ffs[0].title}
+                            desc={ffs[0].desc}
+                            upvoteCount={ffs[0].upvoteCount}
+                            commentCount={ffs[0].commentCount}
+                            authorName={ffs[0].authorName}
+                            dateCreated={ffs[0].dateCreated}
+                            postPic={ffs[0].postPic}
+                            authorPic={ffs[0].authorPic}
+                            hashtags={ffs[0].hashtags}
+                        />
+                    </a>
                 </Col>
             </div>
         )
@@ -52,7 +54,6 @@ function HorizontalPostList() {
     return (
         <div className="container">
             {list}
-            <Button variant="outline-success navbar-button new-posts-button-redirect" href="/posts/new">More new posts</Button>
         </div>);
 }
 export default HorizontalPostList;

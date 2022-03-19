@@ -1,0 +1,98 @@
+.post-title {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 3.5em;
+}
+
+.post-hashtags {
+    margin-top: 1em;
+}
+
+.singlepost-hashtag-wrapper {
+    margin-top: 1em;
+    margin-bottom: -0.7em;
+    justify-content: center;
+}
+
+.singlepost-author-and-info {
+    display: flex;
+}
+
+.singlepost-author-name-and-date {
+  margin-top: 0.75em;
+  margin-left: 0.75em;
+  margin-right: 0.75em;
+  font-size: medium;
+}
+
+.singlepost-card-author-avatar {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 100%;
+    margin-top: 0.3em;
+}
+.single-post-likes-count {
+    width: 6em;
+    min-width: 5em;
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ffffffd0;
+    background-color: #289e44;
+    font-size: 1.5em;
+}
+
+.single-post-comments-count {
+    width: 6em;
+    min-width: 5em;
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #2457e2;
+    color: #ffffffd0;
+    font-size: 1.5em;
+}
+
+.single-post-likes-count:hover{
+    background-color: #1b702f;
+    cursor: pointer;
+}
+
+.single-post-comments-count:hover{
+    background-color: #163896;
+    cursor: pointer;
+}
+
+.likes-and-comments-wrapper {
+    margin-top: 0.75em;
+    margin-bottom: 1em;
+}
+
+.single-post-img {
+    margin-top: 1em;
+    width: 100%;
+    max-height: 50%;
+    height: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.single-post-desc{
+    font-size: larger;
+}
+
+.single-post-content {
+    margin-top: 1em;
+}
+
+.single-post-desc, .single-post-content {
+    font-family: 'Noto Sans', sans-serif;
+}
+

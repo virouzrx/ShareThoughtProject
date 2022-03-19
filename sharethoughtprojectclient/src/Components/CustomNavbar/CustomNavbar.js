@@ -16,11 +16,10 @@ class CustomNavbar extends Component {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="me-auto my-2 my-lg-0 text-light" style={{ maxHeight: '100px' }} navbarScroll>
-                        <Nav.Link className={CheckForCurrentPath("posts")} href="/Posts">Posts</Nav.Link>
-                        <Nav.Link className={CheckForCurrentPath("hashtags")} href="/Hashtags">Hashtags</Nav.Link>
-                        <Nav.Link className={CheckForCurrentPath("creators")} href="/Creators">Creators</Nav.Link>
-                        <Nav.Link className={CheckForCurrentPath("commentors")} href="/Commentors">Commentors</Nav.Link>
-                        <Nav.Link className={CheckForCurrentPath("moderation")} href="/Moderation">Moderation</Nav.Link>
+                        <Nav.Link className={CheckForCurrentPath("posts")} href="/posts">Posts</Nav.Link>
+                        <Nav.Link className={CheckForCurrentPath("creators")} href="/creators">Creators</Nav.Link>
+                        <Nav.Link className={CheckForCurrentPath("moderation")} href="/moderation">Moderation</Nav.Link>
+                        <Nav.Link className={CheckForCurrentPath("createpost")} href="/creatrepost">Create post</Nav.Link>
                     </Nav>
                     <Form className="d-flex">
                         <FormControl
@@ -33,7 +32,7 @@ class CustomNavbar extends Component {
                     </Form>
                     <Nav className="d-flex">
                         <Nav.Link>
-                            <img class="profile-pic" src="https://images.generated.photos/zJwBEDrZXdCfWQjUVHbRPHAAFx4ophx0DTxYY5egRmY/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODkzNTQ5LmpwZw.jpg" />
+                            <img className="profile-pic" src="https://images.generated.photos/zJwBEDrZXdCfWQjUVHbRPHAAFx4ophx0DTxYY5egRmY/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/ODkzNTQ5LmpwZw.jpg" />
                         </Nav.Link>
                         <div>
                             <NavDropdown title="Virouz98" id="navbarScrollingDropdown" className='profile-name'>

@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import { Component } from 'react';
 import HorizontalPostList from "./PostsContainers/HorizontalPostList";
 import './Home.css';
+import { Button } from "react-bootstrap";
 
 
 class Home extends Component {
@@ -28,7 +29,8 @@ class Home extends Component {
                     <h2 className='carousel-header'>New posts</h2>
                     <hr className="mb-5" />
                 </Container>
-                <HorizontalPostList/>
+                <HorizontalPostList postAmount={3}/>
+                <Button variant="outline-success navbar-button new-posts-button-redirect" href="/posts/new">More new posts</Button>
             </div>);
     }
 }
