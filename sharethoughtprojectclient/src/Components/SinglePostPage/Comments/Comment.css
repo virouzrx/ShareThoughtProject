@@ -1,0 +1,39 @@
+.comment-avatar-col {
+    width: 15%;
+    max-width: 80px;
+    min-width: 70px;
+}
+
+.commentor-name {
+    font-weight: bold;
+    font-size: large;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.comment-date {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: medium;
+}
+
+.commentor-pic {
+    width: 100%;
+    border-radius: 100%;
+    margin-left: 0 !important;
+    padding: 0 !important;
+}
+
+.comment-wrapper {
+    margin-bottom: 2em;
+}
+
+.comment-content {
+    margin-top: 0.5em;
+}
+
+.votes-count {
+    margin-left: 0.3em;
+}
+
+.comment-votes {
+    margin-top: 0.5em;
+}

@@ -96,3 +96,38 @@
     font-family: 'Noto Sans', sans-serif;
 }
 
+.secondary-column-header, .comments-header {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 300;
+    font-size: x-large;
+    margin-top: 1em;
+}
+
+.comments-header {
+    margin-bottom: 1em;
+}
+
+.secondary-column-header {
+    text-align: center;
+}
+
+.side-column-card {
+    margin-bottom: 0.5em;
+}
+
+.related-posts {
+    max-width: 300px;
+    min-width: 180px;
+}
+
+@media (max-width: 900px), (max-height: 700px) {
+    .related-posts {
+      display: none;
+      max-width: 0px;
+    }
+
+    .single-post-img {
+        height: 7%;
+    }
+  }
+

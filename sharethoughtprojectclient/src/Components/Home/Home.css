@@ -90,8 +90,7 @@
 
 .likes-count {
     display: inline-block;
-    width: 8em;
-    min-width: 7em;
+    width: 6em;
     font-weight: 400;
     color: #212529;
     text-align: center;

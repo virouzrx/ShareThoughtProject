@@ -8,7 +8,7 @@ import AuthorInfoAndCreateDate from './AuthorInfoAndCreationDate';
 
 function PostCard(props) {
     return (
-        <Card style={{ width: "95%" }}>
+        <Card style={{ width: "94%", border: "none" }}>
             <Card.Img variant="top" src={props.postPic} />
             <Card.Body>
                 <Card.Title className='custom-card-title'>{props.title}</Card.Title>

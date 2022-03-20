@@ -89,7 +89,13 @@ function PostsCarousel() {
     return (
         <div className="container">
             <Row>
-                <Carousel responsive={responsive} arrows={false} renderButtonGroupOutside={true} customButtonGroup={<ButtonGroup />} interval={false}>
+                <Carousel 
+                responsive={responsive} 
+                arrows={false} 
+                renderButtonGroupOutside={true} 
+                customButtonGroup={<ButtonGroup />} 
+                style={{border: "1px solid"}}
+                infinite={true}>
                     {list}
                 </Carousel>
             </Row>
