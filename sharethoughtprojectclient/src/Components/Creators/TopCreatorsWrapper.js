@@ -39,7 +39,7 @@ const CreateGrid = (props) => {
                                 </Card.Text>
                             </Card.Body>
                         </Card>
-                        </a>
+                    </a>
                 </Col>);
         }
         rows.push(<Row className="justify-content-md-center">{columns}</Row>);

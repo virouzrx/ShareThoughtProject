@@ -28,6 +28,12 @@
     margin: 1em 0 1em 0;
 }
 
+.author-regular-card:hover {
+        background-color: #212529;
+        color: white;
+        transition: background-color 0.4s, color 0.3s;
+}
+
 .creator-likes-count {
     display: inline-block;
     min-width: 6em;
@@ -103,4 +109,5 @@ a.hyperlink-card, a.hyperlink-card:hover{
     background-color: #289e44;
     padding: 0.1em 0.5em 0.1em 0.5em;
     margin-right: 0.3em;
+    margin-top: 0.5em;
 }

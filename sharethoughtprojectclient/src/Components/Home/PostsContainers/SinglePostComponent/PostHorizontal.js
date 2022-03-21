@@ -17,7 +17,7 @@ function PostHorizontal(props) {
                 <Col md={8}>
                     <Card.Title className="custom-card-title">{props.title}</Card.Title>
                     <HashtagWrapper hashtags={props.hashtags} />
-                    <AuthorInfoAndCreateDate authorPic={props.authorPic}></AuthorInfoAndCreateDate>
+                    <AuthorInfoAndCreateDate showInfo={props.showInfo} authorName={props.authorName} authorPic={props.authorPic}></AuthorInfoAndCreateDate>
                     <Card.Text>{props.desc}</Card.Text>
                     <ButtonGroup className="me-2" aria-label="First group">
                         <LikesCount upvoteCount={props.upvoteCount}></LikesCount>

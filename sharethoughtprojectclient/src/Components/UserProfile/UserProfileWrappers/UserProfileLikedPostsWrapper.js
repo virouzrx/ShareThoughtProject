@@ -1,8 +1,8 @@
 import { Col, Button } from 'react-bootstrap'
-import PostHorizontal from '../PostsContainers/SinglePostComponent/PostHorizontal';
 import { Link } from 'react-router-dom';
+import PostHorizontal from '../../Home/PostsContainers/SinglePostComponent/PostHorizontal';
 
-function HorizontalPostList(props) {
+function UserProfileLikedPostsWrapper(props) {
     const list = []
     const ffs = [
         {
@@ -30,7 +30,7 @@ function HorizontalPostList(props) {
         },
     ];
 
-    for (let i = 0; i < props.postAmount; i++) {
+    for (let i = 0; i < 5; i++) {
         list.push(
             <div>
                 <Col>
@@ -52,9 +52,11 @@ function HorizontalPostList(props) {
             </div>
         )
     }
+    console.log(list.length)
     return (
         <div className="container">
+            
             {list}
         </div>);
 }
-export default HorizontalPostList;
+export default UserProfileLikedPostsWrapper;

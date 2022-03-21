@@ -79,7 +79,8 @@ function PostsCarousel() {
                     dateCreated={ffs[0].dateCreated}
                     postPic={ffs[0].postPic}
                     authorPic={ffs[0].authorPic}
-                    hashtags={ffs[0].hashtags}>
+                    hashtags={ffs[0].hashtags}
+                    showInfo={true}>
                 </PostCard>
             </Col>
         </div>)

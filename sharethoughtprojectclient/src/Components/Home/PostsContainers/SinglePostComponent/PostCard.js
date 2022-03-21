@@ -8,12 +8,12 @@ import AuthorInfoAndCreateDate from './AuthorInfoAndCreationDate';
 
 function PostCard(props) {
     return (
-        <Card style={{ width: "94%", border: "none" }}>
+        <Card className="standard-card" style={{ width: "94%", border: "none" }}>
             <Card.Img variant="top" src={props.postPic} />
             <Card.Body>
                 <Card.Title className='custom-card-title'>{props.title}</Card.Title>
                 <HashtagWrapper hashtags={props.hashtags}></HashtagWrapper>
-                <AuthorInfoAndCreateDate authorPic={props.authorPic} authorName={props.authorName}></AuthorInfoAndCreateDate>
+                <AuthorInfoAndCreateDate showInfo={true} authorPic={props.authorPic} authorName={props.authorName}></AuthorInfoAndCreateDate>
                 <Card.Text>{props.desc}</Card.Text>
                 <ButtonGroup className="me-2" aria-label="First group">                
                         <LikesCount upvoteCount={props.upvoteCount}></LikesCount>

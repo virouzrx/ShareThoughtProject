@@ -1,6 +1,6 @@
-import './Creators.css';
+import '../UserProfile.css';
 
-const CreatorHashtagWrapper = (props) => {
+const UserProfileHashtagWrapper = (props) => {
     return (
         <div className="creators-hashtag-wrapper">
             {[...Array(props.mainHashtags.length)].map((x, i) =>
@@ -10,4 +10,4 @@ const CreatorHashtagWrapper = (props) => {
     );
 }
 
-export default CreatorHashtagWrapper;
+export default UserProfileHashtagWrapper;

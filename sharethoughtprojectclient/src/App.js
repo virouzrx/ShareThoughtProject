@@ -5,6 +5,7 @@ import Home from './Components/Home/Home';
 import Creators from './Components/Creators/Creators';
 import Posts from './Components/Posts/Posts';
 import SinglePostPage from './Components/SinglePostPage/SinglePost';
+import UserProfile from './Components/UserProfile/UserProfile';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="creators/*" element={<Creators />}></Route>
           <Route path="posts/*" element={<Posts />}></Route>
           <Route path="post/:id" element={<SinglePostPage />}></Route>
+          <Route path="user/:id/*" element={<UserProfile />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

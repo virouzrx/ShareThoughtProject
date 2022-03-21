@@ -1,0 +1,42 @@
+.user-profile-card {
+    text-align: left;
+    margin-left: 0 !important;
+    margin-top: 1em;
+    width: 80%;
+}
+
+.userprofile-hashtag-wrapper {
+    margin-bottom: 1em;
+    justify-content: center;
+}
+
+.userpofile-hashtag {
+    display: inline-block;
+    min-width: 4em;
+    max-width: min-content;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.1em;
+    line-height: 1.5;
+    background-color: #289e44;
+    padding: 0.1em 0.5em 0.1em 0.5em;
+    margin-right: 0.3em;
+    margin-top: 0.5em;
+}
+
+.user-comments-wrapper {
+    margin-top: 1em;
+}
+
+.postLink {
+    text-decoration: none !important;
+    color: #212529;
+    font-size: small;
+    margin-bottom: 0.5em;
+}
+
+.report-user-button {
+    border-radius: 0;
+}

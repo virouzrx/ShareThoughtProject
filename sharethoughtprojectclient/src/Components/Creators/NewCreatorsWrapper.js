@@ -13,7 +13,7 @@ const examples = [
         upvoteCount: 5012,
         joined: "21.02.2021",
         description: "Just an ordinary guy, who likes tech news as much, or even more, as you. Big Android fan and Nintendo enthusiast.",
-        mainHashtags: ["Android", "Microsoft", "IOT"]
+        mainHashtags: ["Android", "Microsoft", "IOT", "Siema", "Byq", "Elo"]
     }];
 
 const CreateGrid = (props) => {
@@ -23,7 +23,7 @@ const CreateGrid = (props) => {
         for (let index = 0; index < 2; index++) {
             columns.push(
                 <Col xs lg="5">
-                    <a href="" class="hyperlink-card">
+                    <a href="/user/1" class="hyperlink-card">
                         <Card className="author-regular-card" href="http://google.pl">
                             <Card.Img variant="top" src={props.authorPicPath} />
                             <Card.Body>

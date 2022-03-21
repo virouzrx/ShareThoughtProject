@@ -194,7 +194,7 @@
     text-decoration: none;
 }
 
-.new-post:hover, .card:hover {
+.new-post:hover, .standard-card:hover {
   background-color: #212529;
   color: white;
   transition: background-color 0.4s, color 0.3s;
