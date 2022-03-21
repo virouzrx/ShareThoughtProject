@@ -1,0 +1,7 @@
+.moderation-buttons {
+    border-radius: 0;
+}
+
+.moderation-unresolved-button {
+    margin-right: -1px;
+}
