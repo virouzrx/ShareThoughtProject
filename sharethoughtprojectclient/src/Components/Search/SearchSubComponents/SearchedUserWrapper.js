@@ -2,9 +2,7 @@ import { Component } from "react";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
 import SearchResultUser from "./SearchResultUser";
 import '../Search.css';
-import { Routes, Route } from "react-router-dom";
-import Home from "../../Home/Home";
-import Comment from "../../SinglePostPage/Comments/Comment";
+
 
 function GeneratePaginationButtons(pageNumber, phrase) {
     const list = [];
@@ -34,14 +32,6 @@ function GeneratePaginationButtons(pageNumber, phrase) {
     }
 }
 
-function GetUserForSearchResult(postAmount, pageNumber) {
-    const list = [];
-    for (let index = 0; index < postAmount; index++) {
-        list.push(<SearchResultUser></SearchResultUser>);
-    }
-    return list;
-}
-
 class SearchedUserWrapper extends Component {
     constructor(props) {
         super(props);
@@ -52,6 +42,14 @@ class SearchedUserWrapper extends Component {
         this.increment = this.increment.bind(this);
     }
 
+    GetUserForSearchResult = (postAmount, pageNumber) => {
+        const list = [];
+        for (let index = 0; index < postAmount; index++) {
+            list.push(<SearchResultUser CurrentPage={pageNumber}></SearchResultUser>);
+        }
+        return list;
+    }
+
     increment = () => {
         this.setState({ pageNumber: this.state.pageNumber + 1 })
         console.log(this.state.pageNumber + 0);
@@ -59,15 +57,8 @@ class SearchedUserWrapper extends Component {
 
     render() {
         return (<div>
-            {GetUserForSearchResult(5, this.props.pageNumber)}
+            <SearchResultUser CurrentPage={this.state.pageNumber}></SearchResultUser>
             <Button onClick={this.increment}> Current page {this.state.pageNumber}</Button>
-            <div className="search-pagination-wrapper">
-                {GeneratePaginationButtons(this.state.pageNumber, this.props.searchedPhrase)}
-            </div>
-            <Routes>
-                <Route path="users/:number" element={<Comment />} />
-                <Route path="/" element={<Comment />} />
-            </Routes>
         </div>);
     }
 }
