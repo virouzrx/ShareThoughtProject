@@ -2,18 +2,13 @@ import { Button, Navbar, Nav, Form, Container, FormControl, NavDropdown } from '
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CustomNavbar.css'
 import { Component } from 'react';
+import { Link } from 'react-bootstrap-icons';
 
 function CheckForCurrentPath(path) {
     if (path === "posts") {
-        if (window.location.pathname.toLocaleLowerCase().includes("moderation") || window.location.pathname.toLocaleLowerCase().includes("createpost")) {
-            return 'navbar-element';
-        }
-        else if (window.location.pathname.toLocaleLowerCase().includes("posts")) {
-            return 'current navbar-element';
-        }
-        else {
-            return 'navbar-element';
-        }
+        var routeElements = window.location.pathname.split('/');
+        var mainRoute = routeElements[1];
+        return mainRoute === "posts" ? 'current navbar-element' : 'navbar-element';
     }
     else {
         return window.location.pathname.toLocaleLowerCase().includes(path) ? 'current navbar-element' : 'navbar-element';
@@ -21,6 +16,14 @@ function CheckForCurrentPath(path) {
 }
 
 class CustomNavbar extends Component {
+    state = {
+        val: ""
+    };
+
+    onSubmit = () => {
+        console.log(this.state.val);
+    };
+
     render() {
         return (
             <Navbar bg="dark" expand="lg" variant="dark">
@@ -40,8 +43,10 @@ class CustomNavbar extends Component {
                                 placeholder="Search"
                                 className="me-2"
                                 aria-label="Search"
+                                value={this.state.val}
+                                onChange={e => this.setState({ val: e.target.value })}
                             />
-                            <Button variant="success navbar-button">Search</Button>
+                            <Button type="submit" variant="success navbar-button" href={`/search/${this.state.val}`}>Search</Button>
                         </Form>
                         <Nav className="d-flex">
                             <Nav.Link>

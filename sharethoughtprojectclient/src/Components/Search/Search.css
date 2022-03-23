@@ -1,0 +1,63 @@
+.search-headers {
+    margin-top: 1em;
+    text-align: center;
+    font-size: larger;
+    color: #198754;
+}
+
+.right-column {
+    padding-right:20px; 
+    border-right: 1px solid #ccc;
+}
+
+.searchresult-user-avatar-col {
+    max-width: 15%;
+    min-width: 90px;
+}
+
+.user-searchresult {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 0.4em;
+    max-height: 15%;
+}
+
+.user-searchresult:hover {
+    background-color: #212529;
+    color: white;
+    transition: background-color 0.4s, color 0.3s;
+}
+
+.user-stats {
+    padding: 0 !important;
+    margin-top: 1em;
+    width: 50%;
+    vertical-align: bottom;
+}
+
+.user-stats-single-element {
+    min-width: 70px
+}
+
+.user-searchresult-date {
+    vertical-align: bottom;
+}
+
+.multidot {
+    margin-top: none !important;
+    margin-left: 1em;
+}
+
+.pagination-button {
+    margin-left: 1em !important;
+}
+
+.search-pagination-wrapper {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.current-page-button {
+    background-color: #198754;
+    color: white;
+}
