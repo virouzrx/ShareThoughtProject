@@ -8,6 +8,7 @@ import SinglePostPage from './Components/SinglePostPage/SinglePost';
 import UserProfile from './Components/UserProfile/UserProfile';
 import Moderation from './Components/Moderation/Moderation';
 import Search from './Components/Search/Search';
+import Auth from './Components/AuthComponents/Auth';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="post/:id" element={<SinglePostPage />}></Route>
           <Route path="user/:id/*" element={<UserProfile />}></Route>
           <Route path="moderation/*" element={<Moderation />}></Route>
+          <Route path="auth/*" element={<Auth />}></Route>
           <Route path="search/:searchedphrase/*" element={<Search/>}></Route>
         </Routes>
       </BrowserRouter>

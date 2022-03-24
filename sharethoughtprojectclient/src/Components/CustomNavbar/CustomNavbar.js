@@ -54,8 +54,8 @@ class CustomNavbar extends Component {
                             </Nav.Link>
                             <div>
                                 <NavDropdown title="Virouz98" id="navbarScrollingDropdown" className='profile-name'>
-                                    <NavDropdown.Item href="/virouz98/profile">Profile</NavDropdown.Item>
-                                    <NavDropdown.Item href="/virouz98/settings">Account settings</NavDropdown.Item>
+                                    <NavDropdown.Item href="/user/virouz98">Profile</NavDropdown.Item>
+                                    <NavDropdown.Item href="/user/virouz98/settings">Account settings</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="/logout">
                                         Logout
