@@ -1,7 +1,27 @@
 .moderation-buttons {
     border-radius: 0;
+    margin-top: 1em;
 }
 
 .moderation-unresolved-button {
     margin-right: -1px;
+}
+
+.resolve-button {
+    margin-top: 20%;
+    margin-left: 79%;
+}
+
+@media screen and (max-width: 1200px) {
+    .resolve-button {
+        margin-top: 20%;
+        margin-left: 78%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .resolve-button {
+        margin-top: 30%;
+        margin-left: 68%;
+    }
 }
