@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
 import SearchResultUser from "./SearchResultUser";
 import '../Search.css';
+import { ArrowLeftCircleFill, ArrowRightCircleFill } from "react-bootstrap-icons";
 
 
 function GeneratePaginationButtons(pageNumber, phrase) {
@@ -55,11 +56,25 @@ class SearchedUserWrapper extends Component {
         console.log(this.state.pageNumber + 0);
     }
 
+    decrement = () => {
+        if (this.state.pageNumber > 1) {
+            this.setState({ pageNumber: this.state.pageNumber - 1 })
+        }
+        console.log(this.state.pageNumber + 0);
+    }
+
     render() {
-        return (<div>
-            {this.GetUserForSearchResult(5, this.state.pageNumber)}
-            <Button onClick={this.increment}> Current page {this.state.pageNumber}</Button>
-        </div>);
+        return (
+            <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                {this.GetUserForSearchResult(this.state.pageNumber, this.state.pageNumber)}
+                <div className="carousel-button-group">
+                    <ButtonGroup style={{marginBottom: '1em'}}>
+                        <Button variant="outline-success" onClick={this.decrement}><ArrowLeftCircleFill /></Button>
+                        <div className="color-info-container user search-page-number" >{this.state.pageNumber}</div>
+                        <Button variant="outline-success" onClick={this.increment}><ArrowRightCircleFill /></Button>
+                    </ButtonGroup>
+                </div>
+            </div>);
     }
 }
 

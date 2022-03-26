@@ -55,6 +55,7 @@ function HorizontalPostList(props) {
     return (
         <div className="container">
             {list}
+            <Button variant="outline-success navbar-button new-posts-button-redirect" href="/posts/new">More new posts</Button>
         </div>);
 }
 export default HorizontalPostList;

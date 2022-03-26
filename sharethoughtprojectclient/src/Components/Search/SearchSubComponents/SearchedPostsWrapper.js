@@ -14,8 +14,8 @@ class SearchedPostsWrapper extends Component {
     render() {
         return (
             <div>
-                <div>{GetPostsForSearchResult(5, this.props.pageNumber)}/</div>
-                <Button>dupa</Button>
+                <div>{GetPostsForSearchResult(5, this.props.pageNumber)}</div>
+                <Button>Posts</Button>
             </div>);
     }
 }

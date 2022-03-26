@@ -30,7 +30,6 @@ class Home extends Component {
                     <hr className="mb-5" />
                 </Container>
                 <HorizontalPostList postAmount={3}/>
-                <Button variant="outline-success navbar-button new-posts-button-redirect" href="/posts/new">More new posts</Button>
             </div>);
     }
 }
