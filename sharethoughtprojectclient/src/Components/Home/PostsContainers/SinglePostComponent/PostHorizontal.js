@@ -8,7 +8,6 @@ import AuthorInfoAndCreateDate from './AuthorInfoAndCreationDate';
 
 function PostHorizontal(props) {
     return (
-
         <div className="new-post">
             <a className="hyperlink-card" href="/post/1">
                 <Row>

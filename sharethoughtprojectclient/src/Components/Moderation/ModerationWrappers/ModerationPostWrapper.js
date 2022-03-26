@@ -11,6 +11,11 @@ class ModerationPostWrapper extends Component {
         };
     }
 
+
+    IsResolved(isResolved, status) {
+        
+    }
+
     SetButtonActive(buttonType) {
         if (buttonType === "unresolved") {
             return this.state.resolved ? "outline-danger" : "outline-danger active";

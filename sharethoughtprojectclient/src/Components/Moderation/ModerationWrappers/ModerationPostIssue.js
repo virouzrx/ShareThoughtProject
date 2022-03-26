@@ -12,7 +12,7 @@ const ModerationPostIssue = (props) => {
         reRender(rerender + 1);
     }
     const handleShow = () => {
-        setShow(true); 
+        setShow(true);
         reRender(rerender + 1);
     }
     return (
@@ -51,7 +51,7 @@ const ModerationPostIssue = (props) => {
                         <Button variant="outline-success" onClick={handleClose}>
                             Mark as safe
                         </Button>
-                        <Button variant="outline-danger" onClick={handleClose} style={{marginLeft: '0px', borderRadius: '0'}}>
+                        <Button variant="outline-danger" onClick={handleClose} style={{ marginLeft: '0px', borderRadius: '0' }}>
                             Remove
                         </Button>
                     </ButtonGroup>

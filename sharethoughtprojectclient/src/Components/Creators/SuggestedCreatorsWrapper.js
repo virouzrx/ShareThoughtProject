@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 class SuggestedCreatorsWrapper extends Component {
     state = {  } 
     render() { 
-        return ( <Button>suggested</Button>);
+        return ( <div>lol</div>);
     }
 }
  

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Button, Container } from "react-bootstrap";
 import HorizontalPostList from "../../Home/PostsContainers/HorizontalPostList";
+import ModerationCommentIssue from "./ModerationCommentIssue";
 
 class ModerationCommentsWrapper extends Component {
     constructor(props) {
@@ -32,17 +33,15 @@ class ModerationCommentsWrapper extends Component {
         if (this.state.resolved) {
             return (
                 <div>
-                    <HorizontalPostList postAmount={5}>
-
-                    </HorizontalPostList>
+                    <ModerationCommentIssue>
+                        
+                    </ModerationCommentIssue>
                 </div>);
         }
         else {
             return (
                 <div>
-                    <HorizontalPostList postAmount={3}>
-
-                    </HorizontalPostList>
+  
                 </div>);
         }
     }
