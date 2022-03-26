@@ -57,7 +57,7 @@ class SearchedUserWrapper extends Component {
 
     render() {
         return (<div>
-            <SearchResultUser CurrentPage={this.state.pageNumber}></SearchResultUser>
+            {this.GetUserForSearchResult(5, this.state.pageNumber)}
             <Button onClick={this.increment}> Current page {this.state.pageNumber}</Button>
         </div>);
     }

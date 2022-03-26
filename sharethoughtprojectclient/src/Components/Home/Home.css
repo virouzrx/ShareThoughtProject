@@ -194,8 +194,37 @@
     text-decoration: none;
 }
 
+.standard-card {
+  width: 94%; 
+  border: "none"; 
+}
+
 .new-post:hover, .standard-card:hover {
   background-color: #212529;
   color: white;
   transition: background-color 0.4s, color 0.3s;
 }
+
+@media screen and (max-width: 1238px) {
+  .standard-card {
+    width: 92% !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .standard-card {
+    width: 91% !important;
+  }
+}
+
+@media screen and (max-width: 464px) {
+  .react-multi-carousel-list {
+    padding-left: 0 !important;
+  }
+
+  .carousel-button-group {
+    display: none;
+  }
+}
+
+
