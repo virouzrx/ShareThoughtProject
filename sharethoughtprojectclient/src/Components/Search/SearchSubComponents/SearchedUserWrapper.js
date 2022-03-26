@@ -67,10 +67,10 @@ class SearchedUserWrapper extends Component {
         return (
             <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
                 {this.GetUserForSearchResult(this.state.pageNumber, this.state.pageNumber)}
-                <div className="carousel-button-group">
+                <div className="search-pagination">
                     <ButtonGroup style={{marginBottom: '1em'}}>
                         <Button variant="outline-success" onClick={this.decrement}><ArrowLeftCircleFill /></Button>
-                        <div className="color-info-container user search-page-number" >{this.state.pageNumber}</div>
+                        <div className="color-info-container search-page-number" >{this.state.pageNumber}</div>
                         <Button variant="outline-success" onClick={this.increment}><ArrowRightCircleFill /></Button>
                     </ButtonGroup>
                 </div>

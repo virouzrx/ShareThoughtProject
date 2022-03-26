@@ -32,6 +32,7 @@ const Search = () => {
         <Routes>
             <Route exact path="users" element={<SearchedUserWrapper />} />
             <Route exact path="posts" element={<SearchedPostsWrapper />} />
+            <Route path="/" element={<SearchedPostsWrapper />} />
         </Routes>
     </Container>);
 }

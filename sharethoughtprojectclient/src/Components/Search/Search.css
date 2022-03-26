@@ -105,9 +105,10 @@
     border-color: #dc3545;
 }
 
-.user {
+.search-page-number, .user {
     color: #198754;
     border-color: #198754;
+    margin-top: 14px;
 }
 
 .multidot {
@@ -129,18 +130,34 @@
     color: white;
 }
 
+.search-pagination {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 1em;
+}
+
 .search-result-username {
     font-weight: bold;
     font-size: x-large;
     font-family: 'Noto Sans', sans-serif;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1400px) {
     .poster, .moderator, .user {
         margin-right: auto;
         margin-left: 2px;
         margin-bottom: 1em;
         margin-top: 0;
+    }
+  }
+
+@media screen and (max-width: 800px) {
+    .poster, .moderator, .user {
+        margin-right: auto;
+        margin-left: 2px;
+        margin-bottom: 1em;
+        margin-top: 1em;
     }
 
     .user-stats {

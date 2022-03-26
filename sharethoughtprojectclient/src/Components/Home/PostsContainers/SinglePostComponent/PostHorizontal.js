@@ -10,21 +10,23 @@ function PostHorizontal(props) {
     return (
 
         <div className="new-post">
-            <Row>
-                <Col md={4}>
-                    <Card.Img variant="top" src={props.postPic} />
-                </Col>
-                <Col md={8}>
-                    <Card.Title className="custom-card-title">{props.title}</Card.Title>
-                    <HashtagWrapper hashtags={props.hashtags} />
-                    <AuthorInfoAndCreateDate showInfo={props.showInfo} authorName={props.authorName} authorPic={props.authorPic}></AuthorInfoAndCreateDate>
-                    <Card.Text>{props.desc}</Card.Text>
-                    <ButtonGroup className="me-2" aria-label="First group">
-                        <LikesCount upvoteCount={props.upvoteCount}></LikesCount>
-                        <CommentsCount commentCount={props.commentCount}></CommentsCount>
-                    </ButtonGroup>
-                </Col>
-            </Row>
+            <a className="hyperlink-card" href="/post/1">
+                <Row>
+                    <Col md={4}>
+                        <Card.Img variant="top" src={props.postPic} />
+                    </Col>
+                    <Col md={8}>
+                        <Card.Title className="custom-card-title">{props.title}</Card.Title>
+                        <HashtagWrapper hashtags={props.hashtags} />
+                        <AuthorInfoAndCreateDate showInfo={props.showInfo} authorName={props.authorName} authorPic={props.authorPic}></AuthorInfoAndCreateDate>
+                        <Card.Text>{props.desc}</Card.Text>
+                        <ButtonGroup className="me-2" aria-label="First group">
+                            <LikesCount upvoteCount={props.upvoteCount}></LikesCount>
+                            <CommentsCount commentCount={props.commentCount}></CommentsCount>
+                        </ButtonGroup>
+                    </Col>
+                </Row>
+            </a>
         </div>);
 }
 
