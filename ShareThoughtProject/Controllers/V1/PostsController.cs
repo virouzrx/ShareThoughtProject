@@ -124,7 +124,6 @@ namespace ShareThoughtProjectApi.Controllers.V1
             {
                 Title = postRequest.Title,
                 Description = postRequest.Description,
-                UrlTitle = postRequest.UrlTitle,
                 UserId = HttpContext.GetUserId(),
                 Created = DateTime.Now,
                 Content = postRequest.Content,
