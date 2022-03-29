@@ -40,7 +40,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
         [HttpPost(ApiRoutes.Identity.Login)]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
-            var authResponse = await _identityService.LoginAsync(request.Email, request.Username, request.Password);
+            var authResponse = await _identityService.LoginAsync(request.Credential, request.Password);
             if (!authResponse.Success)
             {
                 return BadRequest(new AuthFailedResponse

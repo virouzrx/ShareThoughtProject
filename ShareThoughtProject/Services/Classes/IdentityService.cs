@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace ShareThoughtProjectApi.Services
         private readonly IEmailService _emailService;
         private readonly IUserService _userService;
 
-        public IdentityService(UserManager<AppUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters, 
+        public IdentityService(UserManager<AppUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters,
             ShareThoughtDbContext context, IEmailService emailService, IUserService userService)
         {
             _userManager = userManager;
@@ -64,24 +65,34 @@ namespace ShareThoughtProjectApi.Services
             }
         }
 
-        public async Task<AuthenticationResult> LoginAsync(string email, string username, string password)
+        public async Task<AuthenticationResult> LoginAsync(string credential, string password)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null || await _userManager.CheckPasswordAsync(user, password) == false)
+            var isEmail = IsCredentialAnEmail(credential);
+            AppUser appUser;
+            if (isEmail)
+            {
+                appUser = await _userManager.FindByEmailAsync(credential);
+            }
+            else
+            {
+                appUser = await _userManager.FindByNameAsync(credential);
+            }
+           
+            if (appUser == null || await _userManager.CheckPasswordAsync(appUser, password) == false)
             {
                 return new AuthenticationResult
                 {
                     Errors = new[] { "Incorrect e-mail address or password." }
                 };
             }
-            if (!user.EmailConfirmed)
+            if (!appUser.EmailConfirmed)
             {
                 return new AuthenticationResult
                 {
                     Errors = new[] { "Email address not confirmed." }
                 };
             }
-            return await GenerateAuthenticationResultForUserAsync(user);
+            return await GenerateAuthenticationResultForUserAsync(appUser);
         }
 
         public async Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken)
@@ -140,6 +151,20 @@ namespace ShareThoughtProjectApi.Services
             catch
             {
                 return null;
+            }
+        }
+
+        private bool IsCredentialAnEmail(string credential)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(credential);
+
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
             }
         }
 
