@@ -25,7 +25,8 @@ namespace ShareThoughtProjectApi.Contracts
             public const string Login = Base + "/identity/login";
             public const string Register = Base + "/identity/register";
             public const string Refresh = Base + "/identity/refresh";
-            public const string Confirm = Base + "/identity/confirm/{userId}/{token}";
+            public const string Confirm = Base + "/identity/confirm/";
+            public const string Promote = Base + "/identity/promote/";
         }
 
         public static class Hashtags

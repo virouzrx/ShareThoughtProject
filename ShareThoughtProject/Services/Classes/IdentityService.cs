@@ -170,6 +170,13 @@ namespace ShareThoughtProjectApi.Services
                 StringComparison.InvariantCultureIgnoreCase);
         }
 
+        public async Task<IdentityResult> PromoteUserAsync(string username, string Role)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            await _userManager.RemoveFromRoleAsync(user, "User");
+            return await _userManager.AddToRoleAsync(user, Role);
+        }
+
         public async Task<AuthenticationResult> RegisterAsync(string email, string username, string password)
         {
             var existingUserByEmailAddress = await _userManager.FindByEmailAsync(email);
