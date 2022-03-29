@@ -1,61 +1,75 @@
-import { Component } from "react";
-import { Form, Button } from "react-bootstrap";
+import React from "react";
+import { Button, Form } from "react-bootstrap";
 import '../Auth.css';
 
-class Register extends Component {
+class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            password: ""
+            value: '',
+            password: ''
         };
-        this.handleChange = this.handleChange.bind(this);
+
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    handleChange(event) {
+
+    handleEmailChange = (event) => {
         this.setState({ value: event.target.value });
     }
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+    handlePasswordChange = (event) => {
+        this.setState({ password: event.target.value });
     }
 
-
-    setEmail = () => {
-        this.setState({ email: this.state.email })
+    handleSubmit = (event) => {
+        alert('Login: ' + this.state.value + '\r\nPassword: ' + this.state.password);
     }
+
     render() {
         return (
             <div className="Login">
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Group size="lg" controlId="email">
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                             type="email"
-                            value={this.state.value} onChange={this.handleChange}
+                            value={this.state.value}
+                            onChange={this.handleEmailChange}
                         />
                     </Form.Group>
                     <Form.Group size="lg" controlId="email">
                         <Form.Label>Username</Form.Label>
                         <Form.Control
+                            type="text"
+                            value={this.state.value}
+                            onChange={this.handleEmailChange}
+                        />
+                    </Form.Group>
+                    <Form.Group size="lg" controlId="email">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
                             type="email"
-                            value={this.state.value} onChange={this.handleChange}
+                            value={this.state.value}
+                            onChange={this.handleEmailChange}
                         />
                     </Form.Group>
                     <Form.Group size="lg" controlId="password">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>Confirm password</Form.Label>
                         <Form.Control
                             type="password"
-                            value=''
+                            value={this.state.password}
+                            onChange={this.handlePasswordChange}
                         />
                     </Form.Group>
-                    <Button size="lg" type="submit" variant="outline-success login-button">
-                        Register
+                    <Button block size="lg" type="submit" >
+                        Login
                     </Button>
                 </Form>
-            </div>);
+            </div>
+        );
     }
 }
 
-export default Register;
+export default Register
