@@ -193,9 +193,11 @@ namespace ShareThoughtProjectApi.Services
                 Email = email,
                 Joined = DateTime.Now,
                 UserName = username,
-                EmailConfirmed = false
+                EmailConfirmed = true
             };
             var createdUser = await _userManager.CreateAsync(newUser, password);
+            var asignee = await _userManager.FindByEmailAsync(email);
+            await _userManager.AddToRoleAsync(asignee, "User");
             if (!createdUser.Succeeded)
             {
                 return new AuthenticationResult
@@ -219,6 +221,7 @@ namespace ShareThoughtProjectApi.Services
         private async Task<AuthenticationResult> GenerateAuthenticationResultForUserAsync(AppUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            var userRoles = await _userManager.GetRolesAsync(user);
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -233,6 +236,10 @@ namespace ShareThoughtProjectApi.Services
                 Expires = DateTime.MaxValue,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+            foreach (var item in userRoles)
+            {
+                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, item));
+            }
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 

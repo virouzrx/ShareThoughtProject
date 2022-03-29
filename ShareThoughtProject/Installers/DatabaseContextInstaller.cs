@@ -21,6 +21,7 @@ namespace ShareThoughtProjectApi.Installers
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ShareThoughtDbContext>();
             
             //Services

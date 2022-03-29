@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,28 @@ namespace ShareThoughtProjectApi
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ShareThoughtDbContext>();
 
                 await dbContext.Database.MigrateAsync();
+
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                if (!await roleManager.RoleExistsAsync("Admin"))
+                {
+                    var adminRole = new IdentityRole("Admin");
+                    await roleManager.CreateAsync(adminRole);
+                }
+                if (!await roleManager.RoleExistsAsync("Creator"))
+                {
+                    var creatorRole = new IdentityRole("Creator");
+                    await roleManager.CreateAsync(creatorRole);
+                }
+                if (!await roleManager.RoleExistsAsync("Moderator"))
+                {
+                    var moderatorRole = new IdentityRole("Moderator");
+                    await roleManager.CreateAsync(moderatorRole);
+                }
+                if (!await roleManager.RoleExistsAsync("User"))
+                {
+                    var moderatorRole = new IdentityRole("User");
+                    await roleManager.CreateAsync(moderatorRole);
+                }
             }
 
             await host.RunAsync();

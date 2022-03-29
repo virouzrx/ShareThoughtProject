@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class HashtagController : ControllerBase
     {
         private readonly IHashtagService _hashtagService;
