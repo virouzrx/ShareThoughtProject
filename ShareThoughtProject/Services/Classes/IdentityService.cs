@@ -156,16 +156,11 @@ namespace ShareThoughtProjectApi.Services
 
         private bool IsCredentialAnEmail(string credential)
         {
-            try
-            {
-                MailAddress m = new MailAddress(credential);
-
-                return true;
-            }
-            catch (FormatException)
+            if (!MailAddress.TryCreate(credential, out _))
             {
                 return false;
             }
+            return true;
         }
 
         private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
