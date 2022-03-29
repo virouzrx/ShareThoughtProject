@@ -210,7 +210,7 @@ namespace ShareThoughtProjectApi.Services
                     new Claim("id", user.Id),
                     new Claim("username", user.UserName)
                 }),
-                Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
+                Expires = DateTime.MaxValue,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
