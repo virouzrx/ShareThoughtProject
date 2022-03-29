@@ -11,7 +11,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
 {
     public class UsersController
     {
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public class UserController : ControllerBase
         {
             private readonly IUserService _userService;
@@ -42,6 +42,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 response.CreatedPosts = userPosts;
                 return Ok(response);
             }
+
         }
     }
 }

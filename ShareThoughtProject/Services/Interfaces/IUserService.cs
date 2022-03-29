@@ -12,5 +12,6 @@ namespace ShareThoughtProjectApi.Services
         public Task<List<Hashtag>> GetHashtagsFollowedByUser(string userId);
         public Task<List<Comment>> GetCommentsCreatedByUser(string userId);
         public Task<List<Post>> GetPostsCreatedByUser(string userId);
+        public Task<bool> SetUserPhoto(string base64); 
     }
 }

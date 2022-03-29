@@ -30,7 +30,7 @@ class Login extends Component {
             <div className="Login">
                 <Form>
                     <Form.Group size="lg" controlId="email">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Username or Email</Form.Label>
                         <Form.Control
                             type="email"
                             value={this.state.value} onChange={this.handleChange}

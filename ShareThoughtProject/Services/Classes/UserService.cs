@@ -53,5 +53,10 @@ namespace ShareThoughtProjectApi.Services
         {
             return await _context.Users.Where(x => x.UserName == username).FirstOrDefaultAsync();
         }
+
+        public Task<bool> SetUserPhoto(string base64)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

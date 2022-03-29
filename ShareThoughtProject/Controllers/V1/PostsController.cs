@@ -75,10 +75,6 @@ namespace ShareThoughtProjectApi.Controllers.V1
             {
                 return BadRequest("Content cannot be empty");
             }
-            if (string.IsNullOrEmpty(post.UrlTitle))
-            {
-                return BadRequest("UrlTitle cannot be empty");
-            }
 
             var updated = await _postService.UpdatePostAsync(post);
             return (updated == false ? NotFound() : Ok(_mapper.Map<PostResponse>(post)));
