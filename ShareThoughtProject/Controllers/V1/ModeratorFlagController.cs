@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShareThoughtProjectApi.Contracts;
 using ShareThoughtProjectApi.Contracts.V1.Requests;
-using ShareThoughtProjectApi.Domain;
 using ShareThoughtProjectApi.Extensions;
 using ShareThoughtProjectApi.Services;
-using System;
 using System.Threading.Tasks;
-using static ShareThoughtProjectApi.Domain.Enums;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    //todo - restrict it with roles
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Moderator")]
     public class ModeratorFlagController : ControllerBase
     {
         private readonly IFlagService _flagService;

@@ -12,10 +12,11 @@ using ShareThoughtProjectApi.Extensions;
 using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Creator, Moderator")]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
@@ -100,7 +101,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpPost(ApiRoutes.Posts.Create)]
-        public async Task<IActionResult> Create([FromBody] CreatePostRequest postRequest)
+        public async Task<IActionResult> Create([FromForm] CreatePostRequest postRequest)
         {
             var hashtags = await _hashtagService.GetTagsByNameAsync(postRequest.Hashtags);
             if (!hashtags.Any())
@@ -116,11 +117,20 @@ namespace ShareThoughtProjectApi.Controllers.V1
                     hashtags.Add(hashtag);
                 }
             }
+            string filePath = Path.Combine(@"C:\stp\post_images", postRequest.Image.FileName);
+            if (postRequest.Image.Length > 0)
+            {
+                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await postRequest.Image.CopyToAsync(fileStream);
+                }
+            }
             var post = new Post
             {
                 Title = postRequest.Title,
                 Description = postRequest.Description,
                 UserId = HttpContext.GetUserId(),
+                ImagePath = filePath,
                 Created = DateTime.Now,
                 Content = postRequest.Content,
                 Score = 0,
@@ -138,15 +148,12 @@ namespace ShareThoughtProjectApi.Controllers.V1
             {
                 return BadRequest("Content cannot be empty");
             }
-            if (string.IsNullOrEmpty(post.UrlTitle))
-            {
-                return BadRequest("UrlTitle cannot be empty");
-            }
             await _postService.CreatePostAsync(post);
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
             var locationUri = baseUrl + "/" + ApiRoutes.Posts.Get.Replace("{postId}", post.Id.ToString());
             return Created(locationUri, _mapper.Map<PostResponse>(post));
+
         }
 
         [HttpPut(ApiRoutes.Posts.Vote)]
