@@ -16,7 +16,7 @@ using System.IO;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Creator, Moderator")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Creator, Moderator, Admin")]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;

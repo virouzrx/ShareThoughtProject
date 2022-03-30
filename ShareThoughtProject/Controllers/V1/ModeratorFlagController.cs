@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Moderator")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Moderator, Admin")]
     public class ModeratorFlagController : ControllerBase
     {
         private readonly IFlagService _flagService;
