@@ -46,7 +46,7 @@ namespace ShareThoughtProjectApi.Services.Classes
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Config\Files\confirmationEmail.html");
             string file = await File.ReadAllTextAsync(path);
-            string confirmationLink = $@"https://localhost:5001/api/v1/identity/confirm/{userId}/{token}";
+            string confirmationLink = $@"https://localhost:3000/activate/{userId}/{token}";
             var message = file.Replace("{TOKEN_LINK}", confirmationLink);
             return message;
         }

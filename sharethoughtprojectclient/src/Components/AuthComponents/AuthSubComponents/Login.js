@@ -1,62 +1,86 @@
-import { Component } from "react";
-import { Form, Button } from "react-bootstrap";
+import React from "react";
+import { Button, Form } from "react-bootstrap";
 import '../Auth.css';
-import React, { useState } from "react";
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 
-function LoginToApi(credential, password){
+function SendRegisterRequest(email, username, password) {
+  const history = createBrowserHistory({ forceRefresh: true });
   var body = {
-      credential: credential,
-      password: password
+    Credential: username,
+    Password: password
   };
-  
+
   axios.post('https://localhost:5001/api/v1/identity/login', body)
     .then(function (response) {
-      console.log(response);
+      localStorage.setItem("token", response.data.token)
+      history.push('/');
+      document.location.reload()
     })
     .catch(function (error) {
-      console.log(error);
+      document.getElementById("errorMessage").innerHTML = error.response.data.errors[0];
     });
 }
 
-export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-  
-    function validateForm() {
-      return email.length > 0 && password.length > 0;
-    }
-  
-    function handleSubmit(event) {
-      LoginToApi();
-    }
+class Register extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
+    };
 
-  
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleUsernameChange = this.handleUsernameChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleUsernameChange = (event) => {
+    this.setState({ username: event.target.value });
+  }
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    document.getElementById("errorMessage").innerHTML = "";
+
+    SendRegisterRequest(this.state.email, this.state.username, this.state.password);
+
+
+  }
+
+  render() {
     return (
       <div className="Login">
-        <Form onSubmit={LoginToApi(email, password)}>
+        <Form onSubmit={this.handleSubmit}>
           <Form.Group size="lg" controlId="email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Username or email</Form.Label>
             <Form.Control
-              autoFocus
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              value={this.state.username}
+              onChange={this.handleUsernameChange}
             />
           </Form.Group>
-          <Form.Group size="lg" controlId="password">
+          <Form.Group size="lg" controlId="email">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={this.state.password}
+              onChange={this.handlePasswordChange}
             />
           </Form.Group>
-          <Button block size="lg" type="submit" disabled={!validateForm()} > 
+          <p id="errorMessage"></p>
+          <Button size="lg" type="submit" >
             Login
           </Button>
         </Form>
       </div>
     );
   }
-  
+}
+
+export default Register

@@ -9,6 +9,8 @@ import UserProfile from './Components/UserProfile/UserProfile';
 import Moderation from './Components/Moderation/Moderation';
 import Search from './Components/Search/Search';
 import Auth from './Components/AuthComponents/Auth';
+import Confirm from './Components/AuthComponents/AuthSubComponents/Confirm';
+import Activate from './Components/AuthComponents/AuthSubComponents/Activate';
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
           <Route path="user/:id/*" element={<UserProfile />}></Route>
           <Route path="moderation/*" element={<Moderation />}></Route>
           <Route path="auth/*" element={<Auth />}></Route>
+          <Route path="confirm" element={<Confirm />}></Route>
+          <Route path="activate/:userid/:token" element={<Activate />}></Route>
           <Route path="search/:searchedphrase/*" element={<Search/>}></Route>
         </Routes>
       </BrowserRouter>

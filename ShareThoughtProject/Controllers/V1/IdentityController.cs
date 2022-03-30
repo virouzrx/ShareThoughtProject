@@ -106,10 +106,10 @@ namespace ShareThoughtProjectApi.Controllers.V1
             });
         }
 
-        [HttpGet(ApiRoutes.Identity.Confirm)]
-        public async Task<IActionResult> Confirm([FromRoute] string userId, [FromRoute] string token)
+        [HttpPost(ApiRoutes.Identity.Confirm)]
+        public async Task<IActionResult> Confirm([FromBody] ConfirmEmailRequest request)
         {
-            var confirmation = await _identityService.ConfirmEmailAsync(userId, token);
+            var confirmation = await _identityService.ConfirmEmailAsync(request.UserId, request.Token);
             if (!confirmation.Success)
             {
                 return BadRequest(new AuthFailedResponse

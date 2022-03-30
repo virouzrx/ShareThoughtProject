@@ -16,7 +16,7 @@ function SendRegisterRequest(email, username, password) {
 
     axios.post('https://localhost:5001/api/v1/identity/register', body)
         .then(function (response) {
-            history.push('/posts');
+            history.push('/confirm');
             document.location.reload()
         })
         .catch(function (error) {
