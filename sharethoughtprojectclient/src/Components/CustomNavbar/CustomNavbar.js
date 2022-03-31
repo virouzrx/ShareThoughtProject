@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './CustomNavbar.css'
 import { Component } from 'react';
 import { Link } from 'react-bootstrap-icons';
+import jwt_decode from "jwt-decode";
 
 function CheckForCurrentPath(path) {
     if (path === "posts") {
@@ -13,6 +14,21 @@ function CheckForCurrentPath(path) {
     else {
         return window.location.pathname.toLocaleLowerCase().includes(path) ? 'current navbar-element' : 'navbar-element';
     }
+}
+
+function GenerateNavbarElementsByToken() {
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+    let list = [];
+    list.push(<Nav.Link className={CheckForCurrentPath("posts")} href="/posts">Posts</Nav.Link>);
+    list.push(<Nav.Link className={CheckForCurrentPath("creators")} href="/creators">Creators</Nav.Link>);
+    if (decoded.role === 'Admin' || decoded.role === "Moderator") {
+        list.push(<Nav.Link className={CheckForCurrentPath("moderation")} href="/moderation">Moderation</Nav.Link>);
+    }
+    if (decoded.role === "Creator") {
+        list.push(<Nav.Link className={CheckForCurrentPath("createpost")} href="/createpost">Create post</Nav.Link>);
+    }
+    return list;
 }
 
 class CustomNavbar extends Component {
@@ -32,10 +48,7 @@ class CustomNavbar extends Component {
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto my-2 my-lg-0 text-light" style={{ maxHeight: '100px' }} navbarScroll>
-                            <Nav.Link className={CheckForCurrentPath("posts")} href="/posts">Posts</Nav.Link>
-                            <Nav.Link className={CheckForCurrentPath("creators")} href="/creators">Creators</Nav.Link>
-                            <Nav.Link className={CheckForCurrentPath("moderation")} href="/moderation">Moderation</Nav.Link>
-                            <Nav.Link className={CheckForCurrentPath("createpost")} href="/createpost">Create post</Nav.Link>
+                            {GenerateNavbarElementsByToken()}
                         </Nav>
                         <Form className="d-flex">
                             <FormControl

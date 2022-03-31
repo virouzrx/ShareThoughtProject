@@ -12,6 +12,6 @@ namespace ShareThoughtProjectApi.Contracts.V1.Requests
         public string Description { get; set; }
         public string Content { get; set; }
         public IFormFile Image { get; set; }
-        public List<string> Hashtags { get; set; }
+        public string Hashtags { get; set; } //todo - sent list from client side
     }
 }

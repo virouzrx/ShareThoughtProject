@@ -204,7 +204,7 @@ namespace ShareThoughtProjectApi.Services
             };
             var createdUser = await _userManager.CreateAsync(newUser, password);
             var asignee = await _userManager.FindByEmailAsync(email);
-            await _userManager.AddToRoleAsync(asignee, "Admin");
+            await _userManager.AddToRoleAsync(asignee, "Creator");
             if (!createdUser.Succeeded)
             {
                 return new AuthenticationResult

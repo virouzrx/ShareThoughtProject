@@ -11,6 +11,7 @@ import Search from './Components/Search/Search';
 import Auth from './Components/AuthComponents/Auth';
 import Confirm from './Components/AuthComponents/AuthSubComponents/Confirm';
 import Activate from './Components/AuthComponents/AuthSubComponents/Activate';
+import CreatePost from './Components/CreatePost/CreatePost';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="post/:id" element={<SinglePostPage />}></Route>
           <Route path="user/:id/*" element={<UserProfile />}></Route>
           <Route path="moderation/*" element={<Moderation />}></Route>
+          <Route path="createpost/*" element={<CreatePost />}></Route>
           <Route path="auth/*" element={<Auth />}></Route>
           <Route path="confirm" element={<Confirm />}></Route>
           <Route path="activate/:userid/:token" element={<Activate />}></Route>

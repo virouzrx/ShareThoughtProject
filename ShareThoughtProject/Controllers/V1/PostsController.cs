@@ -103,10 +103,15 @@ namespace ShareThoughtProjectApi.Controllers.V1
         [HttpPost(ApiRoutes.Posts.Create)]
         public async Task<IActionResult> Create([FromForm] CreatePostRequest postRequest)
         {
-            var hashtags = await _hashtagService.GetTagsByNameAsync(postRequest.Hashtags);
+            var hashtagsSplit = postRequest.Hashtags
+                .Replace(" ", "")
+                .Split(',')
+                .ToList();
+            var hashtags = await _hashtagService.GetTagsByNameAsync(hashtagsSplit);
+            
             if (!hashtags.Any())
             {
-                foreach (var tag in postRequest.Hashtags)
+                foreach (var tag in hashtagsSplit)
                 {
                     var hashtag = new Hashtag
                     {
