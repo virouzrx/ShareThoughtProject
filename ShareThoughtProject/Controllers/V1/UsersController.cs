@@ -28,17 +28,10 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.User.GetUserInfo)]
-        public async Task<IActionResult> GetUserInfo([FromRoute] string userId)
+        public async Task<IActionResult> GetUserInfo([FromRoute] string username)
         {
-            var user = _userService.GetUserById(userId);
-            var userFollowedHashtags = await _userService.GetHashtagsFollowedByUser(userId);
-            var userComments = await _userService.GetCommentsCreatedByUser(userId);
-            var userPosts = await _userService.GetPostsCreatedByUser(userId);
-            var response = _mapper.Map<UserInfoResponse>(user);
-            response.CreatedComments = userComments;
-            response.FollowedHashtags = userFollowedHashtags;
-            response.CreatedPosts = userPosts;
-            return Ok(response);
+            var user = await _userService.GetUserById(username);
+            return Ok(user);
         }
 
     }
