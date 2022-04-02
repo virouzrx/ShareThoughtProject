@@ -34,5 +34,14 @@ namespace ShareThoughtProjectApi.Controllers.V1
             return Ok(user);
         }
 
+        [HttpGet(ApiRoutes.User.SearchUsers)]
+        public async Task<IActionResult> GetUsersBySearchedPhrase([FromRoute] string phrase, int pageSize, int pageNumber)
+        {
+            var user = await _userService.GetUsersByPhrase(phrase, pageSize, pageNumber);
+            if (user.Count > 0)
+                return Ok(_mapper.Map<UserInfoResponse>(user));
+            return NotFound();
+        }
+
     }
 }

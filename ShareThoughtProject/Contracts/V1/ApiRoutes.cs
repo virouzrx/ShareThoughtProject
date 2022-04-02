@@ -13,7 +13,7 @@ namespace ShareThoughtProjectApi.Contracts
         public static class Posts
         {
             public const string GetAll = Base + "/posts";
-            public const string Get = Base + "/posts/{postTitle}";
+            public const string Get = Base + "/posts/{postId}";
             public const string Create = Base + "/posts";
             public const string Update = Base + "/posts/{postId}";
             public const string Delete = Base + "/posts/{postId}";
@@ -58,7 +58,8 @@ namespace ShareThoughtProjectApi.Contracts
         public static class User
         {
             public const string GetAllUsers = Base + "/users/getall";
-            public const string GetUserInfo = Base + "/user/{username}";
+            public const string GetUserInfo = Base + "/users/{username}";
+            public const string SearchUsers = Base + "/users/search/{phrase}/{pageSize}/{pageNumber}";
         }
 
     }

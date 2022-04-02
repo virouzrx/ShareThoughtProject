@@ -46,7 +46,22 @@ namespace ShareThoughtProjectApi.Services
 
         public async Task<AppUser> GetUserById(string userId)
         {
-           return await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            return await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<AppUser>> GetUsersByPhrase(string phrase, int pageSize, int pageNumber)
+        {
+            var users =  await _context.Users
+                .Where(x => x.UserName
+                    .ToLower()
+                    .Contains(phrase.ToLower()))
+                .Take(pageSize)
+                .ToListAsync();
+            if (pageNumber - 1 * pageSize > 0)
+            {
+                return users.Skip(pageNumber - 1 * pageSize).ToList();
+            }
+            return users;
         }
 
         public async Task<AppUser> GetUserByUsername(string username)

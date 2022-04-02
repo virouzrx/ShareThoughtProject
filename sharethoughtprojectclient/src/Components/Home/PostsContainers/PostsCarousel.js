@@ -87,6 +87,7 @@ function PostsCarousel(props) {
                                 <Col>
                                     <PostCard
                                         key={postInfo.id}
+                                        id={postInfo.id}
                                         title={postInfo.title}
                                         desc={postInfo.description}
                                         upvoteCount={postInfo.score}

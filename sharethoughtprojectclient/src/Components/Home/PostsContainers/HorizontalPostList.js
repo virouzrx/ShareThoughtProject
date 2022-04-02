@@ -60,7 +60,6 @@ function HorizontalPostList(props) {
                                 />
                             </div>
                         </Col>))}
-                    <Button variant="outline-success navbar-button new-posts-button-redirect" href="/posts/new">More new posts</Button>
                 </div>
             </div>
         </>

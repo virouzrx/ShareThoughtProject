@@ -8,7 +8,7 @@ import AuthorInfoAndCreateDate from './AuthorInfoAndCreationDate';
 
 function PostCard(props) {
     return (
-        <a className="hyperlink-card" href="/post/1">
+        <a className="hyperlink-card" href={`/post/${props.id}`}>
             <Card className="standard-card">
                 <Card.Img variant="top" img src={`data:image/jpeg;base64,${props.imagePath}`}  />
                 <Card.Body>

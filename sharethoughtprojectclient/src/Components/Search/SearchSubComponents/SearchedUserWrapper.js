@@ -1,80 +1,71 @@
-import { Component } from "react";
+import { Component, useEffect, useState } from "react";
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
 import SearchResultUser from "./SearchResultUser";
 import '../Search.css';
 import { ArrowLeftCircleFill, ArrowRightCircleFill } from "react-bootstrap-icons";
+import axios from "axios";
 
-
-function GeneratePaginationButtons(pageNumber, phrase) {
-    const list = [];
-    if (pageNumber === 1 || pageNumber === 2) {
-        for (let index = 0; index < 5; index++) {
-            if (index + 1 === pageNumber) {
-                list.push(<Button variant="outline-success" className="current-page-button pagination-button" href={`${window.location.pathname}/${index + 1}`}>{index + 1}</Button>)
-            }
-            else {
-                list.push(<Button variant="outline-success" className="pagination-button" href={`${window.location.pathname}/${index + 1}`}>{index + 1}</Button>)
-            }
-        }
-        return <ButtonGroup>{list}</ButtonGroup>
-    }
-    else if (pageNumber >= 3) {
-        list.push(<Button variant="outline-success" className="pagination-button" href={`${window.location.pathname}/${1}`}>1</Button>)
-        list.push(<p className="multidot">...</p>)
-        for (let index = 0; index < 3; index++) {
-            if (pageNumber + index === pageNumber) {
-                list.push(<Button variant="outline-success" className="current-page-button pagination-button" href={`${window.location.pathname}/${pageNumber + index}`}>{pageNumber + index}</Button>)
-            }
-            else {
-                list.push(<Button variant="outline-success" className="pagination-button" href={`${window.location.pathname}/${pageNumber + index}`}>{pageNumber + index}</Button>)
-            }
-        }
-        return <ButtonGroup>{list}</ButtonGroup>
-    }
+function GetRouteAddress() {
+    console.log(window.location.pathname)
+    var parts = window.location.pathname.split('/');
+    return parts.length >= 4 ? parts[parts.length - 2] : parts[parts.length - 1];
 }
 
-class SearchedUserWrapper extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchedPhrase: "",
-            pageNumber: 1
-        };
-        this.increment = this.increment.bind(this);
-    }
+function SearchedUserWrapper() {
+    const [count, setCount] = useState(1);
+    const [posts, setPosts] = useState([{}]);
+    const [isLoading, setLoading] = useState(true);
 
-    GetUserForSearchResult = (postAmount, pageNumber) => {
-        const list = [];
-        for (let index = 0; index < postAmount; index++) {
-            list.push(<SearchResultUser CurrentPage={pageNumber}></SearchResultUser>);
+    useEffect(() => {
+        document.title = `Kliknięto ${count} razy`;
+        getSearchResult();
+    });
+
+    useEffect(() => {
+        getSearchResult();
+    }, []);
+
+    const getSearchResult = () => {
+        axios
+        .get(`https://localhost:5001/api/v1/users/search/${GetRouteAddress()}/${10}/${count}`)
+        .then((response) => {
+            setPosts(response.data);
+            setLoading(false);
+            console.log(posts);
+        })
+        .catch((error) => {
+            setLoading(false);
+            document.getElementById("errorMessage").innerHTML = "No users found!"
+            console.log(error);
+        });
+    };
+
+    const decrement = () => {
+        if (count === 1) {
+            return 0;
         }
-        return list;
-    }
-
-    increment = () => {
-        this.setState({ pageNumber: this.state.pageNumber + 1 })
-        console.log(this.state.pageNumber + 0);
-    }
-
-    decrement = () => {
-        if (this.state.pageNumber > 1) {
-            this.setState({ pageNumber: this.state.pageNumber - 1 })
+        else {
+            setCount(count - 1);
         }
-        console.log(this.state.pageNumber + 0);
     }
 
-    render() {
+    if (isLoading) {
+        return <div className="App">Loading...</div>;
+    }
+    else {
         return (
-            <div style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-                {this.GetUserForSearchResult(this.state.pageNumber, this.state.pageNumber)}
+            <div>
+                <p>Kliknięto {count} razy</p>
                 <div className="search-pagination">
-                    <ButtonGroup style={{marginBottom: '1em'}}>
-                        <Button variant="outline-success" onClick={this.decrement}><ArrowLeftCircleFill /></Button>
-                        <div className="color-info-container search-page-number" >{this.state.pageNumber}</div>
-                        <Button variant="outline-success" onClick={this.increment}><ArrowRightCircleFill /></Button>
+                    <p id="errorMessage"></p>
+                    <ButtonGroup style={{ marginBottom: '1em' }}>
+                        <Button variant="outline-success" onClick={() => decrement()}><ArrowLeftCircleFill /></Button>
+                        <div className="color-info-container search-page-number" >{count}</div>
+                        <Button variant="outline-success" onClick={() => setCount(count + 1)}><ArrowRightCircleFill /></Button>
                     </ButtonGroup>
                 </div>
-            </div>);
+            </div>
+        );
     }
 }
 
