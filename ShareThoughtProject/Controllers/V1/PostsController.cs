@@ -13,6 +13,7 @@ using System.Linq;
 using AutoMapper;
 using System.Collections.Generic;
 using System.IO;
+using ShareThoughtProjectApi.Services.Interfaces;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
@@ -21,11 +22,13 @@ namespace ShareThoughtProjectApi.Controllers.V1
         private readonly IPostService _postService;
         private readonly IHashtagService _hashtagService;
         private readonly IMapper _mapper;
-        public PostsController(IPostService postService, IHashtagService hashtagService, IMapper mapper)
+        private readonly IMapHelperService _mapHelperService;
+        public PostsController(IPostService postService, IHashtagService hashtagService, IMapper mapper, IMapHelperService mapHelperService)
         {
             _postService = postService;
             _hashtagService = hashtagService;
             _mapper = mapper;
+            _mapHelperService = mapHelperService;
         }
 
         [HttpGet(ApiRoutes.Posts.GetAll)]
@@ -91,9 +94,9 @@ namespace ShareThoughtProjectApi.Controllers.V1
         [HttpDelete(ApiRoutes.Posts.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid postId)
         {
-            var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
-            if (!userOwnsPost)
-                return BadRequest(new { error = "You don't own this post" });
+            //var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
+            //if (!userOwnsPost)
+            //    return BadRequest(new { error = "You don't own this post" });
 
             var deleted = await _postService.DeletePostAsync(postId);
             return (deleted == true ? NoContent() : NotFound());
@@ -107,7 +110,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 .Split(',')
                 .ToList();
             var hashtags = await _hashtagService.GetTagsByNameAsync(hashtagsSplit);
-            
+
             if (!hashtags.Any())
             {
                 foreach (var tag in hashtagsSplit)
@@ -121,12 +124,16 @@ namespace ShareThoughtProjectApi.Controllers.V1
                     hashtags.Add(hashtag);
                 }
             }
-            string filePath = Path.Combine(@"C:\stp\post_images", postRequest.Image.FileName);
+            var imgGuid = Guid.NewGuid();
+            string ImageInBase64 = "";
+
             if (postRequest.Image.Length > 0)
             {
-                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    await postRequest.Image.CopyToAsync(fileStream);
+                    await postRequest.Image.CopyToAsync(ms);
+                    var byteArray = ms.ToArray();
+                    ImageInBase64 = Convert.ToBase64String(byteArray);
                 }
             }
             var post = new Post
@@ -134,7 +141,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 Title = postRequest.Title,
                 Description = postRequest.Description,
                 UserId = HttpContext.GetUserId(),
-                ImagePath = filePath,
+                ImagePath = ImageInBase64,
                 Created = DateTime.Now,
                 Content = postRequest.Content,
                 Score = 0,
@@ -174,14 +181,25 @@ namespace ShareThoughtProjectApi.Controllers.V1
         public async Task<IActionResult> GetPopularPostsToday()
         {
             var objects = await _postService.GetTodaysPopularPostsAsync();
-            var x = _mapper.Map<List<PostResponse>>(objects);
-            return Ok(x);
+            var mapped = _mapper.Map<List<PostResponse>>(objects);
+            await _mapHelperService.AddCreatorInfo(mapped);
+            return Ok(mapped);
         }
 
         [HttpGet(ApiRoutes.Posts.TopThisWeek)]
         public async Task<IActionResult> GetTopPostsThisWeek()
         {
             var objects = await _postService.GetPopularPostsThisWeek();
+            var mapped = _mapper.Map<List<PostResponse>>(objects);
+            await _mapHelperService.AddCreatorInfo(mapped);
+            return Ok(mapped);
+        }
+
+        [HttpGet(ApiRoutes.Posts.New)]
+        public async Task<IActionResult> GetNewPosts([FromRoute] int pageSize, int pageNumber)
+        {
+            var objects = await _postService.GetNewPosts(pageSize, pageNumber);
+            _mapper.Map<List<PostResponse>>(objects);
             return Ok(_mapper.Map<List<PostResponse>>(objects));
         }
     }

@@ -12,12 +12,12 @@ function PostHorizontal(props) {
             <a className="hyperlink-card" href="/post/1">
                 <Row>
                     <Col md={4}>
-                        <Card.Img variant="top" src={props.postPic} />
+                        <Card.Img variant="top" src={`data:image/jpeg;base64,${props.imagePath}`} />
                     </Col>
                     <Col md={8}>
                         <Card.Title className="custom-card-title">{props.title}</Card.Title>
                         <HashtagWrapper hashtags={props.hashtags} />
-                        <AuthorInfoAndCreateDate showInfo={props.showInfo} authorName={props.authorName} authorPic={props.authorPic}></AuthorInfoAndCreateDate>
+                        <AuthorInfoAndCreateDate showInfo={props.showInfo} authorName={props.authorName} authorPic={props.authorPic} created={props.created}></AuthorInfoAndCreateDate>
                         <Card.Text>{props.desc}</Card.Text>
                         <ButtonGroup className="me-2" aria-label="First group">
                             <LikesCount upvoteCount={props.upvoteCount}></LikesCount>

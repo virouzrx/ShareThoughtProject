@@ -34,6 +34,7 @@ namespace ShareThoughtProjectApi.Installers
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IPerspectiveApiService, PerspectiveApiService>();
             services.AddHttpClient<IPerspectiveApiService, PerspectiveApiService>();
+            services.AddScoped<IMapHelperService, MapHelperService>();
         }
     }
 }

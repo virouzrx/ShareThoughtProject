@@ -1,59 +1,71 @@
 import { Col, Button } from 'react-bootstrap'
 import PostHorizontal from '../PostsContainers/SinglePostComponent/PostHorizontal';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+function ExtractHashtagsFromObject(object) {
+    let list = [];
+    object.map(ht => {
+        list.push(ht);
+    })
+    return list;
+}
 
 function HorizontalPostList(props) {
-    const list = []
-    const ffs = [
-        {
-            title: 'Title',
-            desc: 'Lorem ipsum is dolores kurwo działaj',
-            upvoteCount: 52,
-            commentCount: 21,
-            authorName: 'Carl Klaasje',
-            dateCreated: new Date(2021, 5, 12),
-            authorPic: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
-            postPic: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg',
-            hashtags: ['travels', 'stuff', 'tag']
+    const [posts, setPosts] = useState([{}]);
+    const [isLoading, setLoading] = useState(true);
 
-        },
-        {
-            title: 'title',
-            desc: 'desc',
-            upvoteCount: 52,
-            commentCount: 21,
-            authorName: 'Carl Klaasje',
-            dateCreated: new Date(2021, 5, 12),
-            authorPic: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80',
-            postPic: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg',
-            hashtags: ['travels', 'stuff', 'tag']
-        },
-    ];
+    useEffect(() => {
+        getAllNodes();
+    }, []);
 
-    for (let i = 0; i < props.postAmount; i++) {
-        list.push(
-            <div key={i}>
-                <Col>
-                    <PostHorizontal
-                        title={ffs[0].title}
-                        desc={ffs[0].desc}
-                        upvoteCount={ffs[0].upvoteCount}
-                        commentCount={ffs[0].commentCount}
-                        authorName={ffs[0].authorName}
-                        dateCreated={ffs[0].dateCreated}
-                        postPic={ffs[0].postPic}
-                        authorPic={ffs[0].authorPic}
-                        hashtags={ffs[0].hashtags}
-                        showInfo={true}
-                    />
-                </Col>
-            </div>
-        )
+
+    var body = {
+        PageSize: 3,
+        PageNumber: 1
+    };
+
+    const getAllNodes = () => {
+        axios.get("https://localhost:5001/api/v1/posts/" + props.endpoint + `/${props.pageSize}/${props.PageNumber}`).then((response) => {
+            setPosts(response.data);
+            setLoading(false);
+            console.log(posts);
+        });
+    };
+
+    if (isLoading) {
+        return <div className="App">Loading...</div>;
     }
     return (
-        <div className="container">
-            {list}
-            <Button variant="outline-success navbar-button new-posts-button-redirect" href="/posts/new">More new posts</Button>
-        </div>);
+        <>
+            <div>
+                <div className="container">
+                    {posts.map((postInfo) => (
+                        <Col>
+                            <div key={postInfo.id}>
+                                <PostHorizontal
+                                    title={postInfo.title}
+                                    desc={postInfo.description}
+                                    upvoteCount={postInfo.score}
+                                    commentCount={ExtractHashtagsFromObject(postInfo.comments)}
+                                    authorName={postInfo.authorName}
+                                    dateCreated={postInfo.created}
+                                    imagePath={postInfo.imagePath}
+                                    authorPic={postInfo.authorProfilePic}
+                                    comments={postInfo.comments}
+                                    created={postInfo.created}
+                                    hashtags={ExtractHashtagsFromObject(postInfo.hashtags)}
+                                    showInfo={true}
+                                />
+                            </div>
+                        </Col>))}
+                    <Button variant="outline-success navbar-button new-posts-button-redirect" href="/posts/new">More new posts</Button>
+                </div>
+            </div>
+        </>
+
+    )
 }
 export default HorizontalPostList;
+

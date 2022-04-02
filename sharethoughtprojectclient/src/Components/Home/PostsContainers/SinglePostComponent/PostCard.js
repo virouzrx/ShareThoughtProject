@@ -10,15 +10,15 @@ function PostCard(props) {
     return (
         <a className="hyperlink-card" href="/post/1">
             <Card className="standard-card">
-                <Card.Img variant="top" src={props.postPic} />
+                <Card.Img variant="top" img src={`data:image/jpeg;base64,${props.imagePath}`}  />
                 <Card.Body>
                     <Card.Title className='custom-card-title'>{props.title}</Card.Title>
                     <HashtagWrapper hashtags={props.hashtags}></HashtagWrapper>
-                    <AuthorInfoAndCreateDate showInfo={true} authorPic={props.authorPic} authorName={props.authorName}></AuthorInfoAndCreateDate>
+                    <AuthorInfoAndCreateDate showInfo={true} authorPic={props.authorPic} authorName={props.authorName} created={props.created}></AuthorInfoAndCreateDate>
                     <Card.Text>{props.desc}</Card.Text>
                     <ButtonGroup className="me-2" aria-label="First group">
                         <LikesCount upvoteCount={props.upvoteCount}></LikesCount>
-                        <CommentsCount commentCount={props.commentCount}></CommentsCount>
+                        <CommentsCount commentCount={props.comments}></CommentsCount>
                     </ButtonGroup>
                 </Card.Body>
             </Card>

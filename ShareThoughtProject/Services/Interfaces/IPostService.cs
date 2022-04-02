@@ -20,5 +20,6 @@ namespace ShareThoughtProjectApi.Services
         Task<bool> VotePostAsync(Post post, bool isUpvote, string userId);
         public Task<List<Post>> GetPopularPostsThisWeek();
         public Task<List<Post>> GetTodaysPopularPostsAsync();
+        public Task<List<Post>> GetNewPosts(int pageSize, int pageNumber);
     }
 }

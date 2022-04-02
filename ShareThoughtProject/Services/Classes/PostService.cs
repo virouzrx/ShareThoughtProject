@@ -11,9 +11,11 @@ namespace ShareThoughtProjectApi.Services
     public class PostService : IPostService
     {
         private readonly ShareThoughtDbContext _dbContext;
-        public PostService(ShareThoughtDbContext dbContext)
+        private readonly IUserService _userService;
+        public PostService(ShareThoughtDbContext dbContext, IUserService userService)
         {
             _dbContext = dbContext;
+            _userService = userService;
         }
 
         public async Task<bool> VotePostAsync(Post post, bool isUpvote, string userId)
@@ -136,6 +138,11 @@ namespace ShareThoughtProjectApi.Services
                         .Include(post => post.Comments)
                         .FirstOrDefaultAsync());
             }
+
+            foreach (var item in postsToReturn)
+            {
+                var creatorInfo = _userService.GetUserById(item.UserId);
+            }
             return postsToReturn;
         }
 
@@ -173,6 +180,19 @@ namespace ShareThoughtProjectApi.Services
                 }
                 return postsToReturn;
             }
+        }
+
+        public async Task<List<Post>> GetNewPosts(int pageSize, int pageNumber)
+        {
+            var posts = await _dbContext.Posts
+                .OrderBy(x => x.Created)
+                .Take(pageSize)
+                .ToListAsync();
+            if (pageNumber - 1 * pageSize > 0)
+            {
+                return posts.Skip(pageNumber - 1 * pageSize).ToList();
+            }
+            return posts;
         }
     }
 }

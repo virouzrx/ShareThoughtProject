@@ -13,11 +13,15 @@ namespace ShareThoughtProjectApi.Contracts.V1.Responses
         public string UrlTitle { get; set; }
         public string Content { get; set; }
         public DateTime Created { get; set; }
+        public string ImagePath { get; set; }
+        public string Description { get; set; }
         public int Score { get; set; }
         public bool IsDeleted { get; set; }
         public FlagStatus CurrentFlagStatus { get; set; }
         public GeneralFlagReason? FlagReason { get; set; }
-        public string UserId { get; set; }
+        public string UserId { get; set; } //author
+        public string AuthorName { get; set; }
+        public string AuthorProfilePic { get; set; }
         public IEnumerable<HashtagResponse> Hashtags { get; set; }
         public IEnumerable<CommentResponse> Comments { get; set; }
     }
