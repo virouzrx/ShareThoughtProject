@@ -19,11 +19,11 @@ function SearchedUserWrapper() {
     useEffect(() => {
         document.title = `Kliknięto ${count} razy`;
         getSearchResult();
-    });
+    }, [count]);
 
     useEffect(() => {
         getSearchResult();
-    }, []);
+    }, [count]);
 
     const getSearchResult = () => {
         axios
@@ -31,6 +31,7 @@ function SearchedUserWrapper() {
         .then((response) => {
             setPosts(response.data);
             setLoading(false);
+            document.getElementById("errorMessage").innerHTML = "";
             console.log(posts);
         })
         .catch((error) => {

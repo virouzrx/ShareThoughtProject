@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShareThoughtProjectApi.Contracts;
 using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ShareThoughtProjectApi.Controllers.V1
@@ -14,9 +15,10 @@ namespace ShareThoughtProjectApi.Controllers.V1
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         [HttpGet(ApiRoutes.User.GetAllUsers)]
@@ -39,7 +41,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
         {
             var user = await _userService.GetUsersByPhrase(phrase, pageSize, pageNumber);
             if (user.Count > 0)
-                return Ok(_mapper.Map<UserInfoResponse>(user));
+                return Ok(_mapper.Map<List<UserInfoResponse>>(user));
             return NotFound();
         }
 
