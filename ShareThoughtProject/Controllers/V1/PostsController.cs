@@ -16,7 +16,6 @@ using System.IO;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Creator, Moderator, Admin")]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
@@ -162,13 +161,28 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpPut(ApiRoutes.Posts.Vote)]
-        public async Task<IActionResult> VoteComment(Guid commentId, bool isUpvote)
+        public async Task<IActionResult> VoteComment(Guid postId, bool isUpvote)
         {
             var userId = HttpContext.GetUserId();
-            var comment = await _postService.GetPostByIdAsync(commentId);
-            var updated = await _postService.VotePostAsync(comment, isUpvote, userId);
+            var post = await _postService.GetPostByIdAsync(postId);
+            var updated = await _postService.VotePostAsync(post, isUpvote, userId);
 
             return updated == true ? NoContent() : NotFound();
+        }
+
+        [HttpGet(ApiRoutes.Posts.PopularToday)]
+        public async Task<IActionResult> GetPopularPostsToday()
+        {
+            var objects = await _postService.GetTodaysPopularPostsAsync();
+            var x = _mapper.Map<List<PostResponse>>(objects);
+            return Ok(x);
+        }
+
+        [HttpGet(ApiRoutes.Posts.TopThisWeek)]
+        public async Task<IActionResult> GetTopPostsThisWeek()
+        {
+            var objects = await _postService.GetPopularPostsThisWeek();
+            return Ok(_mapper.Map<List<PostResponse>>(objects));
         }
     }
 }

@@ -115,7 +115,7 @@ namespace ShareThoughtProjectApi.Services
             {
                 var AllPostVotes = await _dbContext.PostVotes.Where(x => x.PostId == item).ToListAsync();
                 var likes = AllPostVotes.Where(x => x.IsLike).Count();
-                if (likes > AllPostVotes.Count)
+                if (likes >= AllPostVotes.Count)
                 {
                     postsAndLikes.Add(item, likes);
                 }
@@ -123,16 +123,56 @@ namespace ShareThoughtProjectApi.Services
             var topPosts = postsAndLikes
                 .OrderByDescending(x => x.Value)
                 .ToDictionary(x => x.Key, x => x.Value)
-                .Take(5)
+                .Take(15)
                 .Select(x => x.Key)
                 .ToList();
 
             List<Post> postsToReturn = new();
             foreach (var item in topPosts)
             {
-                postsToReturn.Add(await _dbContext.Posts.Where(x => x.Id == item).FirstOrDefaultAsync());
+                postsToReturn.Add(await _dbContext.Posts
+                        .Where(x => x.Id == item)
+                        .Include(post => post.Hashtags)
+                        .Include(post => post.Comments)
+                        .FirstOrDefaultAsync());
             }
             return postsToReturn;
+        }
+
+        public async Task<List<Post>> GetTodaysPopularPostsAsync()
+        {
+            var cutoff = DateTime.Now.Subtract(new TimeSpan(24, 0, 0));
+            var posts = await _dbContext.PostVotes.Where(x => x.VoteDate <= cutoff).ToListAsync();
+            if (posts.Count < 15)
+            {
+                var postsToReturn = await _dbContext.Posts
+                    .OrderByDescending(x => x.Score)
+                    .Include(post => post.Hashtags)
+                    .Include(post => post.Comments)
+                    .ToListAsync();
+                return postsToReturn.Take(15).ToList();
+            }
+            else
+            {
+                var postsOrdered = posts
+                    .GroupBy(x => x.PostId)
+                    .Select(g => new
+                    {
+                        PostId = g.Key,
+                        Count = g.Distinct().Count()
+                    })
+                    .OrderByDescending(x => x.Count)
+                    .ToList();
+                List<Post> postsToReturn = new();
+                foreach (var item in postsOrdered)
+                {
+                    postsToReturn.Add(_dbContext.Posts.Where(x => x.Id == item.PostId)
+                        .Include(post => post.Hashtags)
+                        .Include(post => post.Comments)
+                        .FirstOrDefault());
+                }
+                return postsToReturn;
+            }
         }
     }
 }

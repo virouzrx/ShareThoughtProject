@@ -18,6 +18,8 @@ namespace ShareThoughtProjectApi.Contracts
             public const string Update = Base + "/posts/{postId}";
             public const string Delete = Base + "/posts/{postId}";
             public const string Vote = Base + "/posts/vote/{postId}";
+            public const string PopularToday = Base + "/posts/popularToday";
+            public const string TopThisWeek = Base + "/posts/topThisWeek";
         }
 
         public static class Identity

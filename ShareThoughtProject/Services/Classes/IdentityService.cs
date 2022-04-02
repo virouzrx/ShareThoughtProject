@@ -200,7 +200,8 @@ namespace ShareThoughtProjectApi.Services
                 Email = email,
                 Joined = DateTime.Now,
                 UserName = username,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                AvatarPath = @"C:\stp\profile_pics\placeholder.png"
             };
             var createdUser = await _userManager.CreateAsync(newUser, password);
             var asignee = await _userManager.FindByEmailAsync(email);

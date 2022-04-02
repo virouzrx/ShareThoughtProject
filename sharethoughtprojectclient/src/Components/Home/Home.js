@@ -29,7 +29,7 @@ class Home extends Component {
                     <h2 className='carousel-header'>New posts</h2>
                     <hr className="mb-5" />
                 </Container>
-                <HorizontalPostList postAmount={3}/>
+                //<HorizontalPostList postAmount={3}/>
             </div>);
     }
 }
