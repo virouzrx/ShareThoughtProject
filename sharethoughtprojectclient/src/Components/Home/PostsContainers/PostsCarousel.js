@@ -68,7 +68,7 @@ function PostsCarousel() {
     ];
 
     for (let i = 0; i < 15; i++) {
-        list.push(<div>
+        list.push(<div key={i}>
             <Col>
                 <PostCard
                     title={ffs[0].title}

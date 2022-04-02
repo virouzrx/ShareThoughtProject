@@ -12,6 +12,7 @@ import Auth from './Components/AuthComponents/Auth';
 import Confirm from './Components/AuthComponents/AuthSubComponents/Confirm';
 import Activate from './Components/AuthComponents/AuthSubComponents/Activate';
 import CreatePost from './Components/CreatePost/CreatePost';
+import Logout from './Components/Logout/Logout';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="user/:id/*" element={<UserProfile />}></Route>
           <Route path="moderation/*" element={<Moderation />}></Route>
           <Route path="createpost/*" element={<CreatePost />}></Route>
+          <Route path="logout/*" element={<Logout/>}></Route>
           <Route path="auth/*" element={<Auth />}></Route>
           <Route path="confirm" element={<Confirm />}></Route>
           <Route path="activate/:userid/:token" element={<Activate />}></Route>

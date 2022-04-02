@@ -32,22 +32,20 @@ function HorizontalPostList(props) {
 
     for (let i = 0; i < props.postAmount; i++) {
         list.push(
-            <div>
+            <div key={i}>
                 <Col>
-                    <a className="hyperlink-card" href="/post/1">
-                        <PostHorizontal
-                            title={ffs[0].title}
-                            desc={ffs[0].desc}
-                            upvoteCount={ffs[0].upvoteCount}
-                            commentCount={ffs[0].commentCount}
-                            authorName={ffs[0].authorName}
-                            dateCreated={ffs[0].dateCreated}
-                            postPic={ffs[0].postPic}
-                            authorPic={ffs[0].authorPic}
-                            hashtags={ffs[0].hashtags}
-                            showInfo={true}
-                        />
-                    </a>
+                    <PostHorizontal
+                        title={ffs[0].title}
+                        desc={ffs[0].desc}
+                        upvoteCount={ffs[0].upvoteCount}
+                        commentCount={ffs[0].commentCount}
+                        authorName={ffs[0].authorName}
+                        dateCreated={ffs[0].dateCreated}
+                        postPic={ffs[0].postPic}
+                        authorPic={ffs[0].authorPic}
+                        hashtags={ffs[0].hashtags}
+                        showInfo={true}
+                    />
                 </Col>
             </div>
         )

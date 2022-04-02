@@ -6,14 +6,22 @@
     margin-top: 7px;
 }
 
-.profile-name {
-    padding-top: 0.5em;
-    margin-top: 2px;
+#profile-name, .profile-name {
     font-size: larger;
+    color: #198754 !important;
+}
+
+#navbarScrollingDropdown {
+    color:  #198754 !important;
+    font-weight: 600;
 }
 
 .navbar-button {
     margin-top: 7px !important;
+}
+
+.dropdown-item:active, .dropdown-item:focus {
+    background-color: #198754;
 }
 
 .navbar-element {
