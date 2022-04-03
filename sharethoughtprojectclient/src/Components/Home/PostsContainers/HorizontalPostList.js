@@ -45,6 +45,7 @@ function HorizontalPostList(props) {
                         <Col>
                             <div key={postInfo.id}>
                                 <PostHorizontal
+                                    id={postInfo.id}
                                     title={postInfo.title}
                                     desc={postInfo.description}
                                     upvoteCount={postInfo.score}

@@ -5,6 +5,7 @@ import '../Search.css';
 import { ArrowLeftCircleFill, ArrowRightCircleFill } from "react-bootstrap-icons";
 import axios from "axios";
 import PostHorizontal from "../../Home/PostsContainers/SinglePostComponent/PostHorizontal";
+import SearchResultPost from "./SearchResultPost";
 
 function GetRouteAddress() {
     console.log(window.location.pathname)
@@ -66,17 +67,16 @@ function SearchedUserWrapper() {
             return (posts.map((postInfo) => (
                 <Col>
                     <div key={postInfo.id}>
-                        <PostHorizontal
+                        <SearchResultPost
                             id={postInfo.id}
                             title={postInfo.title}
                             desc={postInfo.description}
                             upvoteCount={postInfo.score}
-                            commentCount={0}
+                            commentCount={postInfo.comments}
                             authorName={postInfo.authorName}
                             dateCreated={postInfo.created}
                             imagePath={postInfo.imagePath}
                             authorPic={postInfo.authorProfilePic}
-                            hashtags={0}
                             showInfo={true}
                         />
                     </div>
