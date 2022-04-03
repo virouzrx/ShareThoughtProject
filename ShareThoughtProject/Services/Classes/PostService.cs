@@ -188,11 +188,27 @@ namespace ShareThoughtProjectApi.Services
                 .OrderBy(x => x.Created)
                 .Take(pageSize)
                 .ToListAsync();
-            if (pageNumber - 1 * pageSize > 0)
+            if ((pageNumber - 1) * pageSize > 0)
             {
                 return posts.Skip(pageNumber - 1 * pageSize).ToList();
             }
             return posts;
+        }
+
+        public async Task<List<Post>> GetPostsByPhrase(string phrase, int pageSize, int pageNumber)
+        {
+            var users = await _dbContext.Posts
+            .Where(x => x.Title.ToLower().Contains(phrase.ToLower()) || x.Description.ToLower().Contains(phrase.ToLower()))
+            .Include(post => post.Hashtags)
+            .Include(post => post.Comments)
+            .ToListAsync();
+
+            var usersSkipped = users.Skip((pageNumber - 1) * pageSize).ToList();
+            if (usersSkipped.Count > pageSize)
+            {
+                return users.Take(pageSize).ToList();
+            }
+            return usersSkipped;
         }
     }
 }

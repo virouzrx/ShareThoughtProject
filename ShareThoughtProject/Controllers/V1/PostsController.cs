@@ -91,13 +91,21 @@ namespace ShareThoughtProjectApi.Controllers.V1
             return (post == null ? NotFound() : Ok(_mapper.Map<PostResponse>(post)));
         }
 
+        [HttpGet(ApiRoutes.Posts.Search)]
+        public async Task<IActionResult> GetPostsByPhrase([FromRoute] string phrase, int pageSize, int pageNumber)
+        {
+            var post = await _postService.GetPostsByPhrase(phrase, pageSize, pageNumber); 
+            if (post.Count > 0)
+            {
+                var mapped = _mapper.Map<List<PostResponse>>(post);
+                return Ok(await _mapHelperService.AddCreatorInfo(mapped));
+            }
+            return NotFound();
+        }
+
         [HttpDelete(ApiRoutes.Posts.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid postId)
         {
-            //var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
-            //if (!userOwnsPost)
-            //    return BadRequest(new { error = "You don't own this post" });
-
             var deleted = await _postService.DeletePostAsync(postId);
             return (deleted == true ? NoContent() : NotFound());
         }

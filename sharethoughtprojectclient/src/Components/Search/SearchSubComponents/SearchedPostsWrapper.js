@@ -1,61 +1,110 @@
-import { Component } from "react";
-import { Button, ButtonGroup } from 'react-bootstrap'
+import { Component, useEffect, useState } from "react";
+import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
+import SearchResultUser from "./SearchResultUser";
+import '../Search.css';
 import { ArrowLeftCircleFill, ArrowRightCircleFill } from "react-bootstrap-icons";
+import axios from "axios";
 import PostHorizontal from "../../Home/PostsContainers/SinglePostComponent/PostHorizontal";
 
-function GetPostsForSearchResult(postAmount, pageNumber) {
-    const list = [];
-    for (let index = 0; index < postAmount; index++) {
-        list.push(
-            <PostHorizontal
-                title={"Search post"}
-                desc={"Lorem ipsum is dolores this is test sratatata"}
-                upvoteCount={1}
-                commentCount={3}
-                authorName={"Jonas McŁowicz"}
-                dateCreated={"21/04/2021"}
-                postPic={"https://media.istockphoto.com/photos/hotair-balloons-picture-id619250406?b=1&k=20&m=619250406&s=170667a&w=0&h=yijHjU0GTp5zFl5WjrAxYguoXTa37p3lLiehWK15Bx4="}
-                authorPic={"https://prsmeble.pl/wp-content/uploads/2013/10/300x201xperson.jpg.pagespeed.ic.jkTJYjUU9H.webp"}
-                hashtags={["one", "two", "three"]}
-                showInfo={true}
-            />);
-    }
-    return list;
+function GetRouteAddress() {
+    console.log(window.location.pathname)
+    var parts = window.location.pathname.split('/');
+    return parts.length >= 4 ? parts[parts.length - 2] : parts[parts.length - 1];
 }
 
-class SearchedPostsWrapper extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchedPhrase: "",
-            pageNumber: 1
-        };
-        this.increment = this.increment.bind(this);
-    }
-    increment = () => {
-        this.setState({ pageNumber: this.state.pageNumber + 1 })
-        console.log(this.state.pageNumber + 0);
+function SearchedUserWrapper() {
+    const [count, setCount] = useState(1);
+    const [posts, setPosts] = useState([{}]);
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getSearchResult();
+    }, [count]);
+
+    useEffect(() => {
+        getSearchResult();
+    }, [count]);
+
+    const getSearchResult = () => {
+        setLoading(true);
+        axios
+            .get(`https://localhost:5001/api/v1/posts/search/${GetRouteAddress()}/${10}/${count}`)
+            .then((response) => {
+                setPosts(response.data);
+                setLoading(false);
+                document.getElementById("errorMessage").innerHTML = "";
+                console.log(posts);
+            })
+            .catch((error) => {
+                setLoading(false);
+                setPosts(null);
+                document.getElementById("errorMessage").innerHTML = "No posts found!"
+                console.log(error);
+            });
+    };
+
+    const decrement = () => {
+        if (count === 1) {
+            return 0;
+        }
+        else {
+            setCount(count - 1);
+        }
     }
 
-    decrement = () => {
-        if (this.state.pageNumber > 1) {
-            this.setState({ pageNumber: this.state.pageNumber - 1 })
+    const increment = () => {
+        if (posts === null) {
+            return 0;
         }
-        console.log(this.state.pageNumber + 0);
+        else {
+            setCount(count + 1);
+        }
     }
-    render() {
+
+    const GenerateUsers = () => {
+        if (posts !== null) {
+            return (posts.map((postInfo) => (
+                <Col>
+                    <div key={postInfo.id}>
+                        <PostHorizontal
+                            id={postInfo.id}
+                            title={postInfo.title}
+                            desc={postInfo.description}
+                            upvoteCount={postInfo.score}
+                            commentCount={0}
+                            authorName={postInfo.authorName}
+                            dateCreated={postInfo.created}
+                            imagePath={postInfo.imagePath}
+                            authorPic={postInfo.authorProfilePic}
+                            hashtags={0}
+                            showInfo={true}
+                        />
+                    </div>
+                </Col>)))
+        }
+        else {
+            return <p></p>
+        }
+    }
+
+    if (isLoading) {
+        return <div className="App">Loading...</div>;
+    }
+    else {
         return (
             <div>
-                <div>{GetPostsForSearchResult(5, this.props.pageNumber)}</div>
+                {GenerateUsers()}
                 <div className="search-pagination">
-                    <ButtonGroup style={{marginBottom: '1em'}}>
-                        <Button variant="outline-success" onClick={this.decrement}><ArrowLeftCircleFill /></Button>
-                        <div className="color-info-container search-page-number" >{this.state.pageNumber}</div>
-                        <Button variant="outline-success" onClick={this.increment}><ArrowRightCircleFill /></Button>
+                    <p id="errorMessage" style={{ marginBottom: '1em' }}></p>
+                    <ButtonGroup style={{ marginBottom: '1em' }}>
+                        <Button variant="outline-success" onClick={() => decrement()}><ArrowLeftCircleFill /></Button>
+                        <div className="color-info-container search-page-number" >{count}</div>
+                        <Button variant="outline-success" onClick={() => increment()}><ArrowRightCircleFill /></Button>
                     </ButtonGroup>
                 </div>
-            </div>);
+            </div>
+        );
     }
 }
 
-export default SearchedPostsWrapper;
+export default SearchedUserWrapper;

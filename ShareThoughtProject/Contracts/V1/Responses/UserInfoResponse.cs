@@ -12,7 +12,6 @@ namespace ShareThoughtProjectApi.Contracts.V1.Responses
         public DateTime Joined { get; set; }
         public int? PostScore { get; set; }
         public List<Hashtag>? FollowedHashtags { get; set; }
-        public List<Post>? CreatedPosts { get; set; }
-        public List<Comment>? CreatedComments { get; set; }
+        public string Role { get; set; }
     }
 }
