@@ -87,8 +87,16 @@ namespace ShareThoughtProjectApi.Controllers.V1
         [HttpGet(ApiRoutes.Posts.Get)]
         public async Task<IActionResult> Get([FromRoute] Guid postId)
         {
+            //var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
             var post = await _postService.GetPostByIdAsync(postId);
-            return (post == null ? NotFound() : Ok(_mapper.Map<PostResponse>(post)));
+            if (post != null)
+            {
+                List<PostResponse> tempList = new();
+                tempList.Add(_mapper.Map<PostResponse>(post));
+                var tempListWithInfo = await _mapHelperService.AddCreatorInfo(tempList);
+                return Ok(tempListWithInfo[0]);
+            }
+            return NotFound();
         }
 
         [HttpGet(ApiRoutes.Posts.Search)]
@@ -176,9 +184,8 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpPut(ApiRoutes.Posts.Vote)]
-        public async Task<IActionResult> VoteComment(Guid postId, bool isUpvote)
+        public async Task<IActionResult> VotePost(Guid postId, bool isUpvote, string userId)
         {
-            var userId = HttpContext.GetUserId();
             var post = await _postService.GetPostByIdAsync(postId);
             var updated = await _postService.VotePostAsync(post, isUpvote, userId);
 

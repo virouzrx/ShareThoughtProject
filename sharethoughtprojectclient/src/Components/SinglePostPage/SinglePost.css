@@ -65,10 +65,6 @@
     cursor: pointer;
 }
 
-.single-post-comments-count:hover{
-    background-color: #163896;
-    cursor: pointer;
-}
 
 .likes-and-comments-wrapper {
     margin-top: 0.75em;
