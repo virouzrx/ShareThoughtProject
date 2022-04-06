@@ -17,6 +17,7 @@ namespace ShareThoughtProjectApi.Contracts.V1.Responses
         public string Description { get; set; }
         public int Score { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsUpvoted { get; set; }
         public FlagStatus CurrentFlagStatus { get; set; }
         public GeneralFlagReason? FlagReason { get; set; }
         public string UserId { get; set; } //author

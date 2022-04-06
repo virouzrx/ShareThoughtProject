@@ -73,7 +73,6 @@ class App extends Component {
                 document.location.reload()
             })
             .catch(function (error) {
-                console.log("kurwa")
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'

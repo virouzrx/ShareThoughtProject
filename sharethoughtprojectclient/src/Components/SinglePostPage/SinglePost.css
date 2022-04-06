@@ -18,10 +18,10 @@
 }
 
 .singlepost-author-name-and-date {
-  margin-top: 0.75em;
-  margin-left: 0.75em;
-  margin-right: 0.75em;
-  font-size: medium;
+    margin-top: 0.75em;
+    margin-left: 0.75em;
+    margin-right: 0.75em;
+    font-size: medium;
 }
 
 .singlepost-card-author-avatar {
@@ -30,6 +30,7 @@
     border-radius: 100%;
     margin-top: 0.3em;
 }
+
 .single-post-likes-count {
     width: 6em;
     min-width: 5em;
@@ -55,12 +56,12 @@
     vertical-align: middle;
     font-size: 1rem;
     line-height: 1.5;
-    background-color: #2457e2;
     color: #ffffffd0;
+    background-color: #289e44;
     font-size: 1.5em;
 }
 
-.single-post-likes-count:hover{
+.single-post-likes-count:hover {
     background-color: #1b702f;
     cursor: pointer;
 }
@@ -80,7 +81,7 @@
     margin-right: auto;
 }
 
-.single-post-desc{
+.single-post-desc {
     font-size: larger;
 }
 
@@ -88,11 +89,13 @@
     margin-top: 1em;
 }
 
-.single-post-desc, .single-post-content {
+.single-post-desc,
+.single-post-content {
     font-family: 'Noto Sans', sans-serif;
 }
 
-.secondary-column-header, .comments-header {
+.secondary-column-header,
+.comments-header {
     font-family: 'Noto Sans', sans-serif;
     font-weight: 300;
     font-size: x-large;
@@ -116,14 +119,14 @@
     min-width: 180px;
 }
 
-@media (max-width: 900px), (max-height: 700px) {
+@media (max-width: 900px),
+(max-height: 700px) {
     .related-posts {
-      display: none;
-      max-width: 0px;
+        display: none;
+        max-width: 0px;
     }
 
     .single-post-img {
         height: 7%;
     }
-  }
-
+}

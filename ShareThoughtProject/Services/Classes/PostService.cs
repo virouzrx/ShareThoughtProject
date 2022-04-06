@@ -20,7 +20,38 @@ namespace ShareThoughtProjectApi.Services
 
         public async Task<bool> VotePostAsync(Post post, bool isUpvote, string userId)
         {
-            post.Score.Vote(isUpvote);
+            var existingVote = await _dbContext.PostVotes.Where(x => x.PostId == post.Id && x.UserId == userId).FirstOrDefaultAsync();
+            if (existingVote != null)   
+            {
+                if (existingVote.IsLike == isUpvote) //if user clicked the same button twice
+                {
+                    _dbContext.PostVotes.Remove(existingVote);
+                    if (isUpvote)
+                        post.Score--;
+                    else
+                        post.Score++;
+
+                    _dbContext.Posts.Update(post);
+                    var updateSuccessful = await _dbContext.SaveChangesAsync();
+                    return updateSuccessful > 0;
+                }
+                else //if user clicked different button
+                {
+                    _dbContext.PostVotes.Remove(existingVote);
+                }
+            }
+            if (isUpvote)
+            {
+                int tempScore = post.Score;
+                tempScore++;
+                post.Score = tempScore;
+            }
+            else
+            {
+                int tempScore = post.Score;
+                tempScore--;
+                post.Score = tempScore;
+            }
             var vote = new PostVote
             {
                 PostId = post.Id,
@@ -29,10 +60,16 @@ namespace ShareThoughtProjectApi.Services
                 VoteDate = DateTime.Now
             };
             _dbContext.PostVotes.Add(vote);
+
             _dbContext.Posts.Update(post);
             var updated = await _dbContext.SaveChangesAsync();
             return updated > 0;
+        }
 
+        public async Task<bool> IsPostUpvotedByUser(Guid postId, string userId)
+        {
+            var vote = await _dbContext.PostVotes.Where(x => x.PostId == postId && x.UserId == userId).FirstOrDefaultAsync();
+            return vote != null;
         }
 
         public async Task<bool> CreatePostAsync(Post post)
@@ -209,6 +246,16 @@ namespace ShareThoughtProjectApi.Services
                 return users.Take(pageSize).ToList();
             }
             return usersSkipped;
+        }
+
+        public async Task<bool> UserAlreadyVotedPost(Guid postId, string userId, bool isUpvote)
+        {
+            bool userAlreadyLikedPost = await _dbContext.PostVotes
+                .Where( x => x.PostId == postId && 
+                        x.UserId == userId && 
+                        x.IsLike == isUpvote)
+                .AnyAsync();
+            return userAlreadyLikedPost;
         }
     }
 }

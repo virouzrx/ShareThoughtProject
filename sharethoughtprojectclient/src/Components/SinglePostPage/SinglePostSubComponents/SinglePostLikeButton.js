@@ -11,7 +11,6 @@ function SinglePostLikeButton(props) {
                     </path>
                 </svg>
                 {props.upvoteCount}
-
             </div>);
 }
 

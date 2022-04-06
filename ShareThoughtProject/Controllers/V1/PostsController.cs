@@ -17,6 +17,7 @@ using ShareThoughtProjectApi.Services.Interfaces;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
@@ -87,7 +88,6 @@ namespace ShareThoughtProjectApi.Controllers.V1
         [HttpGet(ApiRoutes.Posts.Get)]
         public async Task<IActionResult> Get([FromRoute] Guid postId)
         {
-            //var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
             var post = await _postService.GetPostByIdAsync(postId);
             if (post != null)
             {
@@ -184,8 +184,14 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpPut(ApiRoutes.Posts.Vote)]
-        public async Task<IActionResult> VotePost(Guid postId, bool isUpvote, string userId)
+        public async Task<IActionResult> VotePost([FromRoute] Guid postId, string userId, bool isUpvote)
         {
+
+            if (await _postService.UserOwnsPostAsync(postId, userId))
+            {
+                return BadRequest("You can't vote your own post.");
+            }
+
             var post = await _postService.GetPostByIdAsync(postId);
             var updated = await _postService.VotePostAsync(post, isUpvote, userId);
 
