@@ -73,9 +73,8 @@ function SearchedUserWrapper() {
                             desc={postInfo.description}
                             upvoteCount={postInfo.score}
                             commentCount={postInfo.comments}
-                            hashtags={postInfo.hashtags}
                             authorName={postInfo.authorName}
-                            created={postInfo.created}
+                            dateCreated={postInfo.created}
                             imagePath={postInfo.imagePath}
                             authorPic={postInfo.authorProfilePic}
                             showInfo={true}

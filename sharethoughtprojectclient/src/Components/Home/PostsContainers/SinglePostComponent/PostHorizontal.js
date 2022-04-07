@@ -9,7 +9,7 @@ import AuthorInfoAndCreateDate from './AuthorInfoAndCreationDate';
 function PostHorizontal(props) {
     return (
         <div className="new-post">
-            <a className="hyperlink-card" href="/post/1">
+            <a className="hyperlink-card" href={"/post/" + props.id}>
                 <Row>
                     <Col md={4}>
                         <Card.Img variant="top" src={`data:image/jpeg;base64,${props.imagePath}`} />

@@ -26,7 +26,6 @@ class SearchResultUser extends Component {
                 <a href="/user/1" className="hyperlink-card">
                     <Row>
                         <Col className="searchresult-user-avatar-col"><img className="commentor-pic" src={`data:image/jpeg;base64,${this.props.imagePath}`} /></Col>
-                        dupa
                         <Col>
                             <Row className="search-result-username" xs={6}>{this.props.username}</Row>
                             <Row className="user-searchresult-date">{stringifiedDate}</Row>
@@ -41,7 +40,7 @@ class SearchResultUser extends Component {
                                 </div>
                                 <div className="color-info-container comment-amount-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        className="bi bi-chat-left-fill icon-placement adjusted-icon-placement" viewBox="0 0 16 16">
+                                        className="bi bi-chat-left-fill icon-placement" viewBox="0 0 16 16">
                                         <path
                                             d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
                                     </svg><span>1</span>

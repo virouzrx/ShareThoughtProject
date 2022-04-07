@@ -22,14 +22,11 @@ class SearchResultPost extends Component {
     }
 
     renderHashtags(hashtags) {
-        if (hashtags === undefined) {
-            return <span></span>
+        let list = {};
+        for (let i = 0; i< hashtags.length; i++) {
+            list.push(<div key={i} className="hashtag">{hashtags[i].hashtagName}</div>)
         }
-        else {
-            return (hashtags.map((ht) => {
-                <div key={ht.id} className="hashtag">{ht.hashtagName}</div>
-            }))
-        }
+        return (<div className="hashtag-wrapper">{list}</div>)
     }
 
     render() {
@@ -40,22 +37,30 @@ class SearchResultPost extends Component {
                 <a className="hyperlink-card" href={"/post/" + this.props.id}>
                     <Row>
                         <Col md={3}>
-                            <Card.Img variant="top" src={`data:image/jpeg;base64,${this.props.imagePath}`} style={{ width: '100%' }} />
+                            <Card.Img variant="top" src={`data:image/jpeg;base64,${this.props.imagePath}`} style={{width: '100%'}}/>
                         </Col>
                         <Col md={8}>
                             <Card.Title className="custom-card-title">{this.props.title}</Card.Title>
-                            {this.renderHashtags(this.props.hashtags)} {/*todo - WHY THE HELL THIS DOESNT WORK?! */}
+                            {/*this.renderHashtags(this.props.hashtags)*/} {/*todo - WHY THE HELL THIS DOESNT WORK?! */}
                             <AuthorInfoAndCreateDate showInfo={this.props.showInfo} authorName={this.props.authorName} authorPic={this.props.authorPic} created={this.props.created}></AuthorInfoAndCreateDate>
                             <Card.Text>{this.props.desc}</Card.Text>
                             <ButtonGroup className="me-2" aria-label="First group">
                                 <div className="likes-count">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        className="bi bi-arrow-up-square-fill icon-placement adjusted-icon-placement" viewBox="0 0 16 16">
+                                        className="bi bi-arrow-up-square-fill icon-placement" viewBox="0 0 16 16">
                                         <path
                                             d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z">
                                         </path>
                                     </svg>
-                                    {this.props.upvoteCount === undefined ? 0 : this.props.upvoteCount}
+                                    {this.props.upvoteCount}
+                                </div>
+                                <div className="comments-count">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        className="bi bi-chat-left-fill icon-placement" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                    </svg>
+                                    {this.props.commentCount.length}
                                 </div>
                             </ButtonGroup>
                         </Col>

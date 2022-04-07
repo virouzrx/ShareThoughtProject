@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ShareThoughtProjectApi.Data;
 using ShareThoughtProjectApi.Domain;
 using System.Collections.Generic;
@@ -10,9 +11,12 @@ namespace ShareThoughtProjectApi.Services
     public class UserService : IUserService
     {
         private readonly ShareThoughtDbContext _context;
-        public UserService(ShareThoughtDbContext context)
+        private readonly IMapper _mapper;
+
+        public UserService(ShareThoughtDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<List<AppUser>> GetAllUsers()
         {
@@ -51,17 +55,18 @@ namespace ShareThoughtProjectApi.Services
 
         public async Task<List<AppUser>> GetUsersByPhrase(string phrase, int pageSize, int pageNumber)
         {
-            var users =  await _context.Users
+            var users = await _context.Users
                 .Where(x => x.UserName
                     .ToLower()
                     .Contains(phrase.ToLower()))
-                .Take(pageSize)
                 .ToListAsync();
-            if (pageNumber - 1 * pageSize > 0)
+
+            var usersSkipped = users.Skip((pageNumber - 1) * pageSize).ToList();
+            if (usersSkipped.Count > pageSize)
             {
-                return users.Skip(pageNumber - 1 * pageSize).ToList();
+                return users.Take(pageSize).ToList();
             }
-            return users;
+            return usersSkipped;
         }
 
         public async Task<AppUser> GetUserByUsername(string username)
