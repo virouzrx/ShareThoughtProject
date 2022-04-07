@@ -158,8 +158,7 @@ class SinglePost extends Component {
                             <div className="single-post-content">
                                 {this.state.post.content}
                             </div>
-                            <div className="comments-header">Comments</div>
-                            <CommentList postId={1}></CommentList>
+                            <CommentList postId={GetRouteAddress()}></CommentList>
                         </Col>
                     </Row>
                 </Container>
