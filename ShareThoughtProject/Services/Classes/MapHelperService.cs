@@ -23,5 +23,15 @@ namespace ShareThoughtProjectApi.Services.Classes
             }
             return postResponse;
         }
+        public async Task<List<CommentResponse>> AddAuthorInfo(List<CommentResponse> commentResponse)
+        {
+            foreach (var item in commentResponse)
+            {
+                var user = await _userService.GetUserById(item.UserId);
+                item.AuthorAvatar = user.AvatarPath;
+                item.AuthorName = user.UserName;
+            }
+            return commentResponse;
+        }
     }
 }

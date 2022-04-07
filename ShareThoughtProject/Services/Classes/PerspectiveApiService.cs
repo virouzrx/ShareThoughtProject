@@ -29,25 +29,27 @@ namespace ShareThoughtProjectApi.Services
             var response = await _httpClient.SendAsync(request);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var perspectiveEntity = JsonConvert.DeserializeObject<PerspectiveApiEntity>(jsonResponse);
-            int profanityScore = Convert.ToInt32(Math.Round(perspectiveEntity.attributeScores.PROFANITY.summaryScore.value));
-            int identityAttackScore = Convert.ToInt32(Math.Round(perspectiveEntity.attributeScores.IDENTITY_ATTACK.summaryScore.value));
-            int threatScore = Convert.ToInt32(Math.Round(perspectiveEntity.attributeScores.THREAT.summaryScore.value));
-            int sexuallyExplicitScore = Convert.ToInt32(Math.Round(perspectiveEntity.attributeScores.SEXUALLY_EXPLICIT.summaryScore.value));
+            double profanityScore = Convert.ToDouble(perspectiveEntity.attributeScores.PROFANITY.summaryScore.value);
+            double identityAttackScore = Convert.ToDouble(perspectiveEntity.attributeScores.IDENTITY_ATTACK.summaryScore.value);
+            double threatScore = Convert.ToDouble(Math.Round(perspectiveEntity.attributeScores.THREAT.summaryScore.value));
+            double sexuallyExplicitScore = Convert.ToDouble(Math.Round(perspectiveEntity.attributeScores.SEXUALLY_EXPLICIT.summaryScore.value));
 
-            if (profanityScore > 60 && profanityScore < 75 ||
-                identityAttackScore > 60 && identityAttackScore < 75 ||
-                threatScore > 60 && threatScore < 75 ||
-                sexuallyExplicitScore > 60 && sexuallyExplicitScore < 75)
-            {
-                return AutoModerationStatus.FLAG;
-            }
-            if (profanityScore > 75 ||
-                identityAttackScore > 75 ||
-                threatScore > 75 ||
-                sexuallyExplicitScore > 75)
+            if (profanityScore > 0.75 ||
+                identityAttackScore > 0.75 ||
+                threatScore > 0.75 ||
+                sexuallyExplicitScore > 0.75)
             {
                 return AutoModerationStatus.REJECT;
             }
+
+            if (profanityScore > 0.6 && profanityScore < 0.75 ||
+                identityAttackScore > 0.6 && identityAttackScore < 0.75 ||
+                threatScore > 0.6 && threatScore < 0.75 ||
+                sexuallyExplicitScore > 0.6 && sexuallyExplicitScore < 0.75)
+            {
+                return AutoModerationStatus.FLAG;
+            }
+
             return AutoModerationStatus.OK;
         }
     }

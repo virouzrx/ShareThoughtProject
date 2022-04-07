@@ -28,7 +28,9 @@ namespace ShareThoughtProjectApi.Services
         public async Task<List<Comment>> GetAllPostCommentsAsync(Guid postId)
         {
             var guidPostId = postId;
-            return await _dbContext.Comments.Where(x => x.PostId == guidPostId).ToListAsync();
+            var comments = await _dbContext.Comments.Where(x => x.PostId == guidPostId).ToListAsync();
+            var ordered = comments.OrderByDescending(x => x.Created).ToList();
+            return ordered;
         }
 
         public async Task<bool> VoteCommentAsync(Comment comment, bool isUpvote, string userId)

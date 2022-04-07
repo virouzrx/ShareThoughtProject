@@ -22,7 +22,7 @@ function CheckForCurrentPath(path) {
 
 const Search = () => {
     return (<Container>
-        <p style={{ fontSize: 'xx-large' }}>Searched phrase: {GetRouteAddress()}</p>
+        <p style={{ fontSize: 'xx-large' }}>Searched phrase: {decodeURI(GetRouteAddress())}</p>
         <div className="feed-button-group">
             <ButtonGroup aria-label="Basic example">
                 <Button className={CheckForCurrentPath("posts")} variant="outline-success feed" href={`/search/${GetRouteAddress()}/posts`}>Posts</Button>

@@ -7,6 +7,7 @@ namespace ShareThoughtProjectApi.Contracts.V1.Responses
         public Guid Id { get; set; }
         public string Content { get; set; }
         public DateTime Created { get; set; }
+        public string AuthorAvatar { get; set; }
         public string AuthorName { get; set; }
         public Guid? SupercommentLink { get; set; }
         public int CommentScore { get; set; }

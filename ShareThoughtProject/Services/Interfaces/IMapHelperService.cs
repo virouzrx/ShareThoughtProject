@@ -8,5 +8,6 @@ namespace ShareThoughtProjectApi.Services.Interfaces
     public interface IMapHelperService
     {
         public Task<List<PostResponse>> AddCreatorInfo(List<PostResponse> postResponse);
+        public Task<List<CommentResponse>> AddAuthorInfo(List<CommentResponse> commentResponse);
     }
 }

@@ -1,34 +1,42 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShareThoughtProjectApi.Contracts;
 using ShareThoughtProjectApi.Contracts.V1.Requests;
+using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Domain;
 using ShareThoughtProjectApi.Extensions;
 using ShareThoughtProjectApi.Services;
+using ShareThoughtProjectApi.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User, Admin")]
     public class CommentsController : ControllerBase
     {
         private readonly ICommentService _commentService;
         private readonly IPerspectiveApiService _perspectiveApiService;
-        private readonly IModerationService _moderationService;
+        private readonly IMapper _mapper;
+        private readonly IMapHelperService _mapHelperService;
 
-        public CommentsController(ICommentService commentService, IPerspectiveApiService perspectiveApiService, IModerationService moderationService)
+        public CommentsController(ICommentService commentService, IPerspectiveApiService perspectiveApiService, 
+            IMapper mapper, IMapHelperService mapHelperService)
         {
             _commentService = commentService;
             _perspectiveApiService = perspectiveApiService;
-            _moderationService = moderationService;
+            _mapper = mapper;
+            _mapHelperService = mapHelperService;
         }
 
         [HttpGet(ApiRoutes.Comments.GetAllPostsComments)]
         public async Task<IActionResult> GetPostComments(Guid postId)
         {
-            return Ok(await _commentService.GetAllPostCommentsAsync(postId));
+            var comments = _mapper.Map<List<CommentResponse>>(await _commentService.GetAllPostCommentsAsync(postId));
+            await _mapHelperService.AddAuthorInfo(comments);
+            return Ok(comments);
         }
 
         [HttpPost(ApiRoutes.Comments.CreateComment)]
@@ -39,13 +47,13 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 Content = commentRequest.Content,
                 Created = DateTime.Now,
                 CommentScore = 0,
-                UserId = HttpContext.GetUserId(),
+                UserId = commentRequest.UserId,
                 PostId = postId
             };
             var autoModerationResult = await _perspectiveApiService.AutoModerateComment(commentRequest.Content);
             if (autoModerationResult == AutoModerationResult.AutoModerationStatus.REJECT)
             {
-                return BadRequest("Inadequite content. Please change your comment so it doesn't violate our terms");
+                return BadRequest("We have detected a violent content in your comment. Please change the content of your comment.");
             }
             if (autoModerationResult == AutoModerationResult.AutoModerationStatus.FLAG)
             {
