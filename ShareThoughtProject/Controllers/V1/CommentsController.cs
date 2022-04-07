@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User, Admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CommentsController : ControllerBase
     {
         private readonly ICommentService _commentService;

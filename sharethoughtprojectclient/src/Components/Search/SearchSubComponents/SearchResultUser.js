@@ -19,16 +19,17 @@ class SearchResultUser extends Component {
     }
 
     render() {
-        { console.log(this.props.CurrentPage) }
+        var date = new Date(this.props.joined)
+        var stringifiedDate = date.toLocaleDateString("es-PE");
         return (
             <div className="user-searchresult">
                 <a href="/user/1" className="hyperlink-card">
                     <Row>
-                        <Col className="searchresult-user-avatar-col"><img className="commentor-pic" src="https://transportationenergypartners.org/wp-content/uploads/2020/08/random-person-3.jpg" /></Col>
+                        <Col className="searchresult-user-avatar-col"><img className="commentor-pic" src={`data:image/jpeg;base64,${this.props.imagePath}`} /></Col>
                         <Col>
-                            <Row className="search-result-username" xs={6}>MagicChris_87</Row>
-                            <Row className="user-searchresult-date">Joined: 20.04.2022</Row>
-                            <Row className="user-searchresult-type"><div className="color-info-container user">Poster</div></Row>
+                            <Row className="search-result-username" xs={6}>{this.props.username}</Row>
+                            <Row className="user-searchresult-date">{stringifiedDate}</Row>
+                            <Row className="user-searchresult-type"><div className="color-info-container user">{this.props.role}</div></Row>
                         </Col>
                         <Col>
                             <ButtonGroup aria-label="Basic example" className="user-stats" vertical={!this.state.isMobile} style={{ textAlign: 'left' }}>
@@ -38,9 +39,11 @@ class SearchResultUser extends Component {
                                     </svg><span className="votes-count">1</span>
                                 </div>
                                 <div className="color-info-container comment-amount-block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
-                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z" />
-                                    </svg><span className="votes-count">1</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        className="bi bi-chat-left-fill icon-placement" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                    </svg><span>1</span>
                                 </div>
                                 <div className="color-info-container post-amount-block">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-body-text" viewBox="0 0 16 16">
@@ -50,7 +53,7 @@ class SearchResultUser extends Component {
                             </ButtonGroup>
                         </Col>
                         <Col>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vestibulum libero vitae venenatis scelerisque.
+                            {this.props.description}
                         </Col>
                     </Row >
                 </a >

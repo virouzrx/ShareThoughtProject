@@ -1,86 +1,171 @@
-import { ButtonGroup, Container, Col, Row, Card, Button, Form, FormControl } from "react-bootstrap";
-import CommentsCount from "../Home/PostsContainers/SinglePostComponent/CommentsCount";
+import axios from "axios";
+import { Component } from "react";
 import './SinglePost.css';
 import AuthorAndDate from "./SinglePostSubComponents/AuthorAndDate";
 import SinglePostHashtagWrapper from "./SinglePostSubComponents/SinglePostHashtagWrapper";
 import SinglePostLikeButton from "./SinglePostSubComponents/SinglePostLikeButton";
 import SinglePostCommentsCountButton from "./SinglePostSubComponents/SinglePostCommentsCountButton";
 import CommentList from "./Comments/CommentList";
+import { ButtonGroup, Card, Col, Container, Form, Row, Button } from "react-bootstrap";
+import jwt_decode from "jwt-decode";
 
-const SinglePostPage = (props) => {
-    return (
-        <div>
-            <Container>
-                <Row>
-                    <Col xs={12} md={8}>
-                        <SinglePostHashtagWrapper mainHashtags={["Angular", "ReactJS", "Webdev"]}></SinglePostHashtagWrapper>
-                        <div className="post-title">This is a very fascinating post!</div>
-                        <AuthorAndDate authorName="Nina Kasai" authorPic="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"></AuthorAndDate>
-                        <ButtonGroup className="me-2 likes-and-comments-wrapper" aria-label="First group">
-                            <SinglePostLikeButton upvoteCount={5}></SinglePostLikeButton>
-                            <SinglePostCommentsCountButton commentCount={15}></SinglePostCommentsCountButton>
-                        </ButtonGroup>
-                        <div className="single-post-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</div>
-                        <img className="single-post-img" src="https://s0.2mdn.net/simgad/8623654726582243725"></img>
-                        <div className="single-post-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisl enim, ultricies ac mi sollicitudin, viverra vehicula eros. Vestibulum et egestas enim. Quisque a lorem non orci auctor ultricies non eu velit. Nam dapibus lorem quam, vel egestas arcu sollicitudin at. Donec erat lorem, posuere vulputate molestie at, egestas id metus. Donec semper placerat metus, eu tristique purus. Curabitur eu fermentum lacus, id vestibulum sapien. Aliquam sagittis, lectus id ullamcorper tincidunt, ligula magna volutpat lacus, ut elementum lectus turpis gravida felis. Sed eget lectus sit amet nulla luctus ultrices. Aliquam tristique diam nibh, sed molestie magna ullamcorper ac. Suspendisse dictum nisi et massa condimentum lacinia. Suspendisse potenti.
-                            <br /><br />Etiam est lectus, lobortis sodales ornare a, auctor nec dolor. Nunc luctus tortor ut nisi egestas, a dapibus ligula tristique. Aenean rhoncus euismod velit, ac luctus lectus congue vitae. Pellentesque finibus justo sem, vitae luctus mauris maximus nec. Ut bibendum, diam rhoncus fringilla interdum, nunc elit mollis enim, sit amet rutrum sem ante sed risus. Donec posuere feugiat hendrerit. Sed ac aliquet neque, eget scelerisque nisl. Praesent malesuada sed felis vitae elementum. Curabitur efficitur eu felis nec luctus. Integer vulputate massa dolor, non tristique erat ornare quis. Aenean ac ante velit. Suspendisse hendrerit justo nec enim molestie tristique. Nunc fringilla eros quis risus auctor, sit amet sodales eros viverra. Cras porttitor porttitor purus feugiat consectetur. Aliquam id lacus at ex consectetur condimentum.
-                            <br /><br />Nunc gravida nulla a ullamcorper consequat. Duis tincidunt purus urna, eu vestibulum libero vehicula eget. Curabitur nisi quam, interdum eget neque sed, luctus porta neque. Cras id facilisis ipsum. Aliquam erat volutpat. Quisque odio orci, finibus sit amet congue sit amet, euismod et eros. Phasellus et lacus ac leo mollis accumsan. Etiam interdum sapien vel diam maximus, id tristique tortor maximus. Nunc et sodales nulla, nec aliquam dui. Curabitur at ex ante. Praesent a diam eu nibh egestas varius. Ut at purus at orci pretium feugiat ut vitae quam. Sed et bibendum lacus.</div>
-                        <div className="comments-header">Comments</div>
-                        <Form className="d-flex">
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" style={{width: '100%'}}>
-                                <Form.Control as="textarea" rows={3} resize="none" style={{resize: 'none'}}/>
-                            </Form.Group>
-                        </Form>
-                        <Button variant="outline-primary" style={{marginTop: '-0.5em', marginBottom: '1em'}}>Add comment</Button>
-                        <CommentList postId={1}></CommentList>
-                    </Col>
-                    <Col className="related-posts">
-                        <p className="secondary-column-header">More from this.authorName</p>
-                        <Card className="side-column-card">
-                            <Card.Img variant="top" src="https://i.ytimg.com/vi/LL70ksp198M/maxresdefault.jpg" />
-                            <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
-                                <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="side-column-card">
-                            <Card.Img variant="top" src="https://i.ytimg.com/vi/LL70ksp198M/maxresdefault.jpg" />
-                            <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
-                                <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card className="side-column-card">
-                            <Card.Img variant="top" src="https://i.ytimg.com/vi/LL70ksp198M/maxresdefault.jpg" />
-                            <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
-                                <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                        <Card>
-                            <Card.Img variant="top" src="https://i.ytimg.com/vi/LL70ksp198M/maxresdefault.jpg" />
-                            <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
-                                <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
-        </div>);
+
+const api = axios.create({
+    baseURL: `https://localhost:5001/api/v1/`
+})
+
+
+function GetRouteAddress() {
+    console.log(window.location.pathname)
+    var parts = window.location.pathname.split('/');
+    return parts[2];
 }
 
-export default SinglePostPage;
+class SinglePost extends Component {
+    state = {
+        post: {},
+        buttonEnabled: false
+    }
+    constructor(props) {
+        super(props);
+
+        api.get(`posts/${GetRouteAddress()}`)
+            .then(res => {
+                console.log(res.data)
+                this.setState({ post: res.data })
+                console.log("State: " + this.state.post.isUpvoted)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        this.Upvote = this.Upvote.bind(this);
+        this.Downvote = this.Downvote.bind(this);
+    }
+
+    TestMethod() {
+        let ref = document.getElementById('error');
+        if (ref !== undefined && ref) {
+            document.getElementById('likeButton').classList.add('active');
+            document.getElementById('error').innerHTML = "You have to be logged in to like the post."
+            setTimeout(() => {
+                setInterval(document.getElementById('error').innerHTML = "", 5000)
+            }, 3000);
+            this.setState({ buttonEnabled: true })
+        }
+    }
+
+    Upvote() {
+        let token = localStorage.getItem('token');
+        let ref = document.getElementById('error');
+        if (!token) {
+            if (ref !== undefined && ref) {
+                document.getElementById('error').innerHTML = "You have to be logged in to like the post."
+                setTimeout(() => {
+                    setInterval(document.getElementById('error').innerHTML = "", 5000)
+                }, 3000);
+                this.setState({ buttonEnabled: true })
+            }
+        }
+        else {
+            const decoded = jwt_decode(token);
+            console.log(this.state.post === undefined)
+            api.put(`/posts/vote/${GetRouteAddress()}/${decoded.id}/${true}`)
+                .catch(error => {
+                    document.getElementById('error').innerHTML = error.response.data;
+                    setTimeout(() => {
+                        setInterval(document.getElementById('error').innerHTML = "", 5000)
+                    }, 3000);
+                });
+        }
+    }
+
+    Downvote() {
+        let token = localStorage.getItem('token');
+        let ref = document.getElementById('error');
+        if (!token) {
+            if (ref !== undefined && ref) {
+                document.getElementById('error').innerHTML = "You have to be logged in to like the post."
+                setTimeout(() => {
+                    setInterval(document.getElementById('error').innerHTML = "", 5000)
+                }, 3000);
+                this.setState({ buttonEnabled: true })
+            }
+        }
+        else {
+            const decoded = jwt_decode(token);
+            console.log(this.state.post === undefined)
+            api.put(`/posts/vote/${GetRouteAddress()}/${decoded.id}/${false}`)
+                .catch(error => {
+                    document.getElementById('error').innerHTML = error.response.data;
+                    setTimeout(() => {
+                        setInterval(document.getElementById('error').innerHTML = "", 5000)
+                    }, 3000);
+                })
+        }
+    }
+
+
+    render() {
+        console.log(this.state.post.hashtags)
+        return (
+            <div>
+                <Container>
+                    <Row>
+                        <Col xs={12} md={8}>
+                            <SinglePostHashtagWrapper mainHashtags={this.state.post.hashtags}></SinglePostHashtagWrapper>
+                            <div className="post-title">{this.state.post.title}</div>
+                            <AuthorAndDate authorName={this.state.post.authorName} authorPic={this.state.post.authorProfilePic} created={this.state.post.created}></AuthorAndDate>
+                            <ButtonGroup style={{ marginTop: '1em' }}>
+                                <Button id="likeButton" variant='outline-success' onClick={this.Upvote} disabled={this.state.buttonEnabled} style={{ marginLeft: '0', marginBottom: '0', padding: '0.5em', textAlign: 'center' }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-arrow-up-square-fill icon-placement" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z">
+                                        </path>
+                                    </svg>
+                                    <span id="postScore">
+                                    </span>
+                                </Button>
+                                <Button variant="outline-danger" onClick={this.Downvote} style={{ margin: '0', marginLeft: '0px', padding: '0.5em', textAlign: 'center' }} >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                </Button>
+                                <Button variant="outline-secondary"  style={{ margin: '0', marginLeft: '-1px', padding: '0.5em', textAlign: 'center' }} disabled>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+                                    </svg>
+                                    <span style={{ padding: '5px' }}>
+                                        {this.state.post.score}
+                                    </span>
+                                </Button>
+                                <Button variant="outline-primary" style={{ borderRadius: '0' }} disabled>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-chat-left-fill icon-placement" viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                    </svg>
+                                    <span style={{ padding: '5px' }}>
+                                        {this.state.post.comments === undefined ? 0 : this.state.post.comments.length}
+                                    </span>
+                                </Button>
+                                <div id="error" style={{ marginTop: '7px', marginLeft: '8px' }}></div>
+                            </ButtonGroup>
+
+                            <div className="single-post-desc" style={{ marginTop: '1em' }}>{this.state.post.description}</div>
+                            <img className="single-post-img" src={`data:image/jpeg;base64,${this.state.post.imagePath}`} ></img>
+                            <div className="single-post-content">
+                                {this.state.post.content}
+                            </div>
+                            <div className="comments-header">Comments</div>
+                            <CommentList postId={1}></CommentList>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        )
+    }
+}
+
+export default SinglePost;

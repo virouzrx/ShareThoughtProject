@@ -17,7 +17,6 @@ function SearchedUserWrapper() {
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
-        document.title = `Kliknięto ${count} razy`;
         getSearchResult();
     }, [count]);
 
@@ -26,19 +25,21 @@ function SearchedUserWrapper() {
     }, [count]);
 
     const getSearchResult = () => {
+        setLoading(true);
         axios
-        .get(`https://localhost:5001/api/v1/users/search/${GetRouteAddress()}/${10}/${count}`)
-        .then((response) => {
-            setPosts(response.data);
-            setLoading(false);
-            document.getElementById("errorMessage").innerHTML = "";
-            console.log(posts);
-        })
-        .catch((error) => {
-            setLoading(false);
-            document.getElementById("errorMessage").innerHTML = "No users found!"
-            console.log(error);
-        });
+            .get(`https://localhost:5001/api/v1/users/search/${GetRouteAddress()}/${10}/${count}`)
+            .then((response) => {
+                setPosts(response.data);
+                setLoading(false);
+                document.getElementById("errorMessage").innerHTML = "";
+                console.log(posts);
+            })
+            .catch((error) => {
+                setLoading(false);
+                setPosts(null);
+                document.getElementById("errorMessage").innerHTML = "No posts found!"
+                console.log(error);
+            });
     };
 
     const decrement = () => {
@@ -50,19 +51,55 @@ function SearchedUserWrapper() {
         }
     }
 
+    const increment = () => {
+        if (posts === null) {
+            return 0;
+        }
+        else {
+            setCount(count + 1);
+        }
+    }
+
+    const GenerateUsers = () => {
+        if (posts !== null) {
+            return (posts.map((postInfo) => (
+                <Col>
+                    <div key={postInfo.id}>
+                        <SearchResultUser
+                            title={postInfo.title}
+                            desc={postInfo.description}
+                            upvoteCount={postInfo.postScore}
+                            commentCount={postInfo.commentScore}
+                            role={postInfo.role}
+                            authorName={postInfo.authorName}
+                            dateCreated={postInfo.created}
+                            imagePath={postInfo.imagePath}
+                            authorPic={postInfo.authorProfilePic}
+                            joined={postInfo.joined}
+                            hashtags={1}
+                            showInfo={true}
+                        />
+                    </div>
+                </Col>)))
+        }
+        else {
+            return <p></p>
+        }
+    }
+
     if (isLoading) {
         return <div className="App">Loading...</div>;
     }
     else {
         return (
             <div>
-                <p>Kliknięto {count} razy</p>
+                {GenerateUsers()}
                 <div className="search-pagination">
-                    <p id="errorMessage"></p>
+                    <p id="errorMessage" style={{marginBottom: '1em'}}></p>
                     <ButtonGroup style={{ marginBottom: '1em' }}>
                         <Button variant="outline-success" onClick={() => decrement()}><ArrowLeftCircleFill /></Button>
                         <div className="color-info-container search-page-number" >{count}</div>
-                        <Button variant="outline-success" onClick={() => setCount(count + 1)}><ArrowRightCircleFill /></Button>
+                        <Button variant="outline-success" onClick={() => increment()}><ArrowRightCircleFill /></Button>
                     </ButtonGroup>
                 </div>
             </div>

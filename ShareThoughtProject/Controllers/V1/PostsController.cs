@@ -17,6 +17,7 @@ using ShareThoughtProjectApi.Services.Interfaces;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
@@ -88,16 +89,31 @@ namespace ShareThoughtProjectApi.Controllers.V1
         public async Task<IActionResult> Get([FromRoute] Guid postId)
         {
             var post = await _postService.GetPostByIdAsync(postId);
-            return (post == null ? NotFound() : Ok(_mapper.Map<PostResponse>(post)));
+            if (post != null)
+            {
+                List<PostResponse> tempList = new();
+                tempList.Add(_mapper.Map<PostResponse>(post));
+                var tempListWithInfo = await _mapHelperService.AddCreatorInfo(tempList);
+                return Ok(tempListWithInfo[0]);
+            }
+            return NotFound();
+        }
+
+        [HttpGet(ApiRoutes.Posts.Search)]
+        public async Task<IActionResult> GetPostsByPhrase([FromRoute] string phrase, int pageSize, int pageNumber)
+        {
+            var post = await _postService.GetPostsByPhrase(phrase, pageSize, pageNumber); 
+            if (post.Count > 0)
+            {
+                var mapped = _mapper.Map<List<PostResponse>>(post);
+                return Ok(await _mapHelperService.AddCreatorInfo(mapped));
+            }
+            return NotFound();
         }
 
         [HttpDelete(ApiRoutes.Posts.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid postId)
         {
-            //var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
-            //if (!userOwnsPost)
-            //    return BadRequest(new { error = "You don't own this post" });
-
             var deleted = await _postService.DeletePostAsync(postId);
             return (deleted == true ? NoContent() : NotFound());
         }
@@ -168,9 +184,14 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpPut(ApiRoutes.Posts.Vote)]
-        public async Task<IActionResult> VoteComment(Guid postId, bool isUpvote)
+        public async Task<IActionResult> VotePost([FromRoute] Guid postId, string userId, bool isUpvote)
         {
-            var userId = HttpContext.GetUserId();
+
+            if (await _postService.UserOwnsPostAsync(postId, userId))
+            {
+                return BadRequest("You can't vote your own post.");
+            }
+
             var post = await _postService.GetPostByIdAsync(postId);
             var updated = await _postService.VotePostAsync(post, isUpvote, userId);
 
