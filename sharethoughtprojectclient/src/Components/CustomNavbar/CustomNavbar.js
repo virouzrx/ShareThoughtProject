@@ -51,8 +51,8 @@ const GenerateUserInfoByToken = () => {
                 <div className="vr" style={{ width: '1.5px', backgroundColor: 'white', marginLeft: '1em', marginRight: '0.25em' }}></div>
                 <div>
                     <NavDropdown title={decoded.username} id="navbarScrollingDropdown" className='current navbar-element'>
-                        <NavDropdown.Item href={`/user/lol}`}>Profile</NavDropdown.Item>
-                        <NavDropdown.Item href={`/user/lol/settings`}>Account settings</NavDropdown.Item>
+                        <NavDropdown.Item href={`/user/${decoded.username}`}>Profile</NavDropdown.Item>
+                        <NavDropdown.Item href={`/user/${decoded.username}/settings`}>Account settings</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="/logout">
                             Logout

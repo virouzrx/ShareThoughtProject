@@ -20,6 +20,7 @@ namespace ShareThoughtProjectApi.Services
 
         public async Task<bool> VotePostAsync(Post post, bool isUpvote, string userId)
         {
+            var postAuthor = await _dbContext.Users.Where(x => x.Id == post.UserId).FirstOrDefaultAsync();
             var existingVote = await _dbContext.PostVotes.Where(x => x.PostId == post.Id && x.UserId == userId).FirstOrDefaultAsync();
             if (existingVote != null)   
             {
@@ -27,10 +28,16 @@ namespace ShareThoughtProjectApi.Services
                 {
                     _dbContext.PostVotes.Remove(existingVote);
                     if (isUpvote)
+                    {
                         post.Score--;
+                        postAuthor.PostScore--;
+                    }
                     else
+                    {
                         post.Score++;
-
+                        postAuthor.PostScore++;
+                    }
+                    _dbContext.Users.Update(postAuthor);
                     _dbContext.Posts.Update(post);
                     var updateSuccessful = await _dbContext.SaveChangesAsync();
                     return updateSuccessful > 0;
@@ -45,11 +52,13 @@ namespace ShareThoughtProjectApi.Services
                 int tempScore = post.Score;
                 tempScore++;
                 post.Score = tempScore;
+                postAuthor.PostScore++;
             }
             else
             {
                 int tempScore = post.Score;
                 tempScore--;
+                postAuthor.PostScore--;
                 post.Score = tempScore;
             }
             var vote = new PostVote
@@ -60,7 +69,7 @@ namespace ShareThoughtProjectApi.Services
                 VoteDate = DateTime.Now
             };
             _dbContext.PostVotes.Add(vote);
-
+            _dbContext.Users.Update(postAuthor);
             _dbContext.Posts.Update(post);
             var updated = await _dbContext.SaveChangesAsync();
             return updated > 0;
@@ -147,40 +156,11 @@ namespace ShareThoughtProjectApi.Services
             Dictionary<Guid, int> postsAndLikes = new();
             var postsFromLastWeek = await _dbContext.Posts
                 .Where(x => x.Created >= DateTime.Now.AddDays(-7))
-                .Select(x => x.Id)
+                .OrderByDescending(x => x.Score)
+                .Take(15)
                 .ToListAsync();
 
-            foreach (var item in postsFromLastWeek)
-            {
-                var AllPostVotes = await _dbContext.PostVotes.Where(x => x.PostId == item).ToListAsync();
-                var likes = AllPostVotes.Where(x => x.IsLike).Count();
-                if (likes >= AllPostVotes.Count)
-                {
-                    postsAndLikes.Add(item, likes);
-                }
-            }
-            var topPosts = postsAndLikes
-                .OrderByDescending(x => x.Value)
-                .ToDictionary(x => x.Key, x => x.Value)
-                .Take(15)
-                .Select(x => x.Key)
-                .ToList();
-
-            List<Post> postsToReturn = new();
-            foreach (var item in topPosts)
-            {
-                postsToReturn.Add(await _dbContext.Posts
-                        .Where(x => x.Id == item)
-                        .Include(post => post.Hashtags)
-                        .Include(post => post.Comments)
-                        .FirstOrDefaultAsync());
-            }
-
-            foreach (var item in postsToReturn)
-            {
-                var creatorInfo = _userService.GetUserById(item.UserId);
-            }
-            return postsToReturn;
+            return postsFromLastWeek;
         }
 
         public async Task<List<Post>> GetTodaysPopularPostsAsync()

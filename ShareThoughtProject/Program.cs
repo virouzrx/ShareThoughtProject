@@ -56,6 +56,10 @@ namespace ShareThoughtProjectApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel(options =>
+                    {
+                        options.Limits.MaxRequestHeadersTotalSize = 1048576;
+                    });
                 });
     }
 }

@@ -8,7 +8,10 @@ namespace ShareThoughtProjectApi.Contracts.V1.Responses
     {
         public string AvatarPath { get; set; }
         public string UsernameDisplayName { get; set; }
-        public int CommentScore { get; set; }
+        public string Description { get; set; }
+        public int CommentAmount { get; set; }
+        public string UserName { get; set; }
+        public int PostAmount { get; set; }
         public DateTime Joined { get; set; }
         public int? PostScore { get; set; }
         public List<Hashtag>? FollowedHashtags { get; set; }

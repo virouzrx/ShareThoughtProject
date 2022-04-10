@@ -35,7 +35,12 @@ namespace ShareThoughtProjectApi.Controllers.V1
         public async Task<IActionResult> GetAll()
         {
             var posts = await _postService.GetPostsAsync();
-            return Ok(_mapper.Map<List<PostResponse>>(posts));
+            var mappedPosts = _mapper.Map<List<PostResponse>>(posts);
+            foreach (var item in mappedPosts)
+            {
+                item.CommentCount = item.Comments.Count();
+            }
+            return Ok(mappedPosts);
         }
 
         [HttpPut(ApiRoutes.Posts.Update)]
@@ -93,6 +98,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 List<PostResponse> tempList = new();
                 tempList.Add(_mapper.Map<PostResponse>(post));
                 var tempListWithInfo = await _mapHelperService.AddCreatorInfo(tempList);
+                tempListWithInfo[0].CommentCount = tempListWithInfo[0].Comments.Count();
                 return Ok(tempListWithInfo[0]);
             }
             return NotFound();
@@ -105,6 +111,10 @@ namespace ShareThoughtProjectApi.Controllers.V1
             if (post.Count > 0)
             {
                 var mapped = _mapper.Map<List<PostResponse>>(post);
+                foreach (var item in mapped)
+                {
+                    item.CommentCount = item.Comments.Count();
+                }
                 return Ok(await _mapHelperService.AddCreatorInfo(mapped));
             }
             return NotFound();
@@ -202,6 +212,10 @@ namespace ShareThoughtProjectApi.Controllers.V1
         {
             var objects = await _postService.GetTodaysPopularPostsAsync();
             var mapped = _mapper.Map<List<PostResponse>>(objects);
+            foreach (var item in mapped)
+            {
+                item.CommentCount = item.Comments.Count();
+            }
             await _mapHelperService.AddCreatorInfo(mapped);
             return Ok(mapped);
         }
@@ -211,6 +225,10 @@ namespace ShareThoughtProjectApi.Controllers.V1
         {
             var objects = await _postService.GetPopularPostsThisWeek();
             var mapped = _mapper.Map<List<PostResponse>>(objects);
+            foreach (var item in mapped)
+            {
+                item.CommentCount = item.Comments.Count();
+            }
             await _mapHelperService.AddCreatorInfo(mapped);
             return Ok(mapped);
         }
@@ -219,8 +237,12 @@ namespace ShareThoughtProjectApi.Controllers.V1
         public async Task<IActionResult> GetNewPosts([FromRoute] int pageSize, int pageNumber)
         {
             var objects = await _postService.GetNewPosts(pageSize, pageNumber);
-            _mapper.Map<List<PostResponse>>(objects);
-            return Ok(_mapper.Map<List<PostResponse>>(objects));
+            var mapped = _mapper.Map<List<PostResponse>>(objects);
+            foreach (var item in mapped)
+            {
+                item.CommentCount = item.Comments.Count();
+            }
+            return Ok(mapped);
         }
     }
 }

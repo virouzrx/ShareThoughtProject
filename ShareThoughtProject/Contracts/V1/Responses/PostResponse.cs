@@ -14,6 +14,7 @@ namespace ShareThoughtProjectApi.Contracts.V1.Responses
         public string Content { get; set; }
         public DateTime Created { get; set; }
         public string ImagePath { get; set; }
+        public int CommentCount { get; set; }
         public string Description { get; set; }
         public int Score { get; set; }
         public bool IsDeleted { get; set; }

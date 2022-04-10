@@ -35,4 +35,3 @@ const Activate = () => {
 }
 
 export default Activate;
-<div></div>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Data;
 using ShareThoughtProjectApi.Domain;
 using System.Collections.Generic;
@@ -11,12 +12,10 @@ namespace ShareThoughtProjectApi.Services
     public class UserService : IUserService
     {
         private readonly ShareThoughtDbContext _context;
-        private readonly IMapper _mapper;
 
-        public UserService(ShareThoughtDbContext context, IMapper mapper)
+        public UserService(ShareThoughtDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
         public async Task<List<AppUser>> GetAllUsers()
         {
@@ -74,9 +73,33 @@ namespace ShareThoughtProjectApi.Services
             return await _context.Users.Where(x => x.UserName == username).FirstOrDefaultAsync();
         }
 
-        public Task<bool> SetUserPhoto(string base64)
+        public async Task<UserInfoResponse> AddUserInfo(UserInfoResponse response)
         {
-            throw new System.NotImplementedException();
+            var user = await _context.Users.Where(x => x.UserName == response.UserName).FirstOrDefaultAsync();
+            var userPosts = (await _context.Posts.Where(x => x.UserId == user.Id).ToListAsync()).Count;
+            var userComments = (await _context.Comments.Where(x => x.UserId == user.Id).ToListAsync()).Count;
+            response.PostScore = await _context.Posts.Where(x => x.UserId == user.Id).SumAsync(x => x.Score);
+            response.CommentAmount = userComments;
+            response.PostAmount = userPosts;
+            return response;
+        }
+
+        public async Task<bool> SetUserPhoto(string base64, string userId)
+        {
+            var user = await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            user.AvatarPath = base64;
+            _context.Users.Update(user);
+            var updated = await _context.SaveChangesAsync();
+            return updated > 0;
+        }
+
+        public async Task<bool> SetUserDescription(string description, string userId)
+        {
+            var user = await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            user.Description = description;
+            _context.Users.Update(user);
+            var updated = await _context.SaveChangesAsync();
+            return updated > 0;
         }
     }
 }

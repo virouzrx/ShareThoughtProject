@@ -61,6 +61,13 @@ namespace ShareThoughtProjectApi.Contracts
             public const string GetAllUsers = Base + "/users/getall";
             public const string GetUserInfo = Base + "/users/{username}";
             public const string SearchUsers = Base + "/users/search/{phrase}/{pageSize}/{pageNumber}";
+            public const string SetUserPhoto = Base + "/users/setuserphoto";
+            public const string SetUserDescription = Base + "/users/setuserdescription";
+        }
+
+        public static class Health
+        {
+            public const string Ping = Base + "/ping";
         }
 
     }

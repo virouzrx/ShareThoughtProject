@@ -68,10 +68,11 @@ function SearchedUserWrapper() {
                         <SearchResultUser
                             title={postInfo.title}
                             desc={postInfo.description}
-                            upvoteCount={postInfo.postScore}
+                            postScore={postInfo.postScore}
                             commentCount={postInfo.commentScore}
                             role={postInfo.role}
-                            authorName={postInfo.authorName}
+                            postAmount={postInfo.postAmount}
+                            username={postInfo.userName}
                             dateCreated={postInfo.created}
                             imagePath={postInfo.imagePath}
                             authorPic={postInfo.authorProfilePic}
