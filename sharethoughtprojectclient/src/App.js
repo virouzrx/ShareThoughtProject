@@ -14,6 +14,7 @@ import Activate from './Components/AuthComponents/AuthSubComponents/Activate';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Logout from './Components/Logout/Logout';
 import UserSettings from './Components/UserProfile/UserSettings';
+import NotFound from './Components/NotFound/NotFound';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="confirm" element={<Confirm />}></Route>
           <Route path="activate/:userid/:token" element={<Activate />}></Route>
           <Route path="search/:searchedphrase/*" element={<Search/>}></Route>
+          <Route path="*" element={<NotFound/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
