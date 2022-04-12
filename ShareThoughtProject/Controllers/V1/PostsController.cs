@@ -104,6 +104,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
             return NotFound();
         }
 
+
         [HttpGet(ApiRoutes.Posts.Search)]
         public async Task<IActionResult> GetPostsByPhrase([FromRoute] string phrase, int pageSize, int pageNumber)
         {
@@ -238,11 +239,15 @@ namespace ShareThoughtProjectApi.Controllers.V1
         {
             var objects = await _postService.GetNewPosts(pageSize, pageNumber);
             var mapped = _mapper.Map<List<PostResponse>>(objects);
-            foreach (var item in mapped)
+            if (mapped.Count > 0)
             {
-                item.CommentCount = item.Comments.Count();
+                foreach (var item in mapped)
+                {
+                    item.CommentCount = item.Comments.Count();
+                }
+                return Ok(mapped);
             }
-            return Ok(mapped);
+            return NotFound();
         }
     }
 }

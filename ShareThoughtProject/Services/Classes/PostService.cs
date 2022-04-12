@@ -205,11 +205,12 @@ namespace ShareThoughtProjectApi.Services
                 .OrderBy(x => x.Created)
                 .Take(pageSize)
                 .ToListAsync();
-            if ((pageNumber - 1) * pageSize > 0)
+            var postsSkipped = posts.Skip((pageNumber - 1) * pageSize).ToList();
+            if (postsSkipped.Count > 0)
             {
-                return posts.Skip(pageNumber - 1 * pageSize).ToList();
+                return posts.Take(pageSize).ToList();
             }
-            return posts;
+            return postsSkipped;
         }
 
         public async Task<List<Post>> GetPostsByPhrase(string phrase, int pageSize, int pageNumber)
