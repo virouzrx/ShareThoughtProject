@@ -39,6 +39,20 @@ namespace ShareThoughtProjectApi.Controllers.V1
             return Ok(comments);
         }
 
+        [HttpGet(ApiRoutes.Comments.GetAllPostsCommentsPaginated)]
+        public async Task<IActionResult> GetPostCommentsPaginated(Guid postId, int pageSize, int pageNumber)
+        {
+            var comments = _mapper.Map<List<CommentResponse>>(await _commentService.GetAllPostCommentsPaginatedAsync(postId, pageSize, pageNumber));
+            if (comments.Count > 0)
+            {
+                await _mapHelperService.AddAuthorInfo(comments);
+                return Ok(comments);
+            }
+            return NotFound();
+        }
+
+
+
         [HttpPost(ApiRoutes.Comments.CreateComment)]
         public async Task<IActionResult> AddComment([FromBody] CreateCommentRequest commentRequest, [FromRoute] Guid postId)
         {

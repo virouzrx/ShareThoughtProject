@@ -12,7 +12,11 @@
 
 .comment-date {
     font-family: 'Noto Sans', sans-serif;
-    font-size: medium;
+    font-size: small;
+}
+
+.comment-hyperlink {
+    padding: 0;
 }
 
 .commentor-pic {

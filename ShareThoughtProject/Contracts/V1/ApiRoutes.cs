@@ -42,6 +42,7 @@ namespace ShareThoughtProjectApi.Contracts
         public static class Comments
         {
             public const string GetAllPostsComments = Base + "/getPostComments/{postId}";
+            public const string GetAllPostsCommentsPaginated = Base + "/getPostCommentsPaginated/{postId}/{pageSize}/{pageNumber}";
             public const string CreateComment = Base + "/comments/{postId}";
             public const string CreateSubComment = Base + "/subcomments/{postId}";
             public const string Update = Base + "/comments/update/{commentId}";

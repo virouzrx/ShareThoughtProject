@@ -33,6 +33,19 @@ namespace ShareThoughtProjectApi.Services
             return ordered;
         }
 
+        public async Task<List<Comment>> GetAllPostCommentsPaginatedAsync(Guid postId, int pageSize, int pageNumber)
+        {
+            var guidPostId = postId;
+            var comments = await _dbContext.Comments.Where(x => x.PostId == guidPostId).ToListAsync();
+            
+            var commentsSkipped = comments.Skip((pageNumber - 1) * pageSize).ToList();
+            if (commentsSkipped.Count > pageSize)
+            {
+                return commentsSkipped.Take(pageSize).OrderByDescending(x => x.Created).ToList();
+            }
+            return commentsSkipped;
+        }
+
         public async Task<bool> VoteCommentAsync(Comment comment, bool isUpvote, string userId)
         {
             if (isUpvote)

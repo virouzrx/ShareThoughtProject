@@ -63,7 +63,7 @@ namespace ShareThoughtProjectApi.Services
             var usersSkipped = users.Skip((pageNumber - 1) * pageSize).ToList();
             if (usersSkipped.Count > pageSize)
             {
-                return users.Take(pageSize).ToList();
+                return usersSkipped.Take(pageSize).ToList();
             }
             return usersSkipped;
         }

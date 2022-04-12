@@ -14,5 +14,6 @@ namespace ShareThoughtProjectApi.Services
         public Task<bool> AddCommentAsync(Comment comment, Guid postId);
         public Task<bool> UserOwnsCommentAsync(Guid commentId, string sserId);
         public Task<Comment> GetCommentByIdAsync(Guid commentId);
+        public Task<List<Comment>> GetAllPostCommentsPaginatedAsync(Guid postId, int pageSize, int pageNumber);
     }
 }

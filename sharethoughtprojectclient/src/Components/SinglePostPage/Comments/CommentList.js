@@ -11,7 +11,8 @@ function CommentList(props) {
     const [posts, setPosts] = useState([{}]);
     const [isLoading, setLoading] = useState(true);
     const [content, setContent] = useState("");
-    const [index, setIndex] = useState(0);
+    const [index, setIndex] = useState(1);
+    const [count, setCount] = useState(1);
 
     useEffect(() => {
         getSearchResult();
@@ -19,12 +20,12 @@ function CommentList(props) {
 
     useEffect(() => {
         getSearchResult();
-    }, [index]);
+    }, [count]);
 
     const getSearchResult = () => {
         setLoading(true);
         axios
-            .get(`https://localhost:5001/api/v1/getPostComments/${props.postId}`)
+            .get(`https://localhost:5001/api/v1/getPostCommentsPaginated/${props.postId}/${10}/${count}`)
             .then((response) => {
                 setPosts(response.data);
                 setLoading(false);
@@ -33,9 +34,11 @@ function CommentList(props) {
             .catch((error) => {
                 setLoading(false);
                 setPosts(null);
+                document.getElementById("errorMessage").innerHTML = "No more comments found!"
                 console.log(error);
             });
     };
+    
 
     const GenerateComments = () => {
         if (posts !== null) {
@@ -55,6 +58,25 @@ function CommentList(props) {
             return <p></p>
         }
     }
+
+    const decrement = () => {
+        if (count === 1) {
+            return 0;
+        }
+        else {
+            setCount(count - 1);
+        }
+    }
+
+    const increment = () => {
+        if (posts === null) {
+            return 0;
+        }
+        else {
+            setCount(count + 1);
+        }
+    }
+
 
     const GenerateCommentForm = () => {
         let token = localStorage.getItem("token");
@@ -124,9 +146,17 @@ function CommentList(props) {
         return (
             <Col>
                 <div className="comments-header">Comments</div>
-                <div id="commentErrorMessage" style={{color: 'red' }}></div>
+                <div id="commentErrorMessage" style={{ color: 'red' }}></div>
                 {GenerateCommentForm()}
                 {GenerateComments()}
+                <div className="search-pagination">
+                    <p id="errorMessage" style={{ marginBottom: '1em' }}></p>
+                    <ButtonGroup style={{ marginBottom: '1em' }}>
+                        <Button variant="outline-success" onClick={() => decrement()}><ArrowLeftCircleFill /></Button>
+                        <div className="color-info-container search-page-number" >{count}</div>
+                        <Button variant="outline-success" onClick={() => increment()}><ArrowRightCircleFill /></Button>
+                    </ButtonGroup>
+                </div>
             </Col>
         );
     }
