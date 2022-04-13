@@ -8,15 +8,18 @@ using ShareThoughtProjectApi.Data.CounterTables;
 using ShareThoughtProjectApi.Contracts.V1.Requests;
 using System;
 using static ShareThoughtProjectApi.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace ShareThoughtProjectApi.Services.Classes
 {
     public class ModerationService : IModerationService
     {
         private readonly ShareThoughtDbContext _context;
-        public ModerationService(ShareThoughtDbContext context)
+        private readonly UserManager<AppUser> _userManager;
+        public ModerationService(ShareThoughtDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<List<Report>> GetAllFlaggedEntites()
@@ -131,6 +134,34 @@ namespace ShareThoughtProjectApi.Services.Classes
                 };
             }
            
+        }
+
+        public async Task<PromotionRequest> CreatePromotionRequest(string userId, string description)
+        {
+            var promotionRequest = new PromotionRequest
+            {
+                UserId = userId,
+                PromotionRequestContent = description,
+                RequestCreationDate = DateTime.Now
+            };
+            _context.PromotionRequests.Add(promotionRequest);
+            await _context.SaveChangesAsync();
+            return promotionRequest;
+        }
+
+        public async Task<bool> ResolvePromotionRequest(Guid promotionRequestId, bool resolutionStatus)
+        {
+            var request = await _context.PromotionRequests.Where(x => x.Id == promotionRequestId).FirstOrDefaultAsync();
+            request.RequestStatus = resolutionStatus;
+            if (resolutionStatus)
+            {
+                var user = await _context.Users.Where(x => x.Id == request.UserId).FirstOrDefaultAsync();
+                await _userManager.RemoveFromRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, "Creator");
+            }
+            _context.PromotionRequests.Update(request);
+            var updated = await _context.SaveChangesAsync();
+            return updated > 0;
         }
     }
 }

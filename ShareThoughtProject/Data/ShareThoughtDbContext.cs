@@ -19,5 +19,6 @@ namespace ShareThoughtProjectApi.Data
         public DbSet<HashtagFollow> HashtagFollows { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; } 
         public DbSet<Report> Reports { get; set; }
+        public DbSet<PromotionRequest> PromotionRequests { get; set; }
     }
 }

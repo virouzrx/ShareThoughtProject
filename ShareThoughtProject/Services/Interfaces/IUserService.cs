@@ -16,6 +16,7 @@ namespace ShareThoughtProjectApi.Services
         public Task<bool> SetUserPhoto(string base64, string userId);
         public Task<bool> SetUserDescription(string description, string userId);
         public Task<List<AppUser>> GetUsersByPhrase(string phrase, int pageSize, int pageNumber);
+        public Task<List<AppUser>> GetUsersPaginated(int pageSize, int pageNumber);
         public Task<UserInfoResponse> AddUserInfo(UserInfoResponse response);
     }
 }

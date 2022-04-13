@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Data;
@@ -12,10 +13,12 @@ namespace ShareThoughtProjectApi.Services
     public class UserService : IUserService
     {
         private readonly ShareThoughtDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public UserService(ShareThoughtDbContext context)
+        public UserService(ShareThoughtDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         public async Task<List<AppUser>> GetAllUsers()
         {
@@ -100,6 +103,17 @@ namespace ShareThoughtProjectApi.Services
             _context.Users.Update(user);
             var updated = await _context.SaveChangesAsync();
             return updated > 0;
+        }
+
+        public async Task<List<AppUser>> GetUsersPaginated(int pageSize, int pageNumber)
+        {
+            var creators = (await _userManager.GetUsersInRoleAsync("Creator")).ToList();
+            var creatorsSkipped = creators.Skip((pageNumber - 1) * pageSize).ToList();
+            if (creatorsSkipped.Count > pageSize)
+            {
+                return creatorsSkipped.Take(pageSize).ToList();
+            }
+            return creatorsSkipped;
         }
     }
 }

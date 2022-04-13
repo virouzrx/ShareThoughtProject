@@ -24,6 +24,12 @@ namespace ShareThoughtProjectApi.Contracts
             public const string Search = Base + "/posts/search/{phrase}/{pageSize}/{pageNumber}";
         }
 
+        public static class Moderation
+        {
+            public const string RequestPromotion = Base + "/requestPromotion";
+            public const string ResolvePromotionRequest = Base + "/resolvePromotionRequest/{requestId}/{status}";
+        }
+
         public static class Identity
         {
             public const string Login = Base + "/identity/login";
