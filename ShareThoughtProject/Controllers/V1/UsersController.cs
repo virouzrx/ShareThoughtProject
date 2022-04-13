@@ -119,5 +119,26 @@ namespace ShareThoughtProjectApi.Controllers.V1
             return NotFound();
         }
 
+
+        [HttpGet(ApiRoutes.User.GetCreators)]
+        public async Task<IActionResult> GetCreatorsPaginated([FromRoute] int pageSize, int pageNumber)
+        {
+            var users = await _userService.GetUsersPaginated(pageSize, pageNumber);
+            List<UserInfoResponse> usersToReturn = new();
+            if (users.Count > 0)
+            {
+                foreach (var item in users)
+                {
+                    var singleUserInfoResponse = _mapper.Map<UserInfoResponse>(item);
+                    var roles = await _userManager.GetRolesAsync(item);
+                    singleUserInfoResponse.Role = roles.FirstOrDefault();
+                    var adjustedUser = await _userService.AddUserInfo(singleUserInfoResponse);
+                    usersToReturn.Add(adjustedUser);
+                }
+                return Ok(usersToReturn);
+            }
+            return NotFound();
+        }
     }
 }
+

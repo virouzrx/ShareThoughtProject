@@ -74,7 +74,7 @@ function SearchedUserWrapper() {
                             postAmount={postInfo.postAmount}
                             username={postInfo.userName}
                             dateCreated={postInfo.created}
-                            imagePath={postInfo.imagePath}
+                            imagePath={postInfo.avatarPath}
                             authorPic={postInfo.authorProfilePic}
                             joined={postInfo.joined}
                             hashtags={1}

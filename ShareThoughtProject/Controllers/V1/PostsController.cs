@@ -245,6 +245,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 {
                     item.CommentCount = item.Comments.Count();
                 }
+                await _mapHelperService.AddCreatorInfo(mapped);
                 return Ok(mapped);
             }
             return NotFound();

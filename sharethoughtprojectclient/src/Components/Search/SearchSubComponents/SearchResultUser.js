@@ -22,7 +22,7 @@ class SearchResultUser extends Component {
         var date = new Date(this.props.joined)
         var stringifiedDate = date.toLocaleDateString("es-PE");
         return (
-            <div className="user-searchresult">
+            <div className="user-searchresult" style={{textDecoration: 'none'}}>
                 <a href="/user/1" className="hyperlink-card">
                     <Row>
                         <Col className="searchresult-user-avatar-col"><img className="commentor-pic" src={`data:image/jpeg;base64,${this.props.imagePath}`} /></Col>

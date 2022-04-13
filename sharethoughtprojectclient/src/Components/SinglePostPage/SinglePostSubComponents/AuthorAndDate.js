@@ -3,7 +3,7 @@ function AuthorAndDate(props) {
     var stringifiedDate = date.toLocaleDateString("es-PE");
     return (
         <div class="singlepost-author-and-info">
-            <img className="singlepost-card-author-avatar" src={props.authorPic} />
+            <img className="singlepost-card-author-avatar" src={`data:image/jpeg;base64,${props.authorPic}`} />
             <p class="singlepost-author-name-and-date ">{props.authorName}</p>
             <div className="vr"></div>
             <p className="singlepost-author-name-and-date">{stringifiedDate}</p>
