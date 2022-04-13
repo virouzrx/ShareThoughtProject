@@ -51,7 +51,6 @@ function UserProfilePostsWrapper(props) {
             </div>
         )
     }
-    console.log(list.length)
     return (
         <div className="container">
             

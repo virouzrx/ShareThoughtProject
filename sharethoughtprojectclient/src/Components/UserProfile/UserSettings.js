@@ -7,7 +7,6 @@ const api = axios.create({
 })
 
 function GetRouteAddress() {
-    console.log(window.location.pathname)
     var parts = window.location.pathname.split('/');
     return parts[2];
 }

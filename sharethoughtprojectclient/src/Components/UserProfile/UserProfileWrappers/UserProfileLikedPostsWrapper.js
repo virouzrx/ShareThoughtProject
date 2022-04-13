@@ -52,7 +52,6 @@ function UserProfileLikedPostsWrapper(props) {
             </div>
         )
     }
-    console.log(list.length)
     return (
         <div className="container">
             

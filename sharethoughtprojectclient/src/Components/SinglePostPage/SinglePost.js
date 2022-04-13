@@ -33,7 +33,6 @@ class SinglePost extends Component {
             .then(res => {
                 console.log(res.data)
                 this.setState({ post: res.data })
-                console.log("State: " + this.state.post.isUpvoted)
             })
             .catch(error => {
                 console.log(error)
@@ -68,7 +67,6 @@ class SinglePost extends Component {
         }
         else {
             const decoded = jwt_decode(token);
-            console.log(this.state.post === undefined)
             api.put(`/posts/vote/${GetRouteAddress()}/${decoded.id}/${true}`)
                 .catch(error => {
                     document.getElementById('error').innerHTML = error.response.data;
@@ -93,7 +91,6 @@ class SinglePost extends Component {
         }
         else {
             const decoded = jwt_decode(token);
-            console.log(this.state.post === undefined)
             api.put(`/posts/vote/${GetRouteAddress()}/${decoded.id}/${false}`)
                 .catch(error => {
                     document.getElementById('error').innerHTML = error.response.data;

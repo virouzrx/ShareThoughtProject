@@ -6,8 +6,6 @@ using ShareThoughtProjectApi.Contracts.V1.Requests;
 using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Services;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ShareThoughtProjectApi.Extensions;
 using System.Linq;
 using AutoMapper;
