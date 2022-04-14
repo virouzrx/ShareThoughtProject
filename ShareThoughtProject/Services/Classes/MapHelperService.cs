@@ -8,6 +8,7 @@ namespace ShareThoughtProjectApi.Services.Classes
 {
     public class MapHelperService : IMapHelperService
     {
+        //todo - repository pattern, or at least a generic method
         private readonly IUserService _userService;
         public MapHelperService(IUserService userService)
         {
@@ -32,6 +33,17 @@ namespace ShareThoughtProjectApi.Services.Classes
                 item.AuthorName = user.UserName;
             }
             return commentResponse;
+        }
+
+        public async Task<List<PromotionRequestResponse>> AddRequesterInfo(List<PromotionRequestResponse> promotionRequestResponses)
+        {
+            foreach (var item in promotionRequestResponses)
+            {
+                var user = await _userService.GetUserById(item.UserId);
+                item.UserAvatar = user.AvatarPath;
+                item.Username = user.UserName;
+            }
+            return promotionRequestResponses;
         }
     }
 }

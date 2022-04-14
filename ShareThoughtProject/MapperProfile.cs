@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ShareThoughtProjectApi.Contracts.V1.Responses;
+using ShareThoughtProjectApi.Data;
 using ShareThoughtProjectApi.Domain;
 
 namespace ShareThoughtProjectApi
@@ -12,6 +13,7 @@ namespace ShareThoughtProjectApi
             CreateMap<Hashtag, HashtagResponse>();
             CreateMap<Comment, CommentResponse>();
             CreateMap<AppUser, UserInfoResponse>();
+            CreateMap<PromotionRequest, PromotionRequestResponse>();
         }
     }
 }

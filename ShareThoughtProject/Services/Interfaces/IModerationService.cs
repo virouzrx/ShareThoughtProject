@@ -20,5 +20,6 @@ namespace ShareThoughtProjectApi.Services
         public Task<List<ReporterInfo>> GetReportersInfo();
         public Task<PromotionRequest> CreatePromotionRequest(string userId, string description);
         public Task<bool> ResolvePromotionRequest(Guid promotionRequestId, bool resolutionStatus);
+        public Task<List<PromotionRequest>> GetRequestsPaginated(int pageSize, int pageNumber, bool resolved);
     }
 }

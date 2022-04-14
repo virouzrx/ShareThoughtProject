@@ -9,5 +9,6 @@ namespace ShareThoughtProjectApi.Services.Interfaces
     {
         public Task<List<PostResponse>> AddCreatorInfo(List<PostResponse> postResponse);
         public Task<List<CommentResponse>> AddAuthorInfo(List<CommentResponse> commentResponse);
+        public Task<List<PromotionRequestResponse>> AddRequesterInfo(List<PromotionRequestResponse> promotionRequestResponses);
     }
 }

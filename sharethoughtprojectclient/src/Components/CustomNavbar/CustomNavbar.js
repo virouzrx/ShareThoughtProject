@@ -26,6 +26,9 @@ function GenerateNavbarElementsByToken() {
         const decoded = jwt_decode(token);
         list.push(<Nav.Link className={CheckForCurrentPath("posts")} href="/posts">Posts</Nav.Link>);
         list.push(<Nav.Link className={CheckForCurrentPath("creators")} href="/creators">Creators</Nav.Link>);
+        if (decoded.role === "User") {
+            list.push(<Nav.Link className={CheckForCurrentPath("become-a-creator")} href="/become-a-creator">Become a creator!</Nav.Link>);
+        }
         if (decoded.role === 'Admin' || decoded.role === "Moderator") {
             list.push(<Nav.Link className={CheckForCurrentPath("moderation")} href="/moderation">Moderation</Nav.Link>);
         }

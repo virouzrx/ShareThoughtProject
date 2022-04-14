@@ -163,5 +163,16 @@ namespace ShareThoughtProjectApi.Services.Classes
             var updated = await _context.SaveChangesAsync();
             return updated > 0;
         }
+
+        public async Task<List<PromotionRequest>> GetRequestsPaginated(int pageSize, int pageNumber, bool resolved)
+        {
+            var requests = await _context.PromotionRequests.Where(x => x.RequestStatus == null).ToListAsync();
+            var requestsSkipped = requests.Skip((pageNumber - 1) * pageSize).ToList();
+            if (requestsSkipped.Count > pageSize)
+            {
+                return requests.Take(pageSize).ToList();
+            }
+            return requestsSkipped;
+        }
     }
 }
