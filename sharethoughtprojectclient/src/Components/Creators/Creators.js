@@ -4,6 +4,7 @@ import { ArrowLeftCircleFill, ArrowRightCircleFill } from "react-bootstrap-icons
 import axios from "axios";
 import SearchResultUser from '../Search/SearchSubComponents/SearchResultUser';
 import './Creators.css'
+import HashLoader from "react-spinners/HashLoader";
 
 
 function Creators() {
@@ -60,7 +61,7 @@ function Creators() {
             return (creators.map((creatorInfo) => (
                 <Col>
                     <div key={creatorInfo.id}>
-                    <SearchResultUser
+                        <SearchResultUser
                             title={creatorInfo.title}
                             desc={creatorInfo.description}
                             postScore={creatorInfo.postScore}
@@ -84,14 +85,18 @@ function Creators() {
     }
 
     if (isLoading) {
-        return <div className="App">Loading...</div>;
+        return <div className="App">
+            <div style={{ marginLeft: '-2em', textAlign: 'center', marginTop: '5em', opacity: '0.9' }}>
+                <HashLoader color='#198754' loading={true} size={70} />
+            </div>
+        </div>;
     }
     else {
         return (
             <div>
                 {GenerateUsers()}
                 <div className="search-pagination">
-                    <p id="errorMessage" style={{marginBottom: '1em'}}></p>
+                    <p id="errorMessage" style={{ marginBottom: '1em' }}></p>
                     <ButtonGroup style={{ marginBottom: '1em' }}>
                         <Button variant="outline-success" onClick={() => decrement()}><ArrowLeftCircleFill /></Button>
                         <div className="color-info-container search-page-number" >{count}</div>

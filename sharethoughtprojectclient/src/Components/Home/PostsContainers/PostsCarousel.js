@@ -11,6 +11,7 @@ import '../../Home/Home.css';
 import { ArrowLeftCircleFill, ArrowRightCircleFill } from 'react-bootstrap-icons';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import HashLoader from "react-spinners/HashLoader";
 
 const responsive = {
     superLargeDesktop: {
@@ -68,7 +69,11 @@ function PostsCarousel(props) {
 
 
     if (isLoading) {
-        return <div className="App">Loading...</div>;
+        return <div className="App">
+            <div style={{ marginLeft: '-2em', textAlign: 'center', marginTop: '5em', opacity: '0.9' }}>
+                <HashLoader color='#198754' loading={true} size={70} />
+            </div>
+        </div>;
     }
     return (
         <>

@@ -6,6 +6,7 @@ import SearchResultPost from "../../Search/SearchSubComponents/SearchResultPost"
 import '../../SinglePostPage/Comments/Comment.css';
 import Comment from '../../SinglePostPage/Comments/Comment';
 import jwt_decode from "jwt-decode";
+import HashLoader from "react-spinners/HashLoader";
 
 function NewPostsWrapper(props) {
     const [posts, setPosts] = useState([{}]);
@@ -38,7 +39,7 @@ function NewPostsWrapper(props) {
                 console.log(error);
             });
     };
-    
+
 
     const GenerateComments = () => {
         if (posts !== null) {
@@ -140,7 +141,11 @@ function NewPostsWrapper(props) {
     }
 
     if (isLoading) {
-        return <div className="App">Loading...</div>;
+        return <div className="App">
+            <div style={{ marginLeft: '-2em', textAlign: 'center', marginTop: '5em', opacity: '0.9' }}>
+                <HashLoader color='#198754' loading={true} size={70} />
+            </div>
+        </div>;
     }
     else {
         return (
