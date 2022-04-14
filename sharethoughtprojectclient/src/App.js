@@ -15,6 +15,7 @@ import CreatePost from './Components/CreatePost/CreatePost';
 import Logout from './Components/Logout/Logout';
 import UserSettings from './Components/UserProfile/UserSettings';
 import NotFound from './Components/NotFound/NotFound';
+import PromotionRequest from './Components/PromotionRequest/PromotionRequest';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="logout/*" element={<Logout/>}></Route>
           <Route path="auth/*" element={<Auth />}></Route>
           <Route path="confirm" element={<Confirm />}></Route>
+          <Route path="become-a-creator" element={<PromotionRequest />}></Route>
           <Route path="activate/:userid/:token" element={<Activate />}></Route>
           <Route path="search/:searchedphrase/*" element={<Search/>}></Route>
           <Route path="*" element={<NotFound/>}></Route>
