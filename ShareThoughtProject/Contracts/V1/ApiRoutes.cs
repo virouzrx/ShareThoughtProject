@@ -27,6 +27,7 @@ namespace ShareThoughtProjectApi.Contracts
         public static class Moderation
         {
             public const string RequestPromotion = Base + "/requestPromotion";
+            public const string GetRequestPromotion = Base + "/requestPromotion/{id}";
             public const string ResolvePromotionRequest = Base + "/resolvePromotionRequest";
             public const string PromotionRequests = Base + "/promotionRequests/{pageSize}/{pageNumber}/{resolved}";
         }

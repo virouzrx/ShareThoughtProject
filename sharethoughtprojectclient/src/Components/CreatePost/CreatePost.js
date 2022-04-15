@@ -3,7 +3,7 @@ import { createBrowserHistory } from 'history';
 import React, { Component } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import './CreatePost.css';
-class App extends Component {
+class CreatePost extends Component {
 
     state = {
         selectedFile: null,
@@ -137,4 +137,4 @@ class App extends Component {
     }
 }
 
-export default App; 
+export default CreatePost; 

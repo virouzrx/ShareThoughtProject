@@ -174,5 +174,16 @@ namespace ShareThoughtProjectApi.Services.Classes
             }
             return requestsSkipped;
         }
+
+        public async Task<PromotionRequest> GetPromotionRequest(string id)
+        {
+            return await _context.PromotionRequests.Where(x => x.UserId == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> ValidateIfUserOldEnough(string id)
+        {
+            var user = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return DateTime.Now.AddMonths(-6) > user.Joined;
+        }
     }
 }

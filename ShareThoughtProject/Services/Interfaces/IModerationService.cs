@@ -21,5 +21,7 @@ namespace ShareThoughtProjectApi.Services
         public Task<PromotionRequest> CreatePromotionRequest(string userId, string description);
         public Task<bool> ResolvePromotionRequest(Guid promotionRequestId, bool resolutionStatus);
         public Task<List<PromotionRequest>> GetRequestsPaginated(int pageSize, int pageNumber, bool resolved);
+        public Task<PromotionRequest> GetPromotionRequest(string id);
+        public Task<bool> ValidateIfUserOldEnough(string id);
     }
 }

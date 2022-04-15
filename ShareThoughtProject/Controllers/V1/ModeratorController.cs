@@ -50,10 +50,29 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpPost(ApiRoutes.Moderation.RequestPromotion)]
-        public async Task<IActionResult> RequestPromotion([FromBody] UserPromotionAppealRequest promotionRequest)
+        public async Task<IActionResult> RequestPromotion([FromForm] UserPromotionAppealRequest promotionRequest)
         {
-            var created = await _moderationService.CreatePromotionRequest(promotionRequest.UserId, promotionRequest.Description);
+            var request = await _moderationService.GetPromotionRequest(promotionRequest.UserId);
+            if (request != null)
+            {
+                return BadRequest("You've already sent the request.");
+            }
+            var created = await _moderationService.CreatePromotionRequest(promotionRequest.UserId, promotionRequest.Content);
             return Ok(created);
+        }
+
+        [HttpGet(ApiRoutes.Moderation.RequestPromotion)]
+        public async Task<IActionResult> ValidateUser([FromRoute] string userId)
+        {
+            var oldEnough = await _moderationService.ValidateIfUserOldEnough(userId);
+            return oldEnough ? Ok() : BadRequest();
+        }
+
+        [HttpGet(ApiRoutes.Moderation.GetRequestPromotion)]
+        public async Task<IActionResult> GetPromotionRequest([FromRoute] string id)
+        {
+            var request = await _moderationService.GetPromotionRequest(id);
+            return request == null ? NotFound() : Ok();
         }
 
         [HttpPost(ApiRoutes.Moderation.ResolvePromotionRequest)]
