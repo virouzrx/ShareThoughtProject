@@ -8,6 +8,7 @@ import UserProfileLikedPostsWrapper from "./UserProfileWrappers/UserProfileLiked
 import UserProfilePostsWrapper from "./UserProfileWrappers/UserProfilePostsWrapper";
 import axios from 'axios';
 import PropagateLoader from "react-spinners/PropagateLoader";
+import jwt_decode from "jwt-decode";
 
 const api = axios.create({
     baseURL: `https://localhost:5001/api/v1/`
@@ -123,17 +124,12 @@ class UserProfile extends Component {
                             <Col>
                                 <div className="feed-button-group">
                                     <ButtonGroup aria-label="Basic example">
-                                        <Button className={CheckForCurrentPath("recentlyliked")} variant="outline-success feed" href={`/user/${GetRouteAddress()}/recentlyliked`}>Recently liked</Button>
-                                        <Button className={CheckForCurrentPath("recentposts")} variant="outline-success feed" href={`/user/${GetRouteAddress()}/recentposts`}>Recent posts</Button>
                                         <Button className={CheckForCurrentPath("recentcomments")} variant="outline-success feed" href={`/user/${GetRouteAddress()}/recentcomments`}>Recent comments</Button>
                                     </ButtonGroup>
                                 </div>
 
                                 <Routes>
                                     <Route path="recentcomments" element={<UserProfileCommentsWrapper />} />
-                                    <Route path="recentlyliked" element={<UserProfileLikedPostsWrapper />} />
-                                    <Route path="recentposts" element={<UserProfilePostsWrapper />} />
-                                    <Route exact path="/" element={<UserProfileLikedPostsWrapper />} />
                                 </Routes>
                             </Col>
                         </Row>

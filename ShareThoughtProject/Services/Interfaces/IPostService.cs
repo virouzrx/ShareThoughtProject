@@ -24,5 +24,7 @@ namespace ShareThoughtProjectApi.Services
         public Task<List<Post>> GetPostsByPhrase(string phrase, int pageSize, int pageNumber);
         public Task<bool> IsPostUpvotedByUser(Guid postId, string userId);
         public Task<bool> UserAlreadyVotedPost(Guid postId, string userId, bool isUpvote);
+        public Task<List<Post>> GetUsers5LastPosts(string userId);
+        public Task<List<Post>> GetUsers5LastLikedPosts(string userId);
     }
 }

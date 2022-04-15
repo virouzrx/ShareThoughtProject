@@ -35,7 +35,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
         public async Task<IActionResult> GetPostComments(Guid postId)
         {
             var comments = _mapper.Map<List<CommentResponse>>(await _commentService.GetAllPostCommentsAsync(postId));
-            await _mapHelperService.AddAuthorInfo(comments);
+            await _mapHelperService.AddAuthorInfoAndPostTitle(comments);
             return Ok(comments);
         }
 
@@ -45,12 +45,23 @@ namespace ShareThoughtProjectApi.Controllers.V1
             var comments = _mapper.Map<List<CommentResponse>>(await _commentService.GetAllPostCommentsPaginatedAsync(postId, pageSize, pageNumber));
             if (comments.Count > 0)
             {
-                await _mapHelperService.AddAuthorInfo(comments);
+                await _mapHelperService.AddAuthorInfoAndPostTitle(comments);
                 return Ok(comments);
             }
             return NotFound();
         }
 
+        [HttpGet(ApiRoutes.Comments.GetUserLast5Comments)]
+        public async Task<IActionResult> GetUserLastComments([FromRoute] string userId)
+        {
+            var comments = _mapper.Map<List<CommentResponse>>(await _commentService.GetUsers5LastComments(userId));
+            if (comments.Count > 0)
+            {
+                await _mapHelperService.AddAuthorInfoAndPostTitle(comments);
+                return Ok(comments);
+            }
+            return NotFound();
+        }
 
 
         [HttpPost(ApiRoutes.Comments.CreateComment)]

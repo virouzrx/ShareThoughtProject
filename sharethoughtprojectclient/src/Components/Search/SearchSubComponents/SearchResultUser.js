@@ -53,7 +53,7 @@ class SearchResultUser extends Component {
                             </ButtonGroup>
                         </Col>
                         <Col>
-                            {this.props.description}
+                            {this.props.desc}
                         </Col>
                     </Row >
                 </a >

@@ -10,9 +10,11 @@ namespace ShareThoughtProjectApi.Services.Classes
     {
         //todo - repository pattern, or at least a generic method
         private readonly IUserService _userService;
-        public MapHelperService(IUserService userService)
+        private readonly IPostService _postService;
+        public MapHelperService(IUserService userService, IPostService postService)
         {
             _userService = userService;
+            _postService = postService; 
         }
         public async Task<List<PostResponse>> AddCreatorInfo(List<PostResponse> postResponse)
         {
@@ -24,13 +26,15 @@ namespace ShareThoughtProjectApi.Services.Classes
             }
             return postResponse;
         }
-        public async Task<List<CommentResponse>> AddAuthorInfo(List<CommentResponse> commentResponse)
+        public async Task<List<CommentResponse>> AddAuthorInfoAndPostTitle(List<CommentResponse> commentResponse)
         {
             foreach (var item in commentResponse)
             {
                 var user = await _userService.GetUserById(item.UserId);
+                var post = await _postService.GetPostByIdAsync(item.PostId);
                 item.AuthorAvatar = user.AvatarPath;
                 item.AuthorName = user.UserName;
+                item.PostTitle = post.Title;
             }
             return commentResponse;
         }

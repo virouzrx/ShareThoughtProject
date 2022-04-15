@@ -102,6 +102,36 @@ namespace ShareThoughtProjectApi.Controllers.V1
             return NotFound();
         }
 
+        [HttpGet(ApiRoutes.Posts.GetUserLast5Posts)]
+        public async Task<IActionResult> GetUserLast5Posts([FromRoute] string userId)
+        {
+            var post = await _postService.GetUsers5LastPosts(userId);
+            if (post != null)
+            {
+                List<PostResponse> tempList = new();
+                tempList.Add(_mapper.Map<PostResponse>(post));
+                var tempListWithInfo = await _mapHelperService.AddCreatorInfo(tempList);
+                tempListWithInfo[0].CommentCount = tempListWithInfo[0].Comments.Count();
+                return Ok(tempListWithInfo[0]);
+            }
+            return NotFound();
+        }
+
+        [HttpGet(ApiRoutes.Posts.GetUserLast5LikedPosts)]
+        public async Task<IActionResult> GetUserLast5LikedPosts([FromRoute] string userId)
+        {
+            var post = await _postService.GetUsers5LastLikedPosts(userId);
+            if (post != null)
+            {
+                List<PostResponse> tempList = new();
+                tempList.Add(_mapper.Map<PostResponse>(post));
+                var tempListWithInfo = await _mapHelperService.AddCreatorInfo(tempList);
+                tempListWithInfo[0].CommentCount = tempListWithInfo[0].Comments.Count();
+                return Ok(tempListWithInfo[0]);
+            }
+            return NotFound();
+        }
+
 
         [HttpGet(ApiRoutes.Posts.Search)]
         public async Task<IActionResult> GetPostsByPhrase([FromRoute] string phrase, int pageSize, int pageNumber)

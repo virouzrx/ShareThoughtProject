@@ -46,6 +46,16 @@ namespace ShareThoughtProjectApi.Services
             return commentsSkipped;
         }
 
+        public async Task<List<Comment>> GetUsers5LastComments(string userId)
+        {
+            var comments = await _dbContext.Comments
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.Created)
+                .Take(5)
+                .ToListAsync();
+            return comments;
+        }
+
         public async Task<bool> VoteCommentAsync(Comment comment, bool isUpvote, string userId)
         {
             if (isUpvote)

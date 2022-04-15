@@ -14,6 +14,8 @@ namespace ShareThoughtProjectApi.Contracts
         {
             public const string GetAll = Base + "/posts";
             public const string Get = Base + "/posts/{postId}";
+            public const string GetUserLast5Posts = Base + "/posts/{userId}/last";
+            public const string GetUserLast5LikedPosts = Base + "/posts/{userId}/lastliked";
             public const string Create = Base + "/posts";
             public const string Update = Base + "/posts/{postId}";
             public const string Delete = Base + "/posts/{postId}";
@@ -50,6 +52,7 @@ namespace ShareThoughtProjectApi.Contracts
         public static class Comments
         {
             public const string GetAllPostsComments = Base + "/getPostComments/{postId}";
+            public const string GetUserLast5Comments = Base + "/comments/user/{userId}";
             public const string GetAllPostsCommentsPaginated = Base + "/getPostCommentsPaginated/{postId}/{pageSize}/{pageNumber}";
             public const string CreateComment = Base + "/comments/{postId}";
             public const string CreateSubComment = Base + "/subcomments/{postId}";

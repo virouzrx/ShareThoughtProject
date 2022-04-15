@@ -163,6 +163,15 @@ namespace ShareThoughtProjectApi.Services
             return postsFromLastWeek;
         }
 
+        public async Task<List<Post>> GetUsers5LastPosts(string userId)
+        {
+             return await _dbContext.Posts
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.Created)
+                .Take(5)
+                .ToListAsync();
+        }
+
         public async Task<List<Post>> GetTodaysPopularPostsAsync()
         {
             var cutoff = DateTime.Now.Subtract(new TimeSpan(24, 0, 0));
@@ -237,6 +246,23 @@ namespace ShareThoughtProjectApi.Services
                         x.IsLike == isUpvote)
                 .AnyAsync();
             return userAlreadyLikedPost;
+        }
+
+        public async Task<List<Post>> GetUsers5LastLikedPosts(string userId)
+        {
+            var liked = await _dbContext.PostVotes
+                .Where(x=>x.UserId == userId)
+                .OrderByDescending(x => x.VoteDate)
+                .Take(5)
+                .ToListAsync();
+
+            List<Post> posts = new();
+            foreach (var item in liked)
+            {
+                posts.Add(await _dbContext.Posts.Where(x => x.Id == item.PostId).FirstOrDefaultAsync());
+            }
+
+            return posts;
         }
     }
 }
