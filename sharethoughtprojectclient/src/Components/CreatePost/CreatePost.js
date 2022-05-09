@@ -119,7 +119,7 @@ class CreatePost extends Component {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label className="label-header">Content</Form.Label>
-                            <Form.Control as="textarea" rows={30} resize="none" style={{ resize: 'none' }} onChange={this.onContentChange} />
+                            <Form.Control as="textarea" rows={25} resize="none" style={{ resize: 'none' }} onChange={this.onContentChange} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">

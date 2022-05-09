@@ -82,16 +82,19 @@
 }
 
 .single-post-desc {
-    font-size: larger;
+    font-size: x-large;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 .single-post-content {
     margin-top: 1em;
 }
 
-.single-post-desc,
 .single-post-content {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Bitter', serif;
+    font-size: large;
+    line-height: 1.7;
+    font-weight: 500;
 }
 
 .secondary-column-header,

@@ -74,7 +74,7 @@ class Register extends React.Component {
             />
           </Form.Group>
           <p id="errorMessage"></p>
-          <Button size="lg" type="submit" >
+          <Button size="lg" type="submit" style={{backgroundColor: '#198754', border: '0'}}>
             Login
           </Button>
         </Form>

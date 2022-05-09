@@ -94,7 +94,7 @@ class CustomNavbar extends Component {
                         <Nav className="me-auto my-2 my-lg-0 text-light" style={{ maxHeight: '100px' }}>
                             {GenerateNavbarElementsByToken()}
                         </Nav>
-                        <Form className="d-flex" style={{ marginTop: '-0.4em' }}>
+                        <Form className="d-flex" style={{ marginTop: '-0.4em', borderRadius: '0' }}>
                             <FormControl
                                 type="search"
                                 placeholder="Search"
@@ -102,8 +102,9 @@ class CustomNavbar extends Component {
                                 aria-label="Search"
                                 value={this.state.val}
                                 onChange={e => this.setState({ val: e.target.value })}
+                                style={{borderRadius: '0'}}
                             />
-                            <Button type="submit" variant="success navbar-button" href={`/search/${this.state.val}`}>Search</Button>
+                            <Button style={{borderRadius: '0'}}type="submit" variant="success navbar-button" href={`/search/${this.state.val}`}>Search</Button>
                         </Form>
                         {GenerateUserInfoByToken()}
                     </Navbar.Collapse>

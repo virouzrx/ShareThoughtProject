@@ -92,7 +92,7 @@ function CommentList(props) {
                         </Form.Group>
                     </Form>
                     <ButtonGroup>
-                        <Button variant="outline-primary" style={{ marginTop: '-0.5em', marginBottom: '1em' }} type="submit" onClick={handleSubmit}>Add comment</Button>
+                        <Button variant="outline-success" style={{ marginTop: '-0.5em', marginBottom: '1em'}} type="submit" onClick={handleSubmit}>Add comment</Button>
                     </ButtonGroup>
                 </div>
             );
@@ -109,7 +109,7 @@ function CommentList(props) {
                                 placeholder="Only logged users can comment posts." />
                         </Form.Group>
                     </Form>
-                    <Button variant="outline-primary" style={{ marginTop: '-0.5em', marginBottom: '1em' }} type="submit" onClick={handleSubmit} disabled>Add comment</Button>
+                    <Button variant="outline-success" style={{ marginTop: '-0.5em', marginBottom: '1em' }} type="submit" onClick={handleSubmit} disabled>Add comment</Button>
                 </div>
             );
         }

@@ -127,6 +127,7 @@ namespace ShareThoughtProjectApi.Services
             return await _dbContext.Posts
                 .Include(post => post.Hashtags)
                 .Include(post => post.Comments)
+                .OrderByDescending(x => x.Created)
                 .ToListAsync();
         }
         public async Task<List<Post>> GetPostsByHashtagAsync(Hashtag hashtag)
@@ -211,7 +212,7 @@ namespace ShareThoughtProjectApi.Services
         public async Task<List<Post>> GetNewPosts(int pageSize, int pageNumber)
         {
             var posts = await _dbContext.Posts
-                .OrderBy(x => x.Created)
+                .OrderByDescending(x => x.Created)
                 .Take(pageSize)
                 .ToListAsync();
             var postsSkipped = posts.Skip((pageNumber - 1) * pageSize).ToList();

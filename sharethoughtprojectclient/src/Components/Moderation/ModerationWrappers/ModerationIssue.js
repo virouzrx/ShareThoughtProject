@@ -34,25 +34,19 @@ const ModerationPostIssue = (props) => {
     var stringifiedDate = date.toLocaleDateString("es-PE");
 
     return (
-        <div className="new-post">
-            <Row>
-                <Col md={4}>
-                    <a className="hyperlink-card" href="/post/1">
-                        <Card.Img variant="top" src={'data:image/jpeg;base64,' + props.postPic} />
-                    </a>
-                </Col>
-                <Col>
-                    <Row>
-                        <Card.Title className="custom-card-title">{props.title}</Card.Title>
-                        <Card.Text>{props.desc}</Card.Text>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Button variant="warning" className="resolve-button" onClick={handleShow}>Resolve</Button>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
+        <div className="user-searchresult" style={{ textDecoration: 'none' }}>
+                <Row>
+                    <Col className="searchresult-user-avatar-col"><img className="commentor-pic" src={`data:image/jpeg;base64,${props.postPic}`} /></Col>
+                    <Col>
+                        <Row className="search-result-username" xs={6}>{props.authorName}</Row>
+                    </Col>
+                    <Col>
+                        {props.desc}
+                    </Col>
+                    <Col style={{textAlign: 'right'}}>
+                        <Button variant="warning" style={{marginTop: '0.5em', marginRight: '0.5em'}} onClick={handleShow}>Resolve</Button>
+                    </Col>
+                </Row >
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Do you want to promote user?</Modal.Title>
