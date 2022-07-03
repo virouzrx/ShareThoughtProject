@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareThoughtProjectApi", "S
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ShareThoughtProjectClient", "ShareThoughtProjectClient\ShareThoughtProjectClient.esproj", "{D35CCDCD-D9FD-4095-9F47-E89AB6CB211B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareThoughtProjectTests", "ShareThoughtProject_Tests\ShareThoughtProjectTests.csproj", "{56CC2BFD-3CCD-4930-8BC0-8CD62A4B5B9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{D35CCDCD-D9FD-4095-9F47-E89AB6CB211B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D35CCDCD-D9FD-4095-9F47-E89AB6CB211B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D35CCDCD-D9FD-4095-9F47-E89AB6CB211B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{56CC2BFD-3CCD-4930-8BC0-8CD62A4B5B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56CC2BFD-3CCD-4930-8BC0-8CD62A4B5B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56CC2BFD-3CCD-4930-8BC0-8CD62A4B5B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56CC2BFD-3CCD-4930-8BC0-8CD62A4B5B9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
