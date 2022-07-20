@@ -33,7 +33,9 @@ namespace ShareThoughtProjectApi.Services
             List<Hashtag> hashtags = new();
             foreach (var tag in tagNames)
             {
-                var hashtag = await _dbContext.Hashtags.Where(x => x.HashtagName == tag.ToLower()).SingleOrDefaultAsync();
+                var hashtag = await _dbContext.Hashtags
+                    .Where(x => x.HashtagName == tag.ToLower())
+                    .SingleOrDefaultAsync();
                 if (hashtag != null)
                     hashtags.Add(hashtag);
             }

@@ -80,10 +80,6 @@ namespace ShareThoughtProjectApi.Controllers.V1
             {
                 return BadRequest("We have detected a violent content in your comment. Please change the content of your comment.");
             }
-            if (autoModerationResult == AutoModerationResult.AutoModerationStatus.FLAG)
-            {
-                
-            }
 
             var created = await _commentService.AddCommentAsync(comment, postId);
             return created == true ? Ok() : NotFound();

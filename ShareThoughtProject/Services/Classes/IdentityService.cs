@@ -27,8 +27,12 @@ namespace ShareThoughtProjectApi.Services
         private readonly IEmailService _emailService;
         private readonly IUserService _userService;
 
-        public IdentityService(UserManager<AppUser> userManager, JwtSettings jwtSettings, TokenValidationParameters tokenValidationParameters,
-            ShareThoughtDbContext context, IEmailService emailService, IUserService userService)
+        public IdentityService( UserManager<AppUser> userManager, 
+                                JwtSettings jwtSettings, 
+                                TokenValidationParameters tokenValidationParameters,
+                                ShareThoughtDbContext context, 
+                                IEmailService emailService, 
+                                IUserService userService)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;

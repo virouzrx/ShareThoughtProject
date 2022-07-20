@@ -64,20 +64,18 @@ namespace ShareThoughtProjectApi.Controllers.V1
             using (var memoryStream = new MemoryStream())
             {
                 await request.Avatar.CopyToAsync(memoryStream);
-                using (var bmp = new Bitmap(memoryStream))
+                using var bmp = new Bitmap(memoryStream);
+                int size = 300;
+                int scale = 1;
+                if (bmp.Width > size)
                 {
-                    int size = 300;
-                    int scale = 1;
-                    if (bmp.Width > size)
-                    {
-                        scale = bmp.Width / size;
-                    }
-                    Bitmap resized = new(bmp, new Size(bmp.Width / scale, bmp.Height / scale));
-                    using var ms = new MemoryStream();
-                    resized.Save(ms, ImageFormat.Jpeg);
-                    var byteArray = ms.ToArray();
-                    ImageInBase64 = Convert.ToBase64String(byteArray);
+                    scale = bmp.Width / size;
                 }
+                using Bitmap resized = new(bmp, new Size(bmp.Width / scale, bmp.Height / scale));
+                using var ms = new MemoryStream();
+                resized.Save(ms, ImageFormat.Jpeg);
+                var byteArray = ms.ToArray();
+                ImageInBase64 = Convert.ToBase64String(byteArray);
             }
 
             var x = await _userService.SetUserPhoto(ImageInBase64, request.UserId);

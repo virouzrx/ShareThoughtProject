@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ShareThoughtProjectApi.Contracts.V1.Requests;
 using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Data;
 using ShareThoughtProjectApi.Domain;
@@ -14,6 +15,7 @@ namespace ShareThoughtProjectApi
             CreateMap<Comment, CommentResponse>();
             CreateMap<AppUser, UserInfoResponse>();
             CreateMap<PromotionRequest, PromotionRequestResponse>();
+            CreateMap<CreatePostRequest, Post>();
         }
     }
 }

@@ -11,11 +11,9 @@ namespace ShareThoughtProjectApi.Services
     public class PostService : IPostService
     {
         private readonly ShareThoughtDbContext _dbContext;
-        private readonly IUserService _userService;
-        public PostService(ShareThoughtDbContext dbContext, IUserService userService)
+        public PostService(ShareThoughtDbContext dbContext)
         {
             _dbContext = dbContext;
-            _userService = userService;
         }
 
         public async Task<bool> VotePostAsync(Post post, bool isUpvote, string userId)
@@ -83,6 +81,8 @@ namespace ShareThoughtProjectApi.Services
 
         public async Task<bool> CreatePostAsync(Post post)
         {
+            //todo - move the date to front side
+            post.Created = DateTime.Now;
             await _dbContext.Posts.AddAsync(post);
             var created = await _dbContext.SaveChangesAsync();
             return created > 0;

@@ -12,6 +12,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using System.IO;
 using ShareThoughtProjectApi.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace ShareThoughtProjectApi.Controllers.V1
 {
@@ -47,27 +48,13 @@ namespace ShareThoughtProjectApi.Controllers.V1
             var userOwnsPost = await _postService.UserOwnsPostAsync(postId, HttpContext.GetUserId());
             if (!userOwnsPost)
                 return BadRequest(new { error = "You don't own this post" });
-            var hashtags = await _hashtagService.GetTagsByNameAsync(request.Hashtags);
-            if (!hashtags.Any())
-            {
-                foreach (var tag in request.Hashtags)
-                {
-                    var hashtag = new Hashtag
-                    {
-                        HashtagName = tag,
-                        HashtagNameInLower = tag.ToLower(),
-                        AmountOfHashtagFollowers = 0
-                    };
-                    hashtags.Add(hashtag);
-                }
-            }
             var post = await _postService.GetPostByIdAsync(postId);
 
             post.Title = request.Title;
             post.Description = request.Description;
             post.UrlTitle = request.UrlTitle;
             post.UserId = HttpContext.GetUserId();
-            post.Hashtags = hashtags;
+            post.Hashtags = post.Hashtags = await GetHashtagsFromRequest(request.Hashtags);
 
             if (string.IsNullOrEmpty(post.Title))
             {
@@ -159,48 +146,13 @@ namespace ShareThoughtProjectApi.Controllers.V1
         [HttpPost(ApiRoutes.Posts.Create)]
         public async Task<IActionResult> Create([FromForm] CreatePostRequest postRequest)
         {
-            var hashtagsSplit = postRequest.Hashtags
-                .Replace(" ", "")
-                .Split(',')
-                .ToList();
-            var hashtags = await _hashtagService.GetTagsByNameAsync(hashtagsSplit);
 
-            if (!hashtags.Any())
-            {
-                foreach (var tag in hashtagsSplit)
-                {
-                    var hashtag = new Hashtag
-                    {
-                        HashtagName = tag,
-                        HashtagNameInLower = tag.ToLower(),
-                        AmountOfHashtagFollowers = 0
-                    };
-                    hashtags.Add(hashtag);
-                }
-            }
-            var imgGuid = Guid.NewGuid();
-            string ImageInBase64 = "";
+            var post = _mapper.Map<Post>(postRequest);
 
-            if (postRequest.Image.Length > 0)
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    await postRequest.Image.CopyToAsync(ms);
-                    var byteArray = ms.ToArray();
-                    ImageInBase64 = Convert.ToBase64String(byteArray);
-                }
-            }
-            var post = new Post
-            {
-                Title = postRequest.Title,
-                Description = postRequest.Description,
-                UserId = HttpContext.GetUserId(),
-                ImagePath = ImageInBase64,
-                Created = DateTime.Now,
-                Content = postRequest.Content,
-                Score = 0,
-                Hashtags = hashtags
-            };
+            post.Hashtags = await GetHashtagsFromRequest(postRequest.Hashtags);
+            post.ImagePath = await ConvertIFormFileToBase64String(postRequest.Image);
+            post.UserId = HttpContext.GetUserId();
+            
             if (string.IsNullOrEmpty(post.Title))
             {
                 return BadRequest("Title cannot be empty");
@@ -224,15 +176,14 @@ namespace ShareThoughtProjectApi.Controllers.V1
         [HttpPut(ApiRoutes.Posts.Vote)]
         public async Task<IActionResult> VotePost([FromRoute] Guid postId, string userId, bool isUpvote)
         {
+            var post = await _postService.GetPostByIdAsync(postId);
+            if (post == null)
+                return NotFound();
 
             if (await _postService.UserOwnsPostAsync(postId, userId))
-            {
                 return BadRequest("You can't vote your own post.");
-            }
 
-            var post = await _postService.GetPostByIdAsync(postId);
             var updated = await _postService.VotePostAsync(post, isUpvote, userId);
-
             return updated == true ? NoContent() : NotFound();
         }
 
@@ -277,6 +228,46 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 return Ok(mapped);
             }
             return NotFound();
+        }
+
+        private async Task<string> ConvertIFormFileToBase64String(IFormFile file)
+        {
+            string ImageInBase64 = "";
+            if (file.Length > 0)
+            {
+                using MemoryStream ms = new MemoryStream();
+                await file.CopyToAsync(ms);
+                var byteArray = ms.ToArray();
+                ImageInBase64 = Convert.ToBase64String(byteArray);
+            }
+            return ImageInBase64;
+        }
+
+        private async Task<List<Hashtag>> GetHashtagsFromRequest(string hashtags)
+        {
+            //split the hashtags
+            var hashtagsSplit = hashtags
+                .Replace(" ", "")
+                .Split(',')
+                .ToList();
+            //todo - add hashtag handling in db
+            var hashtagsFromDb = await _hashtagService.GetTagsByNameAsync(hashtagsSplit);
+
+            if (!hashtags.Any())
+            {
+                foreach (var tag in hashtagsSplit)
+                {
+                    var hashtag = new Hashtag
+                    {
+                        HashtagName = tag,
+                        HashtagNameInLower = tag.ToLower(),
+                        AmountOfHashtagFollowers = 0
+                    };
+                    hashtagsFromDb.Add(hashtag);
+                }
+            }
+
+            return hashtagsFromDb;
         }
     }
 }

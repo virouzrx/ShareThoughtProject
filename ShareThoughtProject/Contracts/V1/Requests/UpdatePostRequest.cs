@@ -11,6 +11,6 @@ namespace ShareThoughtProjectApi.Contracts.V1.Requests
         public string Description { get; set; }
         public string UrlTitle { get; set; } //todo - replace it with some generator?
         public string Content { get; set; }
-        public List<string> Hashtags { get; set; }
+        public string Hashtags { get; set; }
     }
 }

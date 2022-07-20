@@ -1,4 +1,11 @@
 using Xunit;
+using Moq;
+using Microsoft.EntityFrameworkCore;
+using ShareThoughtProjectApi.Data;
+using ShareThoughtProjectApi.Domain;
+using ShareThoughtProjectApi.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace ShareThoughtProject_Tests
 {
@@ -7,7 +14,7 @@ namespace ShareThoughtProject_Tests
         [Fact]
         public void Test1()
         {
-            Assert.True(false);
+
         }
     }
 }
