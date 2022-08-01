@@ -8,7 +8,6 @@ namespace ShareThoughtProjectApi.Services.Classes
 {
     public class MapHelperService : IMapHelperService
     {
-        //todo - repository pattern, or at least a generic method
         private readonly IUserService _userService;
         private readonly IPostService _postService;
         public MapHelperService(IUserService userService, IPostService postService)

@@ -16,6 +16,7 @@ namespace ShareThoughtProjectApi.Services
             _dbContext = dbContext;
         }
 
+        //to refactor
         public async Task<bool> VotePostAsync(Post post, bool isUpvote, string userId)
         {
             var postAuthor = await _dbContext.Users.Where(x => x.Id == post.UserId).FirstOrDefaultAsync();

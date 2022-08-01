@@ -21,6 +21,7 @@ namespace ShareThoughtProjectApi.Services.Classes
             _emailServiceConfig = emailServiceConfig;
         }
 
+        //to int test
         public async Task<string> Send(string receiver, string token, string userId)
         {
             var message = await CreateHtmlToSend(userId, token);

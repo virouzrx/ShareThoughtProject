@@ -19,6 +19,7 @@ namespace ShareThoughtProjectApi.Services
             _perspectiveConfig = perspectiveConfig;
             _httpClient = client;
         }
+        //to int test
         public async Task<AutoModerationStatus> AutoModerateComment(string content)
         {
             var url = "https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=" + _perspectiveConfig.GetKey();

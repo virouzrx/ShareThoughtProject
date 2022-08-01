@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +7,7 @@ using ShareThoughtProjectApi.Contracts.V1.Requests;
 using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Domain;
 using ShareThoughtProjectApi.Services;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -56,29 +51,9 @@ namespace ShareThoughtProjectApi.Controllers.V1
         }
 
         [HttpPost(ApiRoutes.User.SetUserPhoto)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         public async Task<IActionResult> SetUserPhoto([FromForm] SetAvatarRequest request)
         {
-            string ImageInBase64 = "";
-
-            using (var memoryStream = new MemoryStream())
-            {
-                await request.Avatar.CopyToAsync(memoryStream);
-                using var bmp = new Bitmap(memoryStream);
-                int size = 300;
-                int scale = 1;
-                if (bmp.Width > size)
-                {
-                    scale = bmp.Width / size;
-                }
-                using Bitmap resized = new(bmp, new Size(bmp.Width / scale, bmp.Height / scale));
-                using var ms = new MemoryStream();
-                resized.Save(ms, ImageFormat.Jpeg);
-                var byteArray = ms.ToArray();
-                ImageInBase64 = Convert.ToBase64String(byteArray);
-            }
-
-            var x = await _userService.SetUserPhoto(ImageInBase64, request.UserId);
+            var x = await _userService.SetUserPhoto(request.Avatar, request.UserId);
             return x ? Ok() : BadRequest();
         }
 
@@ -88,12 +63,6 @@ namespace ShareThoughtProjectApi.Controllers.V1
         {
             var x = await _userService.SetUserDescription(request.Description, request.UserId);
             return x ? Ok() : BadRequest();
-        }
-
-        [HttpGet(ApiRoutes.Health.Ping)]
-        public async Task<IActionResult> Ping()
-        {
-            return Ok("pong");
         }
 
         [HttpGet(ApiRoutes.User.SearchUsers)]

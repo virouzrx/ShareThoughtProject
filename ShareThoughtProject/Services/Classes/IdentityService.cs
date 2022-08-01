@@ -157,8 +157,9 @@ namespace ShareThoughtProjectApi.Services
                 return null;
             }
         }
-
-        private bool IsCredentialAnEmail(string credential)
+            
+        //to test
+        private static bool IsCredentialAnEmail(string credential)
         {
             if (!MailAddress.TryCreate(credential, out _))
             {
@@ -167,7 +168,7 @@ namespace ShareThoughtProjectApi.Services
             return true;
         }
 
-        private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
+        private static bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
         {
             return (validatedToken is JwtSecurityToken jwtSecurityToken) &&
                 jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,

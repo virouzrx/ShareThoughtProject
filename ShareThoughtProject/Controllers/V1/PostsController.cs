@@ -50,9 +50,7 @@ namespace ShareThoughtProjectApi.Controllers.V1
                 return BadRequest(new { error = "You don't own this post" });
             var post = await _postService.GetPostByIdAsync(postId);
 
-            post.Title = request.Title;
-            post.Description = request.Description;
-            post.UrlTitle = request.UrlTitle;
+            post = _mapper.Map<Post>(request);
             post.UserId = HttpContext.GetUserId();
             post.Hashtags = post.Hashtags = await GetHashtagsFromRequest(request.Hashtags);
 

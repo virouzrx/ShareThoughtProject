@@ -1,10 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShareThoughtProjectApi.Contracts.V1.Responses;
 using ShareThoughtProjectApi.Data;
 using ShareThoughtProjectApi.Domain;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -87,10 +92,11 @@ namespace ShareThoughtProjectApi.Services
             return response;
         }
 
-        public async Task<bool> SetUserPhoto(string base64, string userId)
+        public async Task<bool> SetUserPhoto(IFormFile file, string userId)
         {
+            var imageInBase64 = await ConvertImageToBase64String(file);
             var user = await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
-            user.AvatarPath = base64;
+            user.AvatarPath = imageInBase64;
             _context.Users.Update(user);
             var updated = await _context.SaveChangesAsync();
             return updated > 0;
@@ -114,6 +120,26 @@ namespace ShareThoughtProjectApi.Services
                 return creatorsSkipped.Take(pageSize).ToList();
             }
             return creatorsSkipped;
+        }
+
+        //to unit test
+        private async static Task<string> ConvertImageToBase64String(IFormFile file)
+        {
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            using var bmp = new Bitmap(memoryStream);
+            int size = 300;
+            int scale = 1;
+            if (bmp.Width > size)
+            {
+                scale = bmp.Width / size;
+            }
+            using Bitmap resized = new(bmp, new Size(bmp.Width / scale, bmp.Height / scale));
+            using var ms = new MemoryStream();
+            resized.Save(ms, ImageFormat.Jpeg);
+            var byteArray = ms.ToArray();
+            string imageInBase64 = Convert.ToBase64String(byteArray);
+            return imageInBase64;
         }
     }
 }

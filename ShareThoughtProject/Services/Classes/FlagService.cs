@@ -17,6 +17,7 @@ namespace ShareThoughtProjectApi.Services
         {
             _dbContext = dbContext;
         }
+        //to refactor
         public async Task<FlagEntityResult> FlagEntityAsync(ReportedEntityType reportedEntityType, Guid flaggedEntityId, FlagPostRequest flagPostRequest, string reporterId)
         {
             if (reportedEntityType == ReportedEntityType.Post)
